@@ -860,7 +860,15 @@ main.o: main.cpp /opt/Qt/6.6.3/gcc_64/include/QtWidgets/QApplication \
 		/opt/Qt/6.6.3/gcc_64/include/QtGui/qtextdocument.h \
 		/opt/Qt/6.6.3/gcc_64/include/QtGui/qtextformat.h \
 		/opt/Qt/6.6.3/gcc_64/include/QtGui/qpen.h \
-		/opt/Qt/6.6.3/gcc_64/include/QtGui/qtextoption.h
+		/opt/Qt/6.6.3/gcc_64/include/QtGui/qtextoption.h \
+		/opt/Qt/6.6.3/gcc_64/include/QtWidgets/QMdiArea \
+		/opt/Qt/6.6.3/gcc_64/include/QtWidgets/qmdiarea.h \
+		/opt/Qt/6.6.3/gcc_64/include/QtWidgets/qabstractscrollarea.h \
+		/opt/Qt/6.6.3/gcc_64/include/QtWidgets/qtabwidget.h \
+		/opt/Qt/6.6.3/gcc_64/include/QtWidgets/QMdiSubWindow \
+		/opt/Qt/6.6.3/gcc_64/include/QtWidgets/qmdisubwindow.h \
+		/opt/Qt/6.6.3/gcc_64/include/QtWidgets/QGraphicsScene \
+		/opt/Qt/6.6.3/gcc_64/include/QtWidgets/qgraphicsscene.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o main.cpp
 
 ####### Install
