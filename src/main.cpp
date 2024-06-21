@@ -3,10 +3,8 @@
 #include <QVBoxLayout>
 #include <QLineEdit>
 #include <X11/Xlib.h> // Only needed on X11 systems
-#include <QMdiArea>
-#include <QMdiSubWindow>
-#include <QGraphicsScene>
 #include <QLabel>
+#include <QPushButton>
 //#include <QTextEdit>
 
 int main(int argc, char *argv[]) {
@@ -23,11 +21,13 @@ int main(int argc, char *argv[]) {
     QFont placeholder_font("Sans", 24);
     QFont login_text_font("Sans", 36);
     QFont description_text_font("Sans", 28);
+    QFont button_font("Sans", 20);
 
     QWidget *textbox_widget = new QWidget(&window);
     QSize container_size(app_width*2/3, app_height/10);
     QSize description_size(app_width/6, app_height/10);
     QSize widget_size(app_width, app_height/10);
+    QSize button_size(app_width/4, app_height/16);
 
     QRect right_container(app_width/2, app_height/8, app_width/2, app_height/4); //aleft, atop, awidth, aheight
 
@@ -46,6 +46,10 @@ int main(int argc, char *argv[]) {
     QHBoxLayout *password_layout = new QHBoxLayout(password_widget);
     password_layout->setAlignment(Qt::AlignLeft);
     password_layout->setContentsMargins(app_width/12,0,0,0);
+    QWidget *button_widget = new QWidget(&window);
+    QHBoxLayout *button_layout = new QHBoxLayout(button_widget);
+    button_layout->setAlignment(Qt::AlignCenter);
+    button_layout->setContentsMargins(0,app_height/10,0,0);
  
     QVBoxLayout *textbox_widget_layout = new QVBoxLayout(textbox_widget);
     textbox_widget_layout->setAlignment(Qt::AlignCenter); // Center align the contents
@@ -56,6 +60,11 @@ int main(int argc, char *argv[]) {
     login_text->setAlignment(Qt::AlignCenter);
     login_text->setMargin(60);
 
+    QPushButton *submit_button = new QPushButton(textbox_widget);
+    submit_button->setText("Submit");
+    submit_button->setFont(button_font);
+    submit_button->setFixedSize(button_size);
+
     QLabel *username_desc = new QLabel(username_widget);
     QLabel *email_desc = new QLabel(email_widget);
     QLabel *password_desc = new QLabel(password_widget);
@@ -64,19 +73,19 @@ int main(int argc, char *argv[]) {
     username_desc->setText("Username: ");
     username_desc->setAlignment(Qt::AlignLeft);
     username_desc->setFixedSize(description_size);
-    username_desc->setContentsMargins(0,20,0,0);
+    username_desc->setContentsMargins(0,app_height/40,0,0);
 
     email_desc->setFont(description_text_font);
     email_desc->setText("Email: ");
     email_desc->setAlignment(Qt::AlignLeft);
     email_desc->setFixedSize(description_size);
-    email_desc->setContentsMargins(0,20,0,0);
+    email_desc->setContentsMargins(0,app_height/40,0,0);
 
     password_desc->setFont(description_text_font);
     password_desc->setText("Password: ");
     password_desc->setAlignment(Qt::AlignLeft);
     password_desc->setFixedSize(description_size);
-    password_desc->setContentsMargins(0,20,0,0);
+    password_desc->setContentsMargins(0,app_height/40,0,0);
 
     QLineEdit *username_edit = new QLineEdit(username_widget);
     QLineEdit *email_edit = new QLineEdit(email_widget);
@@ -110,10 +119,13 @@ int main(int argc, char *argv[]) {
     password_layout->addWidget(password_desc);
     password_layout->addWidget(password_edit);
 
+    button_layout->addWidget(submit_button);
+
     textbox_widget_layout->addWidget(login_text);
     textbox_widget_layout->addWidget(username_widget);
     textbox_widget_layout->addWidget(email_widget);
     textbox_widget_layout->addWidget(password_widget);
+    textbox_widget_layout->addWidget(button_widget);
 
     QVBoxLayout *main_layout = new QVBoxLayout(&window);
 
