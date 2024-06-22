@@ -19,7 +19,5 @@ INCLUDEPATH += .
 #DEFINES += QT_DISABLE_DEPRECATED_UP_TO=0x060000 # disables all APIs deprecated in Qt 6.0.0 and earlier
 
 # Input
-HEADERS += LoginWidget.h WidgetComponent.h
-SOURCES += LoginWidget.cpp main.cpp WidgetComponent.cpp
-
-CONFIG += moc
+SOURCES += main.cpp WidgetComponent.cpp LoginWidget.cpp
+HEADERS += WidgetComponent.h LoginWidget.h

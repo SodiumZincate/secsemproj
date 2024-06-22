@@ -1,23 +1,34 @@
-#ifndef LOGINWIDGET_H
-#define LOGINWIDGET_H
+#pragma once
 
 #include <QObject>
 #include <QWidget>
+#include <QLabel>
+#include <QPushButton>
 #include <QHBoxLayout>
-#include "WidgetComponent.h"
 
-class WidgetComponent;
-
-class LoginWidget : public QObject{
-    Q_OBJECT
+class LoginWidget{
     private:
-        QWidget *sub_widget;
-        QHBoxLayout *sub_widget_layout;
-        QSize sub_widget_size;
-    public: 
-        LoginWidget(QWidget*);
+        QWidget *login_widget;
+        QHBoxLayout *login_layout;
+    public:
+        void init(QWidget*);
         QWidget* getWidget();
-        void addWidget(WidgetComponent* temp_widget_component);
+        QHBoxLayout* getHLayout();
 };
 
-#endif
+class LoginHead{
+    private:
+        QLabel* login_text;
+    public:
+        void init(QWidget*);
+        QLabel* getWidget_label();
+};
+
+class LoginFoot{
+    private:
+        QPushButton* button_widget;
+        QHBoxLayout* button_layout;
+    public:
+        void init(QWidget*);
+        QPushButton* getWidget_button();
+};
