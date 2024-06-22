@@ -66,9 +66,12 @@ int main(int argc, char *argv[]) {
     WidgetComponent *username_component = new WidgetComponent();
     WidgetComponent *email_component = new WidgetComponent();
     WidgetComponent *password_component = new WidgetComponent();
+
     username_component->init(username_widget, "Username");
     email_component->init(email_widget, "Email");
     password_component->init(password_widget, "Password");
+    //Hiding text input on Password Field
+    password_component->getWidget_edit()->setEchoMode(QLineEdit::Password);
 
     //Addition of Username Label and Text Box to Username Widget
     username_layout->addWidget(username_component->getWidget_label());
