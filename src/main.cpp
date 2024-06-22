@@ -1,3 +1,4 @@
+#include <iostream>
 #include <QApplication>
 #include <QWidget>
 #include <QVBoxLayout>
@@ -5,137 +6,99 @@
 #include <X11/Xlib.h> // Only needed on X11 systems
 #include <QLabel>
 #include <QPushButton>
+
+#include "WidgetComponent.h"
+#include "LoginWidget.h"
 //#include <QTextEdit>
 
+Display* disp = XOpenDisplay(NULL); // Only needed on X11 systems
+Screen*  scrn = DefaultScreenOfDisplay(disp); // Only needed on X11 systems
+int app_width = scrn->width/2; // Only needed on X11 systems
+int app_height = scrn->height/2; // Only needed on X11 systems
+
 int main(int argc, char *argv[]) {
-    Display* disp = XOpenDisplay(NULL); // Only needed on X11 systems
-    Screen*  scrn = DefaultScreenOfDisplay(disp); // Only needed on X11 systems
-    int app_width = scrn->width/2; // Only needed on X11 systems
-    int app_height = scrn->height/2; // Only needed on X11 systems
 
     QApplication app(argc, argv);
 
     QWidget window;
     window.setWindowTitle("League Manager");
 
-    QFont placeholder_font("Sans", 24);
-    QFont login_text_font("Sans", 36);
-    QFont description_text_font("Sans", 28);
-    QFont button_font("Sans", 20);
-
+    //Main Widget
     QWidget *textbox_widget = new QWidget(&window);
-    QSize container_size(app_width*2/3, app_height/10);
-    QSize description_size(app_width/6, app_height/10);
-    QSize widget_size(app_width, app_height/10);
-    QSize button_size(app_width/4, app_height/16);
-
-    QRect right_container(app_width/2, app_height/8, app_width/2, app_height/4); //aleft, atop, awidth, aheight
-
-    QWidget *username_widget = new QWidget(&window);
-    username_widget->setFixedSize(widget_size);
-    QHBoxLayout *username_layout = new QHBoxLayout(username_widget);
-    username_layout->setAlignment(Qt::AlignLeft);
-    username_layout->setContentsMargins(app_width/12,0,0,0);
-    QWidget *email_widget = new QWidget(&window);
-    email_widget->setFixedSize(widget_size);
-    QHBoxLayout *email_layout = new QHBoxLayout(email_widget);
-    email_layout->setAlignment(Qt::AlignLeft);
-    email_layout->setContentsMargins(app_width/12,0,0,0);
-    QWidget *password_widget = new QWidget(&window);
-    password_widget->setFixedSize(widget_size);
-    QHBoxLayout *password_layout = new QHBoxLayout(password_widget);
-    password_layout->setAlignment(Qt::AlignLeft);
-    password_layout->setContentsMargins(app_width/12,0,0,0);
-    QWidget *button_widget = new QWidget(&window);
-    QHBoxLayout *button_layout = new QHBoxLayout(button_widget);
-    button_layout->setAlignment(Qt::AlignCenter);
-    button_layout->setContentsMargins(0,app_height/10,0,0);
- 
     QVBoxLayout *textbox_widget_layout = new QVBoxLayout(textbox_widget);
     textbox_widget_layout->setAlignment(Qt::AlignCenter); // Center align the contents
-        
-    QLabel *login_text = new QLabel(textbox_widget);
-    login_text->setFont(login_text_font);
-    login_text->setText("Register: ");
-    login_text->setAlignment(Qt::AlignCenter);
-    login_text->setMargin(60);
 
-    QPushButton *submit_button = new QPushButton(textbox_widget);
-    submit_button->setText("Submit");
-    submit_button->setFont(button_font);
-    submit_button->setFixedSize(button_size);
+    //Username Widget
+    LoginWidget *username = new LoginWidget();
+    username->init(&window);
+    QWidget *username_widget = username->getWidget();
+    QHBoxLayout *username_layout = username->getHLayout();
 
-    QLabel *username_desc = new QLabel(username_widget);
-    QLabel *email_desc = new QLabel(email_widget);
-    QLabel *password_desc = new QLabel(password_widget);
+    //Email Widget
+    LoginWidget *email = new LoginWidget();
+    email->init(&window);
+    QWidget* email_widget = email->getWidget();
+    QHBoxLayout *email_layout = email->getHLayout();
 
-    username_desc->setFont(description_text_font);
-    username_desc->setText("Username: ");
-    username_desc->setAlignment(Qt::AlignLeft);
-    username_desc->setFixedSize(description_size);
-    username_desc->setContentsMargins(0,app_height/40,0,0);
+    //Password Widget
+    LoginWidget *password = new LoginWidget();
+    password->init(&window);
+    QWidget* password_widget = password->getWidget();
+    QHBoxLayout *password_layout = password->getHLayout();
 
-    email_desc->setFont(description_text_font);
-    email_desc->setText("Email: ");
-    email_desc->setAlignment(Qt::AlignLeft);
-    email_desc->setFixedSize(description_size);
-    email_desc->setContentsMargins(0,app_height/40,0,0);
-
-    password_desc->setFont(description_text_font);
-    password_desc->setText("Password: ");
-    password_desc->setAlignment(Qt::AlignLeft);
-    password_desc->setFixedSize(description_size);
-    password_desc->setContentsMargins(0,app_height/40,0,0);
-
-    QLineEdit *username_edit = new QLineEdit(username_widget);
-    QLineEdit *email_edit = new QLineEdit(email_widget);
-    QLineEdit *password_edit = new QLineEdit(password_widget);
-
-    username_edit->setFixedSize(container_size);
-    username_edit->setFont(placeholder_font);
-    username_edit->setPlaceholderText("Username");
-    username_edit->setAlignment(Qt::AlignLeft); // Left align text within QLineEdit
-    username_edit->setTextMargins(20, 0, 0, 5);
-
-    email_edit->setFixedSize(container_size);
-    email_edit->setFont(placeholder_font);
-    email_edit->setPlaceholderText("adarshanub@gmail.com");
-    email_edit->setAlignment(Qt::AlignLeft); // Left align text within QLineEdit
-    email_edit->setTextMargins(20, 0, 0, 5);
-
-    password_edit->setFixedSize(container_size);
-    password_edit->setFont(placeholder_font);
-    password_edit->setPlaceholderText("Password");
-    password_edit->setEchoMode(QLineEdit::Password);
-    password_edit->setAlignment(Qt::AlignLeft); // Left align text within QLineEdit
-    password_edit->setTextMargins(20, 0, 0, 5);
-
-    username_layout->addWidget(username_desc);
-    username_layout->addWidget(username_edit);
-
-    email_layout->addWidget(email_desc);
-    email_layout->addWidget(email_edit);
+    //Login Text Widget
+    LoginHead *login = new LoginHead();
+    login->init(&window);
+    QLabel* login_label = login->getWidget_label();
     
-    password_layout->addWidget(password_desc);
-    password_layout->addWidget(password_edit);
+    //Submit Button Widget
+    LoginFoot *button = new LoginFoot();
+    button->init(&window);
+    QPushButton* button_widget = button->getWidget_button();
 
-    button_layout->addWidget(submit_button);
+    //Submit Button Container Widget (Made so the Submit Button Widget could be centered as a Widget)
+    QWidget *button_container = new QWidget(&window);
+    QHBoxLayout *button_container_layout = new QHBoxLayout(button_container);
+    button_container_layout->setAlignment(Qt::AlignCenter);
+    button_container_layout->setContentsMargins(0,app_height/10,0,0);
+    
+    //Initialization of Widget Components
+    WidgetComponent *username_component = new WidgetComponent();
+    WidgetComponent *email_component = new WidgetComponent();
+    WidgetComponent *password_component = new WidgetComponent();
+    username_component->init(username_widget, "Username");
+    email_component->init(email_widget, "Email");
+    password_component->init(password_widget, "Password");
 
-    textbox_widget_layout->addWidget(login_text);
+    //Addition of Username Label and Text Box to Username Widget
+    username_layout->addWidget(username_component->getWidget_label());
+    username_layout->addWidget(username_component->getWidget_edit());
+
+    //Addition of Username Label and Text Box to Email Widget
+    email_layout->addWidget(email_component->getWidget_label());
+    email_layout->addWidget(email_component->getWidget_edit());
+
+    //Addition of Username Label and Text Box to Password Widget
+    password_layout->addWidget(password_component->getWidget_label());
+    password_layout->addWidget(password_component->getWidget_edit());
+
+    //Addition of Submit Button Widget to the Submit Button Container Widget
+    button_container_layout->addWidget(button_widget);
+
+    //Addition of sub-widgets to the main Widget
+    textbox_widget_layout->addWidget(login_label);
     textbox_widget_layout->addWidget(username_widget);
     textbox_widget_layout->addWidget(email_widget);
     textbox_widget_layout->addWidget(password_widget);
-    textbox_widget_layout->addWidget(button_widget);
+    textbox_widget_layout->addWidget(button_container);
 
+    //Layout of the main UI
     QVBoxLayout *main_layout = new QVBoxLayout(&window);
-
     main_layout->addWidget(textbox_widget);
     main_layout->setAlignment(Qt::AlignCenter);
-
     window.setLayout(main_layout);
     
     window.resize(scrn->width/2, scrn->height/2);
-
     window.show();
 
     return app.exec();
