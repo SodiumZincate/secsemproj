@@ -3,6 +3,7 @@
 #include <QObject>
 #include <QWidget>
 #include <QLabel>
+#include <QLineEdit>
 #include <QPushButton>
 #include <QHBoxLayout>
 
@@ -31,4 +32,14 @@ class LoginFoot{
     public:
         void init(QWidget*);
         QPushButton* getWidget_button();
+};
+
+class WidgetComponent{
+    private:
+        QLabel *widget_label;
+        QLineEdit *widget_edit;
+    public:
+        void init(QWidget*, QString);
+        QLabel* getWidget_label();
+        QLineEdit* getWidget_edit();
 };

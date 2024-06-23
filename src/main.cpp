@@ -7,7 +7,6 @@
 #include <QLabel>
 #include <QPushButton>
 
-#include "WidgetComponent.h"
 #include "LoginWidget.h"
 //#include <QTextEdit>
 
