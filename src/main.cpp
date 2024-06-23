@@ -1,18 +1,23 @@
 #include <QtWidgets/QApplication>
 #include <QtGui/QScreen>
+#include <QtWidgets/QWidget>
 #include <QtWidgets/QVBoxLayout>
-#include "LoginUI.h"
+#include <QtWidgets/QLineEdit>
+#include <QtWidgets/QLabel>
+#include <QtWidgets/QPushButton>
 
 int app_height = 0;
 int app_width = 0;
 
-#ifdef _WIN32
-    int default_font_size = 26;
-#elif defined(__linux__)
-    int default_font_size = 34;
-#endif
+int app_height = 0;
+int app_width = 0;
 
 int main(int argc, char *argv[]) {
+    #if defined(__WIN32__)
+    
+    #elif defined(__linux__)
+    
+    #endif
 
     QApplication app(argc, argv);
     QScreen *screen = QGuiApplication::primaryScreen();
@@ -21,8 +26,8 @@ int main(int argc, char *argv[]) {
     int screenWidth = screenSize.width();
     int screenHeight = screenSize.height();
 
-    app_width = screenWidth / 2;
-    app_height = screenHeight / 2;
+    app_width = screenWidth/2;
+    app_height = screenHeight/2;
 
     QWidget window;
     window.setWindowTitle("League Manager");
@@ -106,7 +111,7 @@ int main(int argc, char *argv[]) {
     main_layout->addWidget(textbox_widget);
     main_layout->setAlignment(Qt::AlignCenter);
     window.setLayout(main_layout);
-
+    
     window.resize(app_width, app_height);
     window.show();
 
