@@ -3,7 +3,6 @@
 ######################################################################
 
 QT += core gui
-LIBS += -lX11
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 

@@ -1,11 +1,10 @@
 #pragma once
 
-#include <QObject>
-#include <QWidget>
-#include <QLabel>
-#include <QLineEdit>
-#include <QPushButton>
-#include <QHBoxLayout>
+#include <QtWidgets/QWidget>
+#include <QtWidgets/QLabel>
+#include <QtWidgets/QLineEdit>
+#include <QtWidgets/QPushButton>
+#include <QtWidgets/QHBoxLayout>
 
 class LoginWidget{
     private:

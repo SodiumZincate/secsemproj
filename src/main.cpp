@@ -1,19 +1,22 @@
 #include <iostream>
-#include <QApplication>
-#include <QWidget>
-#include <QVBoxLayout>
-#include <QLineEdit>
-#include <X11/Xlib.h> // Only needed on X11 systems
-#include <QLabel>
-#include <QPushButton>
+#include <QtWidgets/QApplication>
+#include <QtWidgets/QWidget>
+#include <QtWidgets/QVBoxLayout>
+#include <QtWidgets/QLineEdit>
+#include <windows.h>
+#include <QtWidgets/QLabel>
+#include <QtWidgets/QPushButton>
 
 #include "LoginWidget.h"
-//#include <QTextEdit>
+//#include <QtWidgets/QTextEdit>
 
-Display* disp = XOpenDisplay(NULL); // Only needed on X11 systems
-Screen*  scrn = DefaultScreenOfDisplay(disp); // Only needed on X11 systems
-int app_width = scrn->width/2; // Only needed on X11 systems
-int app_height = scrn->height/2; // Only needed on X11 systems
+// Retrieve screen dimensions using Windows API
+int screenWidth = GetSystemMetrics(SM_CXSCREEN);
+int screenHeight = GetSystemMetrics(SM_CYSCREEN);
+
+// Calculate application dimensions
+int app_width = screenWidth / 2;
+int app_height = screenHeight / 2;
 
 int main(int argc, char *argv[]) {
 
@@ -100,7 +103,7 @@ int main(int argc, char *argv[]) {
     main_layout->setAlignment(Qt::AlignCenter);
     window.setLayout(main_layout);
     
-    window.resize(scrn->width/2, scrn->height/2);
+    window.resize(screenWidth/2, screenHeight/2);
     window.show();
 
     return app.exec();
