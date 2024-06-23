@@ -1,26 +1,34 @@
 #include <iostream>
 #include <QtWidgets/QApplication>
+#include <QtGui/QScreen>
 #include <QtWidgets/QWidget>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QLineEdit>
-#include <windows.h>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QPushButton>
 
 #include "LoginWidget.h"
 //#include <QtWidgets/QTextEdit>
 
-// Retrieve screen dimensions using Windows API
-int screenWidth = GetSystemMetrics(SM_CXSCREEN);
-int screenHeight = GetSystemMetrics(SM_CYSCREEN);
-
-// Calculate application dimensions
-int app_width = screenWidth / 2;
-int app_height = screenHeight / 2;
+int app_height = 0;
+int app_width = 0;
 
 int main(int argc, char *argv[]) {
+    #if defined(__WIN32__)
+    
+    #elif defined(__linux__)
+    
+    #endif
 
     QApplication app(argc, argv);
+    QScreen *screen = QGuiApplication::primaryScreen();
+
+    QSize screenSize = screen->size();
+    int screenWidth = screenSize.width();
+    int screenHeight = screenSize.height();
+
+    app_width = screenWidth/2;
+    app_height = screenHeight/2;
 
     QWidget window;
     window.setWindowTitle("League Manager");
@@ -103,7 +111,7 @@ int main(int argc, char *argv[]) {
     main_layout->setAlignment(Qt::AlignCenter);
     window.setLayout(main_layout);
     
-    window.resize(screenWidth/2, screenHeight/2);
+    window.resize(app_width, app_height);
     window.show();
 
     return app.exec();
