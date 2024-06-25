@@ -13,13 +13,13 @@
 int app_height = 0;
 int app_width = 0;
 
-int main(int argc, char *argv[]) {
-    #if defined(__WIN32__)
-    
-    #elif defined(__linux__)
-    
-    #endif
+#ifdef _WIN32
+    int default_font_size =  26;
+#elif defined(__linux__)
+    int default_font_size = 36;
+#endif
 
+int main(int argc, char *argv[]) {
     QApplication app(argc, argv);
     QScreen *screen = QGuiApplication::primaryScreen();
 

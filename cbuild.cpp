@@ -21,14 +21,14 @@ void copy_dlls() {
 #ifdef _WIN32
 	std::filesystem::create_directories("bin/platforms");
 
-	copy_file("bin/platforms/qwindows.dll", "vendor/qt/lib/windows/platforms/qwindows.dll");
-	copy_file("bin/Qt6Core.dll",            "vendor/qt/lib/windows/Qt6Core.dll");
-	copy_file("bin/Qt6Widgets.dll",         "vendor/qt/lib/windows/Qt6Widgets.dll");
-	copy_file("bin/Qt6Gui.dll",             "vendor/qt/lib/windows/Qt6Gui.dll");
+	copy_file("bin/platforms/qwindows.dll", "qt/lib/windows/platforms/qwindows.dll");
+	copy_file("bin/Qt6Core.dll",            "qt/lib/windows/Qt6Core.dll");
+	copy_file("bin/Qt6Widgets.dll",         "qt/lib/windows/Qt6Widgets.dll");
+	copy_file("bin/Qt6Gui.dll",             "qt/lib/windows/Qt6Gui.dll");
 #elif defined(__linux__)
-	copy_file("bin/libQt6Core.so.6",    "vendor/qt/lib/linux/libQt6Core.so.6");
-	copy_file("bin/libQt6Widgets.so.6", "vendor/qt/lib/linux/libQt6Widgets.so.6");
-	copy_file("bin/libQt6Gui.so.6",     "vendor/qt/lib/linux/libQt6Gui.so.6");
+	copy_file("bin/libQt6Core.so.6",    "qt/lib/linux/libQt6Core.so.6");
+	copy_file("bin/libQt6Widgets.so.6", "qt/lib/linux/libQt6Widgets.so.6");
+	copy_file("bin/libQt6Gui.so.6",     "qt/lib/linux/libQt6Gui.so.6");
 #endif
 }
 
@@ -40,17 +40,17 @@ void build(char** argv) {
 			"-Wl,-rpath='$ORIGIN'", "-std=c++17"
 		})
 		.inc_paths({
-			"vendor/qt/include",
+			"qt/include",
 			"src"
 		})
 
 #ifdef _WIN32
 		.lib_paths({
-			"vendor/qt/lib/windows"
+			"qt/lib/windows"
 		})
 #elif defined(__linux__)
 		.lib_paths({
-			"vendor/qt/lib/linux"
+			"qt/lib/linux"
 		})
 #endif
 		.libs({
