@@ -6,8 +6,9 @@
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QPushButton>
 
-int app_height = 0;
-int app_width = 0;
+
+#include "LoginWidget.h"
+//#include <QtWidgets/QTextEdit>
 
 int app_height = 0;
 int app_width = 0;
