@@ -35,7 +35,7 @@ void copy_dlls() {
 void build(char** argv) {
 	CBuild cbuild("g++");
 	cbuild
-		.out("bin", "app")
+		.out("bin", "league")
 		.flags({
 			"-Wl,-rpath='$ORIGIN'", "-std=c++17"
 		})

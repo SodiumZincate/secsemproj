@@ -1,3 +1,4 @@
 cbuild.exe
 bin
 *.o
+cbuild
