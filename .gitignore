@@ -1,2 +1,5 @@
-src/app.log
-**/.vscode/
+cbuild.exe
+bin
+*.o
+cbuild
+.qmake
