@@ -63,7 +63,7 @@ private:
 
 private:
 	std::string m_cc, m_out_dir, m_out_file;
-	std::vector<std::string> m_flags, m_src, m_objs, m_inc_paths, m_lib_paths, m_libs, m_moc_src;
+	std::vector<std::string> m_flags, m_src, m_objs, m_moc_objs, m_inc_paths, m_lib_paths, m_libs, m_moc_src;
 	std::vector<CompileCommand> m_cmp_cmds;
 };
 
@@ -309,6 +309,9 @@ CBuild& CBuild::clean() {
 	for (auto obj : m_objs) {
 		std::filesystem::remove(obj);
 	}
+	for (auto obj : m_moc_objs) {
+		std::filesystem::remove(obj);
+	}
 	return *this;
 }
 
@@ -324,6 +327,7 @@ bool CBuild::compile_moc_single(const std::string& src) {
 		replace(moc_src, ".h", ".moc.cpp");
 
 	m_objs.push_back(obj);
+	m_moc_objs.push_back(moc_src);
 
 	std::string dir = std::filesystem::current_path().string();
 	std::string cmd = m_cc + " " + flags + " " + inc_paths + " -o " + obj + " -c " + moc_src;
