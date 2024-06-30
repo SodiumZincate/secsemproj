@@ -6,12 +6,40 @@
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QHBoxLayout>
+#include <QtWidgets/QStackedWidget>
+#include <iostream>
 
 extern int default_font_size;
 extern int app_width, app_height, screenWidth, screenHeight;
 
-void initLogin(QWidget* window);
-void initRegister(QWidget* window);
+class StackedWidgets : public QObject{
+	Q_OBJECT
+public:
+	QWidget mainWidget;
+	QHBoxLayout *appLayout;
+    QStackedWidget stacked_windows;
+	QWidget loginApp;
+	QWidget registerApp;
+	StackedWidgets(){
+    	appLayout = new QHBoxLayout(&mainWidget);
+		appLayout->addWidget(&stacked_windows);
+	}
+	void addWidget(QWidget* widget){
+		stacked_windows.addWidget(widget);
+	}
+    // void addtoLayout() {
+
+    // }
+    void setCurrentIndex(int index) {
+        stacked_windows.setCurrentIndex(index);
+	}
+	public slots:
+		void changeWindow_forward();
+		void changeWindow_backward();
+};
+
+void initLogin(StackedWidgets *App, QWidget* window);
+void initRegister(StackedWidgets *App, QWidget* window);
 
 class LoginUI {
 private:
@@ -23,25 +51,19 @@ public:
     QHBoxLayout* getHLayout();
 };
 
-class LoginText : public QObject{
-	Q_OBJECT
+class LoginText{
 private:
     QLabel* login_text;
 public:
     void init(QWidget*, QString, int font_size = default_font_size);
     QLabel* getWidget_label();
-// public slots:
-// 	void changeText();
 };
 
-class LoginButton : public QObject{
-	Q_OBJECT
+class LoginButton{
 public:
     QPushButton* button_widget;
     void init(QWidget*, QString, int font_size = default_font_size);
     QPushButton* getWidget_button();
-// public slots:
-// 	void changeMode();
 };
 
 class WidgetComponent : public QObject {

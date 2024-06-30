@@ -16,7 +16,7 @@ int screenHeight;
 #endif
 
 int main(int argc, char *argv[]) {
-    QApplication app(argc, argv);
+	QApplication app(argc, argv);
     QScreen *screen = QGuiApplication::primaryScreen();
 	QSize screenSize = screen->size();
 
@@ -26,21 +26,22 @@ int main(int argc, char *argv[]) {
     app_width = screenWidth / 2;
     app_height = screenHeight / 2;
 
-	QWidget mainWidget;
-	QWidget loginWidget, registerWidget;
-	initLogin(&loginWidget);
-	
-	QStackedWidget app_windows;
+	StackedWidgets stack1;
 
-	app_windows.addWidget(&loginWidget);
-	app_windows.setCurrentWidget(&loginWidget);
-	
-	QHBoxLayout *app_layout = new QHBoxLayout(&mainWidget);
-	app_layout->addWidget(&app_windows);
+	initLogin(&stack1, &stack1.loginApp);
+	initRegister(&stack1, &stack1.registerApp);
 
-	mainWidget.setLayout(app_layout);
-	mainWidget.resize(app_width, app_height);
-	mainWidget.show();
+	stack1.addWidget(&stack1.loginApp);
+	stack1.addWidget(&stack1.registerApp);
+
+	stack1.setCurrentIndex(0);
+
+	// stack1.addtoLayout();
+	stack1.mainWidget.setLayout(stack1.appLayout);
+
+	stack1.mainWidget.setWindowTitle("League Manager");
+    stack1.mainWidget.resize(app_width*3/2, app_height*3/2);
+    stack1.mainWidget.show();
 
     return app.exec();
 }

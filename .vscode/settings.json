@@ -80,7 +80,10 @@
 		"qwidget": "cpp",
 		"qvboxlayout": "cpp",
 		"qdebug": "cpp",
-		"qlineedit": "cpp"
+		"qlineedit": "cpp",
+		"qpushbutton": "cpp",
+		"qstackedwidget": "cpp",
+		"qlabel": "cpp"
 	}
 } // {
 // {

@@ -1,6 +1,6 @@
 #include "LoginUI.h"
 
-void initLogin(QWidget* window) {
+void initLogin(StackedWidgets *App, QWidget* window) {
 
 	window->setWindowTitle("Sign in");
 
@@ -29,12 +29,8 @@ void initLogin(QWidget* window) {
 
     // Login Text Widget
     LoginText *login_text = new LoginText();
-    login_text->init(window, "Login");
+    login_text->init(window, "Register");
     QLabel *login_label = login_text->getWidget_label();
-
-	// LoginText *login_mode_text = new LoginText();
-	// login_mode_text->init(window, "Sign in", default_font_size-10);
-	// QLabel *change_mode_label = login_mode_text->getWidget_label();
 
     // Submit Button Widget
     LoginButton *button = new LoginButton();
@@ -43,17 +39,22 @@ void initLogin(QWidget* window) {
 
     // Submit Button Widget
 	LoginButton *signin_button = new LoginButton();
-    signin_button->init(window, "Sign in", default_font_size-5);
+    signin_button->init(window, "Already have an account? Sign in", default_font_size-5);
     QPushButton *signin_button_widget = signin_button->getWidget_button();
 	signin_button_widget->setCursor(Qt::PointingHandCursor);
 	signin_button_widget->setStyleSheet("QPushButton{text-decoration:underline;border:none;}");
-	
 
     // Submit Button Container Widget (Made so the Submit Button Widget could be centered as a Widget)
     QWidget *button_container = new QWidget(window);
     QHBoxLayout *button_container_layout = new QHBoxLayout(button_container);
     button_container_layout->setAlignment(Qt::AlignCenter);
-    button_container_layout->setContentsMargins(app_width/4, app_height / 10, 0, 0);
+    button_container_layout->setContentsMargins(0, app_height / 10, 0, 0);
+	
+	QWidget *signin_button_container = new QWidget(window);
+    QHBoxLayout *signin_button_container_layout = new QHBoxLayout(signin_button_container);
+    signin_button_container_layout->setAlignment(Qt::AlignCenter);
+    signin_button_container_layout->setContentsMargins(0, app_height / 10, 0, 0);
+    signin_button_widget->setFixedSize(QSize(app_width / 2, app_height / 32));
 
     // Initialization of Widget Components
     WidgetComponent *username_component = new WidgetComponent();
@@ -80,7 +81,7 @@ void initLogin(QWidget* window) {
 
     // Addition of Submit Button Widget to the Submit Button Container Widget
     button_container_layout->addWidget(button_widget);
-	button_container_layout->addWidget(signin_button_widget);
+	signin_button_container_layout->addWidget(signin_button_widget);
 
     // Addition of sub-widgets to the main Widget
     textbox_widget_layout->addWidget(login_label);
@@ -88,12 +89,14 @@ void initLogin(QWidget* window) {
     textbox_widget_layout->addWidget(email_widget);
     textbox_widget_layout->addWidget(password_widget);
     textbox_widget_layout->addWidget(button_container);
+	textbox_widget_layout->addWidget(signin_button_container);
 	// textbox_widget_layout->addWidget(change_mode_label);
 
 	// Connection of submit button with username, email and password text fields
     QObject::connect(button_widget, &QPushButton::clicked, username_component, &WidgetComponent::updateEditText);
     QObject::connect(button_widget, &QPushButton::clicked, email_component, &WidgetComponent::updateEditText);
     QObject::connect(button_widget, &QPushButton::clicked, password_component, &WidgetComponent::updateEditText);
+	QObject::connect(signin_button_widget, &QPushButton::clicked, App, &StackedWidgets::changeWindow_forward);
 
     // Layout of the main UI
     QVBoxLayout *main_layout = new QVBoxLayout(window);
@@ -115,9 +118,9 @@ void initLogin(QWidget* window) {
 	// window_2.show();
 }
 
-void initLogin(QWidget* window) {
+void initRegister(StackedWidgets *App, QWidget* window) {
 
-	window->setWindowTitle("Sign in");
+	window->setWindowTitle("Sign up");
 
     // Main Widget
     QWidget *textbox_widget = new QWidget(window);
@@ -148,7 +151,7 @@ void initLogin(QWidget* window) {
 
     // Submit Button Widget
 	LoginButton *signin_button = new LoginButton();
-    signin_button->init(window, "Sign in", default_font_size-5);
+    signin_button->init(window, "Don't already have an account? Sign up", default_font_size-5);
     QPushButton *signin_button_widget = signin_button->getWidget_button();
 	signin_button_widget->setCursor(Qt::PointingHandCursor);
 	signin_button_widget->setStyleSheet("QPushButton{text-decoration:underline;border:none;}");
@@ -157,7 +160,13 @@ void initLogin(QWidget* window) {
     QWidget *button_container = new QWidget(window);
     QHBoxLayout *button_container_layout = new QHBoxLayout(button_container);
     button_container_layout->setAlignment(Qt::AlignCenter);
-    button_container_layout->setContentsMargins(app_width/4, app_height / 10, 0, 0);
+    button_container_layout->setContentsMargins(0, app_height / 10, 0, 0);
+	
+	QWidget *signin_button_container = new QWidget(window);
+    QHBoxLayout *signin_button_container_layout = new QHBoxLayout(signin_button_container);
+    signin_button_container_layout->setAlignment(Qt::AlignCenter);
+    signin_button_container_layout->setContentsMargins(0, app_height / 10, 0, 0);
+    signin_button_widget->setFixedSize(QSize(app_width / 2, app_height / 32));
 
     // Initialization of Widget Components
     WidgetComponent *username_component = new WidgetComponent();
@@ -179,36 +188,22 @@ void initLogin(QWidget* window) {
 
     // Addition of Submit Button Widget to the Submit Button Container Widget
     button_container_layout->addWidget(button_widget);
-	button_container_layout->addWidget(signin_button_widget);
+	signin_button_container_layout->addWidget(signin_button_widget);
 
     // Addition of sub-widgets to the main Widget
     textbox_widget_layout->addWidget(login_label);
     textbox_widget_layout->addWidget(username_widget);
     textbox_widget_layout->addWidget(password_widget);
     textbox_widget_layout->addWidget(button_container);
+	textbox_widget_layout->addWidget(signin_button_container);
 	// textbox_widget_layout->addWidget(change_mode_label);
-
-	// Connection of submit button with username, email and password text fields
-    QObject::connect(button_widget, &QPushButton::clicked, username_component, &WidgetComponent::updateEditText);
-    QObject::connect(button_widget, &QPushButton::clicked, email_component, &WidgetComponent::updateEditText);
-    QObject::connect(button_widget, &QPushButton::clicked, password_component, &WidgetComponent::updateEditText);
+	// Connection of submit button with username and password text fields
+    QObject::connect(button_widget, &QPushButton::clicked, username_component, &WidgetComponent::updateEditText);    QObject::connect(button_widget, &QPushButton::clicked, password_component, &WidgetComponent::updateEditText);
+	QObject::connect(signin_button_widget, &QPushButton::clicked, App, &StackedWidgets::changeWindow_backward);
 
     // Layout of the main UI
     QVBoxLayout *main_layout = new QVBoxLayout(window);
     main_layout->addWidget(textbox_widget);
     main_layout->setAlignment(Qt::AlignCenter);
     window->setLayout(main_layout);
-
-	// QWidget window_2;
-	// window_2.setParent(window);
-
-	// LoginText *register_text = new LoginText();
-    // register_text->init(&window_2);
-    // QLabel *register_label = login_text->getWidget_label();
-
-	// QObject::connect(signin_button_widget, &QPushButton::clicked, signin_button, &LoginButton::changeMode);
-	// QObject::connect(signin_button_widget, &QPushButton::clicked, login_text, &LoginText::changeText);
-
-	// window->setWindowTitle("Register");
-	// window_2.show();
 }
