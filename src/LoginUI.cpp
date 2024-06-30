@@ -3,8 +3,6 @@
 #include <QtCore/QDebug>
 #include <iostream>
 
-extern int app_width, app_height, default_font_size;
-
 void LoginUI::init(QWidget* parent) {
     QSize widget_size(app_width, app_height / 10);
 
@@ -23,32 +21,46 @@ QHBoxLayout* LoginUI::getHLayout() {
     return login_layout;
 }
 
-void LoginHead::init(QWidget* parent) {
+void LoginText::init(QWidget* parent, QString text, int font_size) {
     login_text = new QLabel(parent);
-    login_text->setFont(QFont("Sans", default_font_size));
-    login_text->setText("Register");
+    login_text->setFont(QFont("Sans", font_size));
+    login_text->setText(text);
     login_text->setAlignment(Qt::AlignCenter);
     login_text->setMargin(60);
 }
 
-QLabel* LoginHead::getWidget_label() {
+QLabel* LoginText::getWidget_label() {
     return login_text;
 }
 
-void LoginFoot::init(QWidget* parent) {
+// void LoginText::changeText(){
+// 	if(login_text->text() == QString("Login"))
+// 	{
+// 		login_text->setText("Register");
+// 	}
+// 	else
+// 	{
+// 		login_text->setText("Login");
+// 	}
+// }
+
+void LoginButton::init(QWidget* parent, QString text, int font_size) {
     button_widget = new QPushButton(parent);
-    button_widget->setText("Submit");
-    button_widget->setFont(QFont("Sans", default_font_size - 12));
+    button_widget->setText(text);
+    button_widget->setFont(QFont("Sans", font_size - 12));
     button_widget->setFixedSize(QSize(app_width / 4, app_height / 16));
 }
 
-QPushButton* LoginFoot::getWidget_button() {
+QPushButton* LoginButton::getWidget_button() {
     return button_widget;
 }
 
-WidgetComponent::WidgetComponent(QObject *parent)
-    : QObject(parent), widget_label(nullptr), widget_edit(nullptr) {
-}
+// void LoginButton::changeMode(){
+// 	if(button_widget->text() == QString("Sign in"))
+// 		button_widget->setText("Sign up");
+// 	else
+// 		button_widget->setText("Sign in");
+// }
 
 void WidgetComponent::init(QWidget* parent, QString widget_text) {
     widget_label = new QLabel(parent);
@@ -74,7 +86,11 @@ QLineEdit* WidgetComponent::getWidget_edit() {
     return widget_edit;
 }
 
-void WidgetComponent::getEditText() {
-    QString text = widget_edit->text();
-    std::cout << "Entered text: " << text.toStdString() << std::endl;
+QString WidgetComponent::getEditText(){
+	return field_text;
+}
+
+void WidgetComponent::updateEditText() {
+    field_text = widget_edit->text();
+	std::cout<<"Hello"<<std::endl;
 }

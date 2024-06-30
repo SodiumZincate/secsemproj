@@ -2,4 +2,5 @@ cbuild.exe
 bin
 *.o
 cbuild
-.qmake
+.qmake.stash
+*.moc.cpp

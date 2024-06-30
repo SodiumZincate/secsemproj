@@ -61,6 +61,7 @@ void build(char** argv) {
 		.src({
 			"src/LoginUI.cpp",
 			"src/main.cpp",
+			"src/loginWidget.cpp"
 		})
 		.moc_src({
 			"src/LoginUI.h"
