@@ -18,8 +18,6 @@ public:
 	QWidget mainWidget;
 	QHBoxLayout *appLayout;
     QStackedWidget stacked_windows;
-	QWidget loginApp;
-	QWidget registerApp;
 	StackedWidgets(){
     	appLayout = new QHBoxLayout(&mainWidget);
 		appLayout->addWidget(&stacked_windows);
