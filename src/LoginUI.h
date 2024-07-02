@@ -7,6 +7,7 @@
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QStackedWidget>
+#include <QtWidgets/QToolButton>
 #include <iostream>
 
 extern int default_font_size;
@@ -77,4 +78,5 @@ public:
 	QString getEditText();
 public slots:
     void updateEditText();
+	void togglePasswordVisibility(QPushButton*);
 };

@@ -27,6 +27,12 @@ void initLogin(StackedWidgets *App, QWidget* window) {
     QWidget *password_widget = password->getWidget();
     QHBoxLayout *password_layout = password->getHLayout();
 
+	//Retype Password Widget
+	LoginUI *retype_password = new LoginUI();
+    retype_password->init(window);
+    QWidget *retype_password_widget = retype_password->getWidget();
+    QHBoxLayout *retype_password_layout = retype_password->getHLayout();
+
     // Login Text Widget
     LoginText *login_text = new LoginText();
     login_text->init(window, "Register");
@@ -60,13 +66,37 @@ void initLogin(StackedWidgets *App, QWidget* window) {
     WidgetComponent *username_component = new WidgetComponent();
     WidgetComponent *email_component = new WidgetComponent();
     WidgetComponent *password_component = new WidgetComponent();
+	WidgetComponent *retype_password_component = new WidgetComponent();
 
     username_component->init(username_widget, "Username");
     email_component->init(email_widget, "Email");
+
     password_component->init(password_widget, "Password");
-    // Hiding text input on Password Field
+	password_component->getWidget_edit()->setPlaceholderText("Enter Password");
+	// Hiding text input on Password Field
     password_component->getWidget_edit()->setEchoMode(QLineEdit::Password);
 
+    retype_password_component->init(retype_password_widget, "Password");
+	retype_password_component->getWidget_edit()->setPlaceholderText("Confirm Password");
+	// Hiding text input on Password Field
+    retype_password_component->getWidget_edit()->setEchoMode(QLineEdit::Password);
+	
+	QPushButton *showButton = new QPushButton(password_component->getWidget_edit());
+	showButton->setIcon(QIcon("requisite/assets/images/eye_shown.png"));
+	showButton->setFixedHeight(password_component->getWidget_edit()->height()/2);
+	QObject::connect(showButton, &QPushButton::clicked, 
+    	[password_component, showButton]() {
+			password_component->togglePasswordVisibility(showButton);
+			});
+
+	QPushButton *showRetypeButton = new QPushButton(retype_password_component->getWidget_edit());
+	showRetypeButton->setIcon(QIcon("requisite/assets/images/eye_shown.png"));
+	showRetypeButton->setFixedHeight(retype_password_component->getWidget_edit()->height()/2);
+	QObject::connect(showRetypeButton, &QPushButton::clicked, 
+    	[retype_password_component, showRetypeButton]() {
+			retype_password_component->togglePasswordVisibility(showRetypeButton);
+			});
+	
     // Addition of Username Label and Text Box to Username Widget
     username_layout->addWidget(username_component->getWidget_label());
     username_layout->addWidget(username_component->getWidget_edit());
@@ -78,6 +108,11 @@ void initLogin(StackedWidgets *App, QWidget* window) {
     // Addition of Password Label and Text Box to Password Widget
     password_layout->addWidget(password_component->getWidget_label());
     password_layout->addWidget(password_component->getWidget_edit());
+	password_layout->addWidget(showButton);
+
+	retype_password_layout->addWidget(retype_password_component->getWidget_label());
+	retype_password_layout->addWidget(retype_password_component->getWidget_edit());
+	retype_password_layout->addWidget(showRetypeButton);
 
     // Addition of Submit Button Widget to the Submit Button Container Widget
     button_container_layout->addWidget(button_widget);
@@ -88,6 +123,7 @@ void initLogin(StackedWidgets *App, QWidget* window) {
     textbox_widget_layout->addWidget(username_widget);
     textbox_widget_layout->addWidget(email_widget);
     textbox_widget_layout->addWidget(password_widget);
+	textbox_widget_layout->addWidget(retype_password_widget);
     textbox_widget_layout->addWidget(button_container);
 	textbox_widget_layout->addWidget(signin_button_container);
 	// textbox_widget_layout->addWidget(change_mode_label);
@@ -175,8 +211,16 @@ void initRegister(StackedWidgets *App, QWidget* window) {
 
     username_component->init(username_widget, "Username");
     password_component->init(password_widget, "Password");
-    // Hiding text input on Password Field
+	// Hiding text input on Password Field
     password_component->getWidget_edit()->setEchoMode(QLineEdit::Password);
+
+	QPushButton *showButton = new QPushButton(password_component->getWidget_edit());
+	showButton->setIcon(QIcon("requisite/assets/images/eye_shown.png"));
+	showButton->setFixedHeight(password_component->getWidget_edit()->height()/2);
+	QObject::connect(showButton, &QPushButton::clicked, 
+    	[password_component, showButton]() {
+			password_component->togglePasswordVisibility(showButton);
+			});
 
     // Addition of Username Label and Text Box to Username Widget
     username_layout->addWidget(username_component->getWidget_label());
@@ -185,6 +229,7 @@ void initRegister(StackedWidgets *App, QWidget* window) {
     // Addition of Password Label and Text Box to Password Widget
     password_layout->addWidget(password_component->getWidget_label());
     password_layout->addWidget(password_component->getWidget_edit());
+    password_layout->addWidget(showButton);
 
     // Addition of Submit Button Widget to the Submit Button Container Widget
     button_container_layout->addWidget(button_widget);
