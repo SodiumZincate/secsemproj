@@ -27,12 +27,14 @@ int main(int argc, char *argv[]) {
     app_height = screenHeight / 2;
 
 	StackedWidgets stack1;
+	QWidget loginApp;
+	QWidget registerApp;
 
-	initLogin(&stack1, &stack1.loginApp);
-	initRegister(&stack1, &stack1.registerApp);
+	initLogin(&stack1, &loginApp);
+	initRegister(&stack1, &registerApp);
 
-	stack1.addWidget(&stack1.loginApp);
-	stack1.addWidget(&stack1.registerApp);
+	stack1.addWidget(&loginApp);
+	stack1.addWidget(&registerApp);
 
 	stack1.setCurrentIndex(0);
 
@@ -40,6 +42,7 @@ int main(int argc, char *argv[]) {
 	stack1.mainWidget.setLayout(stack1.appLayout);
 
 	stack1.mainWidget.setWindowTitle("League Manager");
+	stack1.mainWidget.setFont(QFont("Sans", default_font_size - 12));
     stack1.mainWidget.resize(app_width*3/2, app_height*3/2);
     stack1.mainWidget.show();
 

@@ -81,5 +81,17 @@ QString WidgetComponent::getEditText(){
 
 void WidgetComponent::updateEditText() {
     field_text = widget_edit->text();
-	std::cout<<"Hello"<<std::endl;
+	qDebug(qUtf8Printable(field_text));
+}
+
+void WidgetComponent::togglePasswordVisibility(QPushButton *showButton){
+	if(widget_edit->echoMode() == QLineEdit::Password){
+		widget_edit->setEchoMode(QLineEdit::Normal);
+		showButton->setIcon(QIcon("requisite/assets/images/eye_hidden.png"));
+	}
+	else if(widget_edit->echoMode() == QLineEdit::Normal){
+		widget_edit->setEchoMode(QLineEdit::Password);
+		showButton->setIcon(QIcon("requisite/assets/images/eye_shown.png"));
+		
+	}
 }
