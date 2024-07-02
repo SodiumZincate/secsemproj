@@ -80,8 +80,25 @@ QString WidgetComponent::getEditText(){
 }
 
 void WidgetComponent::updateEditText() {
-    field_text = widget_edit->text();
-	qDebug(qUtf8Printable(field_text));
+	if(QString(widget_edit->text()) == ""){
+		widget_edit->setText("");
+		widget_edit->setPlaceholderText("Field can't be empty");
+		widget_edit->setStyleSheet("QLineEdit { placeholder-text-color: #FB3B3B }");
+	}
+}
+
+void WidgetComponent::checkSamePassword(WidgetComponent* retype_password_component) {
+    if(QString(this->widget_edit->text()) == QString(retype_password_component->widget_edit->text())){
+		qDebug(qUtf8Printable(this->widget_edit->text()));
+	}
+	else{
+		this->widget_edit->setText("");
+		this->widget_edit->setPlaceholderText("Passwords don't match");
+		this->widget_edit->setStyleSheet("QLineEdit { placeholder-text-color: #FB3B3B }");
+		retype_password_component->widget_edit->setText("");
+		retype_password_component->widget_edit->setPlaceholderText("Passwords don't match");
+		retype_password_component->widget_edit->setStyleSheet("QLineEdit { placeholder-text-color: #FB3B3B }");
+	}
 }
 
 void WidgetComponent::togglePasswordVisibility(QPushButton *showButton){
