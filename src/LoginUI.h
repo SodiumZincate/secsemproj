@@ -76,7 +76,8 @@ public:
     QLabel* getWidget_label();
     QLineEdit* getWidget_edit();
 	QString getEditText();
-public slots:
-    void updateEditText();
 	void togglePasswordVisibility(QPushButton*);
+    void checkSamePassword(WidgetComponent* password_component);
+public slots:
+	void updateEditText();
 };

@@ -126,12 +126,18 @@ void initLogin(StackedWidgets *App, QWidget* window) {
 	textbox_widget_layout->addWidget(retype_password_widget);
     textbox_widget_layout->addWidget(button_container);
 	textbox_widget_layout->addWidget(signin_button_container);
-	// textbox_widget_layout->addWidget(change_mode_label);
 
 	// Connection of submit button with username, email and password text fields
     QObject::connect(button_widget, &QPushButton::clicked, username_component, &WidgetComponent::updateEditText);
     QObject::connect(button_widget, &QPushButton::clicked, email_component, &WidgetComponent::updateEditText);
     QObject::connect(button_widget, &QPushButton::clicked, password_component, &WidgetComponent::updateEditText);
+    QObject::connect(button_widget, &QPushButton::clicked, retype_password_component, &WidgetComponent::updateEditText);
+
+	QObject::connect(button_widget, &QPushButton::clicked, 
+    	[password_component, retype_password_component]() {
+			password_component->checkSamePassword(retype_password_component);
+			});
+
 	QObject::connect(signin_button_widget, &QPushButton::clicked, App, &StackedWidgets::changeWindow_forward);
 
     // Layout of the main UI
@@ -139,19 +145,6 @@ void initLogin(StackedWidgets *App, QWidget* window) {
     main_layout->addWidget(textbox_widget);
     main_layout->setAlignment(Qt::AlignCenter);
     window->setLayout(main_layout);
-
-	// QWidget window_2;
-	// window_2.setParent(window);
-
-	// LoginText *register_text = new LoginText();
-    // register_text->init(&window_2);
-    // QLabel *register_label = login_text->getWidget_label();
-
-	// QObject::connect(signin_button_widget, &QPushButton::clicked, signin_button, &LoginButton::changeMode);
-	// QObject::connect(signin_button_widget, &QPushButton::clicked, login_text, &LoginText::changeText);
-
-	// window->setWindowTitle("Register");
-	// window_2.show();
 }
 
 void initRegister(StackedWidgets *App, QWidget* window) {
@@ -241,9 +234,10 @@ void initRegister(StackedWidgets *App, QWidget* window) {
     textbox_widget_layout->addWidget(password_widget);
     textbox_widget_layout->addWidget(button_container);
 	textbox_widget_layout->addWidget(signin_button_container);
-	// textbox_widget_layout->addWidget(change_mode_label);
+
 	// Connection of submit button with username and password text fields
-    QObject::connect(button_widget, &QPushButton::clicked, username_component, &WidgetComponent::updateEditText);    QObject::connect(button_widget, &QPushButton::clicked, password_component, &WidgetComponent::updateEditText);
+	QObject::connect(button_widget, &QPushButton::clicked, username_component, &WidgetComponent::updateEditText);
+    QObject::connect(button_widget, &QPushButton::clicked, password_component, &WidgetComponent::updateEditText);
 	QObject::connect(signin_button_widget, &QPushButton::clicked, App, &StackedWidgets::changeWindow_backward);
 
     // Layout of the main UI
