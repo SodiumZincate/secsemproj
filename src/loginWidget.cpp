@@ -1,6 +1,6 @@
 #include "LoginUI.h"
 
-void initLogin(StackedWidgets *App, QWidget* window) {
+void initRegister(StackedWidgets *App, QWidget* window) {
 
 	window->setWindowTitle("Sign in");
 
@@ -138,7 +138,7 @@ void initLogin(StackedWidgets *App, QWidget* window) {
 			password_component->checkSamePassword(retype_password_component);
 			});
 
-	QObject::connect(signin_button_widget, &QPushButton::clicked, App, &StackedWidgets::changeWindow_forward);
+	QObject::connect(signin_button_widget, &QPushButton::clicked, App, &StackedWidgets::changeWindow_backward);
 
     // Layout of the main UI
     QVBoxLayout *main_layout = new QVBoxLayout(window);
@@ -147,7 +147,7 @@ void initLogin(StackedWidgets *App, QWidget* window) {
     window->setLayout(main_layout);
 }
 
-void initRegister(StackedWidgets *App, QWidget* window) {
+void initLogin(StackedWidgets *App, QWidget* window) {
 
 	window->setWindowTitle("Sign up");
 
@@ -238,7 +238,7 @@ void initRegister(StackedWidgets *App, QWidget* window) {
 	// Connection of submit button with username and password text fields
 	QObject::connect(button_widget, &QPushButton::clicked, username_component, &WidgetComponent::updateEditText);
     QObject::connect(button_widget, &QPushButton::clicked, password_component, &WidgetComponent::updateEditText);
-	QObject::connect(signin_button_widget, &QPushButton::clicked, App, &StackedWidgets::changeWindow_backward);
+	QObject::connect(signin_button_widget, &QPushButton::clicked, App, &StackedWidgets::changeWindow_forward);
 
     // Layout of the main UI
     QVBoxLayout *main_layout = new QVBoxLayout(window);
