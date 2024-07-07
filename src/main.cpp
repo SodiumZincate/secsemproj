@@ -2,7 +2,7 @@
 #include <QtGui/QScreen>
 #include <QtWidgets/QStackedWidget>
 #include <QtWidgets/QHBoxLayout>
-#include "LoginUI.h"
+#include "loginUI.h"
 
 int app_height = 0;
 int app_width = 0;

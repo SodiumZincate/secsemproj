@@ -59,12 +59,12 @@ void build(char** argv) {
 			"Qt6Gui",
 		})
 		.src({
-			"src/LoginUI.cpp",
+			"src/loginUI.cpp",
 			"src/main.cpp",
 			"src/loginWidget.cpp"
 		})
 		.moc_src({
-			"src/LoginUI.h"
+			"src/loginUI.h"
 		})
 		.build_moc()  // Generate .moc.cpp files
         .compile()    // Compile all source files

@@ -1,4 +1,4 @@
-#include "LoginUI.h"
+#include "loginUI.h"
 #include <QtWidgets/QVBoxLayout>
 #include <QtCore/QDebug>
 
@@ -109,6 +109,5 @@ void WidgetComponent::togglePasswordVisibility(QPushButton *showButton){
 	else if(widget_edit->echoMode() == QLineEdit::Normal){
 		widget_edit->setEchoMode(QLineEdit::Password);
 		showButton->setIcon(QIcon("requisite/assets/images/eye_shown.png"));
-		
 	}
 }
