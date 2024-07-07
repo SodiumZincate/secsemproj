@@ -50,8 +50,7 @@ public:
     QHBoxLayout* getHLayout();
 };
 
-class LoginText : public QObject{
-	Q_OBJECT
+class LoginText {
 private:
     QLabel* login_text;
 public:
