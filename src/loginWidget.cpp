@@ -1,4 +1,4 @@
-#include "LoginUI.h"
+#include "loginUI.h"
 
 void initRegister(StackedWidgets *App, QWidget* window) {
 

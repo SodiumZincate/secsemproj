@@ -58,8 +58,8 @@ public:
     QHBoxLayout* getHLayout();    // Method to retrieve the horizontal layout
 };
 
-// Class representing a labeled text component in the login UI
-class LoginText {
+class LoginText : public QObject{
+	Q_OBJECT
 private:
     QLabel* login_text;    // Label widget for displaying text in the login UI
 public:

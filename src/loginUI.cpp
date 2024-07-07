@@ -1,6 +1,6 @@
-#include "LoginUI.h"   // Include header file for LoginUI class
-#include <QtWidgets/QVBoxLayout>   // Include necessary Qt widgets module
-#include <QtCore/QDebug>   // Include necessary Qt core module for debugging
+#include "loginUI.h"
+#include <QtWidgets/QVBoxLayout>
+#include <QtCore/QDebug>
 
 void StackedWidgets::changeWindow_forward() {
     setCurrentIndex(stacked_windows.currentIndex()+1);   // Move to the next widget in the stacked windows
@@ -107,7 +107,7 @@ void WidgetComponent::togglePasswordVisibility(QPushButton *showButton){
 		showButton->setIcon(QIcon("requisite/assets/images/eye_hidden.png"));   // Set icon for hiding password
 	}
 	else if(widget_edit->echoMode() == QLineEdit::Normal){
-		widget_edit->setEchoMode(QLineEdit::Password);   // Hide password
-		showButton->setIcon(QIcon("requisite/assets/images/eye_shown.png"));   // Set icon for showing password
+		widget_edit->setEchoMode(QLineEdit::Password);
+		showButton->setIcon(QIcon("requisite/assets/images/eye_shown.png"));
 	}
 }
