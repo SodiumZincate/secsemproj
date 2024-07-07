@@ -13,9 +13,21 @@
 extern int default_font_size;
 extern int app_width, app_height, screenWidth, screenHeight;
 
-/*StackedWidgets acts as a container for multiple widgets (windows), only one of which is visible
-at any time. This is useful for applications with multiple screens, like login and registration,
-which can be swapped in and out as needed.*/
+// Class for stacked widgets to store widgets in a stack
+class StackedWidgets : public QObject{
+	Q_OBJECT // A QT macro that allows the use of slots
+public:
+	QWidget mainWidget;
+	QHBoxLayout *appLayout;
+    QStackedWidget stacked_windows;
+	StackedWidgets(){
+    	appLayout = new QHBoxLayout(&mainWidget);
+		appLayout->addWidget(&stacked_windows);
+	}
+	void addWidget(QWidget* widget){
+		stacked_windows.addWidget(widget);
+	}
+    // void addtoLayout() {
 
 class StackedWidgets : public QObject { // Inherits from QObject, the base class for all Qt objects.
     Q_OBJECT // Macro for enabling Qt's meta-object features, such as signals and slots.
@@ -42,12 +54,13 @@ public slots:
     void changeWindow_backward(); // Slot to change the visible widget to the previous one.
 };
 
-
-// Function prototypes for initializing login and register interfaces within StackedWidgets
+// Functions to initialize Login page
 void initLogin(StackedWidgets *App, QWidget* window);
+// Functions to initialize Register page
 void initRegister(StackedWidgets *App, QWidget* window);
 
-// Class representing the login user interface
+// Main class for the widgets in login/Register page
+// (Username, Email, Password) widgets
 class LoginUI {
 private:
     QWidget *login_widget;    // Widget container for the login UI
@@ -58,6 +71,7 @@ public:
     QHBoxLayout* getHLayout();    // Method to retrieve the horizontal layout
 };
 
+// Class for Head Text and other miscellanous text in login/Register page
 class LoginText {
 private:
     QLabel* login_text;    // Label widget for displaying text in the login UI
@@ -66,17 +80,18 @@ public:
     QLabel* getWidget_label();    // Method to retrieve the label widget
 };
 
-// Class representing a button component in the login UI
-class LoginButton {
+// Class for buttons in login/Register page
+class LoginButton{
 public:
     QPushButton* button_widget;    // Button widget for user interaction
     void init(QWidget*, QString, int font_size = default_font_size);    // Method to initialize the button
     QPushButton* getWidget_button();    // Method to retrieve the button widget
 };
 
-// Class representing a customizable widget component with text and input fields
+// Sub class for the individual input field widgets in login/Register page
+// each object of this class represents a text label and its input field
 class WidgetComponent : public QObject {
-    Q_OBJECT    // Macro for Qt's meta-object system
+    Q_OBJECT // A QT macro that allows the use of slots
 private:
     QString field_text;    // Text stored within the widget component
     QLabel *widget_label;    // Label widget for displaying text

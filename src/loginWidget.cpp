@@ -56,6 +56,7 @@ void initRegister(StackedWidgets *App, QWidget* window) {
     button_container_layout->setAlignment(Qt::AlignCenter);
     button_container_layout->setContentsMargins(0, app_height / 10, 0, 0);
 	
+	// Submit Button Container Widget (Made so the Submit Button Widget could be centered as a Widget)
 	QWidget *signin_button_container = new QWidget(window);
     QHBoxLayout *signin_button_container_layout = new QHBoxLayout(signin_button_container);
     signin_button_container_layout->setAlignment(Qt::AlignCenter);
@@ -81,6 +82,7 @@ void initRegister(StackedWidgets *App, QWidget* window) {
 	// Hiding text input on Password Field
     retype_password_component->getWidget_edit()->setEchoMode(QLineEdit::Password);
 	
+	// Widget for showing and hiding password field
 	QPushButton *showButton = new QPushButton(password_component->getWidget_edit());
 	showButton->setIcon(QIcon("requisite/assets/images/eye_shown.png"));
 	showButton->setFixedHeight(password_component->getWidget_edit()->height()/2);
@@ -89,6 +91,7 @@ void initRegister(StackedWidgets *App, QWidget* window) {
 			password_component->togglePasswordVisibility(showButton);
 			});
 
+	// Widget for showing and hiding retype password field
 	QPushButton *showRetypeButton = new QPushButton(retype_password_component->getWidget_edit());
 	showRetypeButton->setIcon(QIcon("requisite/assets/images/eye_shown.png"));
 	showRetypeButton->setFixedHeight(retype_password_component->getWidget_edit()->height()/2);
@@ -133,11 +136,13 @@ void initRegister(StackedWidgets *App, QWidget* window) {
     QObject::connect(button_widget, &QPushButton::clicked, password_component, &WidgetComponent::updateEditText);
     QObject::connect(button_widget, &QPushButton::clicked, retype_password_component, &WidgetComponent::updateEditText);
 
+	// Connection for checking same password in both password fields
 	QObject::connect(button_widget, &QPushButton::clicked, 
     	[password_component, retype_password_component]() {
 			password_component->checkSamePassword(retype_password_component);
 			});
 
+	// Connection for changing pages
 	QObject::connect(signin_button_widget, &QPushButton::clicked, App, &StackedWidgets::changeWindow_backward);
 
     // Layout of the main UI
@@ -238,6 +243,8 @@ void initLogin(StackedWidgets *App, QWidget* window) {
 	// Connection of submit button with username and password text fields
 	QObject::connect(button_widget, &QPushButton::clicked, username_component, &WidgetComponent::updateEditText);
     QObject::connect(button_widget, &QPushButton::clicked, password_component, &WidgetComponent::updateEditText);
+
+	// Connection for checking same password in both password fields
 	QObject::connect(signin_button_widget, &QPushButton::clicked, App, &StackedWidgets::changeWindow_forward);
 
     // Layout of the main UI

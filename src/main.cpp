@@ -30,12 +30,14 @@ int main(int argc, char *argv[]) {
 	QWidget loginApp;
 	QWidget registerApp;
 
+	// Initializa login and register pages
 	initLogin(&stack1, &loginApp);
 	initRegister(&stack1, &registerApp);
 
 	stack1.addWidget(&loginApp);
 	stack1.addWidget(&registerApp);
 
+	// Set initial page to login page
 	stack1.setCurrentIndex(0);
 
 	// stack1.addtoLayout();
