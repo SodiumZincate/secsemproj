@@ -13,8 +13,9 @@
 extern int default_font_size;
 extern int app_width, app_height, screenWidth, screenHeight;
 
+// Class for stacked widgets to store widgets in a stack
 class StackedWidgets : public QObject{
-	Q_OBJECT
+	Q_OBJECT // A QT macro that allows the use of slots
 public:
 	QWidget mainWidget;
 	QHBoxLayout *appLayout;
@@ -37,9 +38,13 @@ public:
 		void changeWindow_backward();
 };
 
+// Functions to initialize Login page
 void initLogin(StackedWidgets *App, QWidget* window);
+// Functions to initialize Register page
 void initRegister(StackedWidgets *App, QWidget* window);
 
+// Main class for the widgets in login/Register page
+// (Username, Email, Password) widgets
 class LoginUI {
 private:
     QWidget *login_widget;
@@ -50,6 +55,7 @@ public:
     QHBoxLayout* getHLayout();
 };
 
+// Class for Head Text and other miscellanous text in login/Register page
 class LoginText {
 private:
     QLabel* login_text;
@@ -58,6 +64,7 @@ public:
     QLabel* getWidget_label();
 };
 
+// Class for buttons in login/Register page
 class LoginButton{
 public:
     QPushButton* button_widget;
@@ -65,8 +72,10 @@ public:
     QPushButton* getWidget_button();
 };
 
+// Sub class for the individual input field widgets in login/Register page
+// each object of this class represents a text label and its input field
 class WidgetComponent : public QObject {
-    Q_OBJECT
+    Q_OBJECT // A QT macro that allows the use of slots
 private:
 	QString field_text;
     QLabel *widget_label;
