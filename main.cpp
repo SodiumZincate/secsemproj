@@ -4,6 +4,10 @@
 
 using namespace std;
 
+// Callback function is called for each row
+// data = database, argc = no. of columns in a row,
+// argv = array of strings where each string is the value of a column in the row
+// azcolName = array of strings where each string is the name of the column
 static int callback(void* data, int argc, char **argv, char** azcolName){
 	int i;
 	for(i=0; i<argc; i++){
@@ -31,7 +35,7 @@ int main(int argc, const char* argvp[])
 	stringstream ss1;
 	ss1 << "CREATE TABLE DATA"
 		<< "("
-		<< "SN INT PRIMARY KEY NOT NULL,"
+		<< "LID INT PRIMARY KEY NOT NULL,"
 		<< "USERNAME TEXT NOT NULL,"
 		<< "EMAIL TEXT NOT NULL,"
 		<< "PASSWORD TEXT NOT NULL"
@@ -63,12 +67,14 @@ int main(int argc, const char* argvp[])
 	query(db);
 
 	stringstream ss2;
+	int LID = 1;
+	string username = "Prasiddha", email = "prasiddhapokh@gmail.com", password = "12345678";
 	ss2 << "INSERT INTO DATA VALUES"
 	<< "("
-	<< "1,"
-	<< "'Prasiddha',"
-	<< "'prasiddhapokh@gmail.com',"
-	<< "'12345678'"
+	<< LID << ","
+	<< "'" << username << "',"
+	<< "'" << email << "',"
+	<< "'" << password << "'"
 	<< ")";
 
 	string sqlInsert = ss2.str();
@@ -88,7 +94,7 @@ int main(int argc, const char* argvp[])
 	stringstream ss3;
 	ss3 << "DELETE FROM DATA WHERE USERNAME"
 	<< "="
-	<< "'Prasiddha'";
+	<< "'" << username << "'";
 
 	string sqlDelete = ss3.str();
 	exit = sqlite3_exec(db, sqlDelete.c_str(), NULL, 0, &errMsg);
