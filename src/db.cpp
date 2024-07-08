@@ -3,7 +3,7 @@
 using namespace std;
 
 int updateDatabase(string clientReq, string mode, stringstream &clientRes) {
-	httplib::Client cli("0.0.0.0", 8080);
+	httplib::Client cli("localhost", 8080);
 	
 	if (strcmp(mode.c_str(), "insert") == 0){
 		if (auto res = cli.Post("/login/insert?=login.db", clientReq, "text/plain")) {
