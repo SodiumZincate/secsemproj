@@ -81,9 +81,10 @@ QString WidgetComponent::getFieldText(){
 
 void WidgetComponent::updateEditText() {
 	if(QString(widget_edit->text()) == ""){
-		widget_edit->setText("");   // Clear text if empty
-		widget_edit->setPlaceholderText("Field can't be empty");   // Set placeholder text if field is empty
-		widget_edit->setStyleSheet("QLineEdit { placeholder-text-color: #FB3B3B }");   // Set stylesheet for placeholder text color
+		field_text = "";
+		widget_edit->setText("");
+		widget_edit->setPlaceholderText("Field can't be empty");
+		widget_edit->setStyleSheet("QLineEdit { placeholder-text-color: #FB3B3B }");
 	}
 	else{
 		field_text = widget_edit->text();
