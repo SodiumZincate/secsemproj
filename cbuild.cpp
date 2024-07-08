@@ -25,6 +25,7 @@ void copy_dlls() {
 	copy_file("bin/Qt6Core.dll",            "requisite/qt/lib/windows/Qt6Core.dll");
 	copy_file("bin/Qt6Widgets.dll",         "requisite/qt/lib/windows/Qt6Widgets.dll");
 	copy_file("bin/Qt6Gui.dll",             "requisite/qt/lib/windows/Qt6Gui.dll");
+	copy_file("bin/sqlite3.dll",             "requisite/server/lib/windows/sqlite3.dll");
 #elif defined(__linux__)
 	copy_file("bin/libQt6Core.so.6",    "requisite/qt/lib/linux/libQt6Core.so.6");
 	copy_file("bin/libQt6Widgets.so.6", "requisite/qt/lib/linux/libQt6Widgets.so.6");
@@ -41,12 +42,14 @@ void build(char** argv) {
 		})
 		.inc_paths({
 			"requisite/qt/include",
+            "requisite/server/include",
 			"src"
 		})
 
 #ifdef _WIN32
 		.lib_paths({
-			"requisite/qt/lib/windows"
+			"requisite/qt/lib/windows",
+			"requisite/server/lib/windows"
 		})
 #elif defined(__linux__)
 		.lib_paths({
@@ -57,7 +60,8 @@ void build(char** argv) {
 			"Qt6Widgets",
 			"Qt6Core",
 			"Qt6Gui",
-			"sqlite3"
+			"sqlite3",
+            "ws2_32", // Requrired for server
 		})
 		.src({
 			"src/loginUI.cpp",
