@@ -57,7 +57,10 @@ void build(char** argv) {
 			"Qt6Widgets",
 			"Qt6Core",
 			"Qt6Gui",
-			"sqlite3"
+			"sqlite3",
+			#ifdef _WIN32
+            "ws2_32", // Requrired for server
+			#endif
 		})
 		.src({
 			"src/loginUI.cpp",
