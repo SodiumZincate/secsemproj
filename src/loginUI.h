@@ -97,12 +97,12 @@ private:
     QLabel *widget_label;    // Label widget for displaying text
     QLineEdit *widget_edit;    // Line edit widget for user input
 public:
-    void init(QWidget*, QString);    // Method to initialize the widget component
-    QLabel* getWidget_label();    // Method to retrieve the label widget
-    QLineEdit* getWidget_edit();    // Method to retrieve the line edit widget
-    QString getEditText();    // Method to retrieve text entered in the line edit
-    void togglePasswordVisibility(QPushButton*);    // Method to toggle password visibility
-    void checkSamePassword(WidgetComponent* password_component);    // Method to check if passwords match
+    void init(QWidget*, QString);
+    QLabel* getWidget_label();
+    QLineEdit* getWidget_edit();
+	QString getFieldText();
+	void togglePasswordVisibility(QPushButton*);
+    bool checkSamePassword(WidgetComponent* password_component);
 public slots:
     void updateEditText();    // Slot method to update text in the line edit
 };

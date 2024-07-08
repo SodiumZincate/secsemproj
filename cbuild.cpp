@@ -57,11 +57,13 @@ void build(char** argv) {
 			"Qt6Widgets",
 			"Qt6Core",
 			"Qt6Gui",
+			"sqlite3"
 		})
 		.src({
 			"src/loginUI.cpp",
 			"src/main.cpp",
-			"src/loginWidget.cpp"
+			"src/loginWidget.cpp",
+			"src/db.cpp"
 		})
 		.moc_src({
 			"src/loginUI.h"

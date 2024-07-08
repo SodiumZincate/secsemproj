@@ -1,4 +1,5 @@
 #include "loginUI.h"
+#include "db.h"
 
 void initRegister(StackedWidgets *App, QWidget* window) {
 
@@ -136,10 +137,37 @@ void initRegister(StackedWidgets *App, QWidget* window) {
     QObject::connect(button_widget, &QPushButton::clicked, password_component, &WidgetComponent::updateEditText);
     QObject::connect(button_widget, &QPushButton::clicked, retype_password_component, &WidgetComponent::updateEditText);
 
+	// QObject::disconnect(button_widget, &QPushButton::clicked, username_component, &WidgetComponent::updateEditText);
+    // QObject::disconnect(button_widget, &QPushButton::clicked, email_component, &WidgetComponent::updateEditText);
+    // QObject::disconnect(button_widget, &QPushButton::clicked, password_component, &WidgetComponent::updateEditText);
+    // QObject::disconnect(button_widget, &QPushButton::clicked, retype_password_component, &WidgetComponent::updateEditText);
+
 	// Connection for checking same password in both password fields
 	QObject::connect(button_widget, &QPushButton::clicked, 
-    	[password_component, retype_password_component]() {
-			password_component->checkSamePassword(retype_password_component);
+    	[username_component, email_component, password_component, retype_password_component]() {
+			bool isSamePassword = password_component->checkSamePassword(retype_password_component);
+			std::string username_text, email_text, password_text;
+			username_text = (username_component->getFieldText()).toStdString();
+			email_text = (email_component->getFieldText()).toStdString();
+			password_text = (password_component->getFieldText()).toStdString();
+			std::cout << username_text << email_text << password_text << std::endl; 
+
+			if(isSamePassword){
+				if(username_text != "" && email_text != "" && password_text != ""){
+					int errorDatabase = initDatabase(
+						username_text, email_text, password_text
+					);
+					if(errorDatabase!=0){
+						std::cout << "\nError initializing database" << std::endl;
+					}
+				}
+				else{
+					std::cout << "Fields can't be empty" << std::endl;
+				}
+			}
+			else{
+				std::cout << "Passwords do not match" << std::endl;
+			}
 			});
 
 	// Connection for changing pages

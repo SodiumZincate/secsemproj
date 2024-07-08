@@ -75,8 +75,8 @@ QLineEdit* WidgetComponent::getWidget_edit() {
     return widget_edit;   // Return the line edit widget
 }
 
-QString WidgetComponent::getEditText(){
-	return field_text;   // Return the text stored in the widget component
+QString WidgetComponent::getFieldText(){
+	return field_text;
 }
 
 void WidgetComponent::updateEditText() {
@@ -85,19 +85,24 @@ void WidgetComponent::updateEditText() {
 		widget_edit->setPlaceholderText("Field can't be empty");   // Set placeholder text if field is empty
 		widget_edit->setStyleSheet("QLineEdit { placeholder-text-color: #FB3B3B }");   // Set stylesheet for placeholder text color
 	}
+	else{
+		field_text = widget_edit->text();
+	}
 }
 
-void WidgetComponent::checkSamePassword(WidgetComponent* retype_password_component) {
+bool WidgetComponent::checkSamePassword(WidgetComponent* retype_password_component) {
     if(QString(this->widget_edit->text()) == QString(retype_password_component->widget_edit->text())){
-		qDebug(qUtf8Printable(this->widget_edit->text()));   // Print debug message if passwords match
+		qDebug(qUtf8Printable(this->widget_edit->text()));
+		return true;
 	}
 	else{
-		this->widget_edit->setText("");   // Clear text if passwords don't match
-		this->widget_edit->setPlaceholderText("Passwords don't match");   // Set placeholder text for password mismatch
-		this->widget_edit->setStyleSheet("QLineEdit { placeholder-text-color: #FB3B3B }");   // Set stylesheet for placeholder text color
-		retype_password_component->widget_edit->setText("");   // Clear text in retype password component
-		retype_password_component->widget_edit->setPlaceholderText("Passwords don't match");   // Set placeholder text for retype password component
-		retype_password_component->widget_edit->setStyleSheet("QLineEdit { placeholder-text-color: #FB3B3B }");   // Set stylesheet for placeholder text color
+		this->widget_edit->setText("");
+		this->widget_edit->setPlaceholderText("Passwords don't match");
+		this->widget_edit->setStyleSheet("QLineEdit { placeholder-text-color: #FB3B3B }");
+		retype_password_component->widget_edit->setText("");
+		retype_password_component->widget_edit->setPlaceholderText("Passwords don't match");
+		retype_password_component->widget_edit->setStyleSheet("QLineEdit { placeholder-text-color: #FB3B3B }");
+		return false;
 	}
 }
 
