@@ -83,6 +83,7 @@
 		"qlineedit": "cpp",
 		"qpushbutton": "cpp",
 		"qstackedwidget": "cpp",
-		"qlabel": "cpp"
+		"qlabel": "cpp",
+		"csignal": "cpp"
 	}
 }
