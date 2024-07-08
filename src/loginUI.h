@@ -84,9 +84,9 @@ public:
     void init(QWidget*, QString);
     QLabel* getWidget_label();
     QLineEdit* getWidget_edit();
-	QString getEditText();
+	QString getFieldText();
 	void togglePasswordVisibility(QPushButton*);
-    void checkSamePassword(WidgetComponent* password_component);
+    bool checkSamePassword(WidgetComponent* password_component);
 public slots:
 	void updateEditText();
 };
