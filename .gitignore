@@ -4,3 +4,4 @@ bin
 cbuild
 .qmake.stash
 *.moc.cpp
+.vscode/
