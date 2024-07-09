@@ -44,7 +44,7 @@ void initRegister(StackedWidgets *App, QWidget* window) {
     button->init(window, "Submit");
     QPushButton *button_widget = button->getWidget_button();
 
-    // Submit Button Widget
+    // Sign in Button Widget
 	LoginButton *signin_button = new LoginButton();
     signin_button->init(window, "Already have an account? Sign in", default_font_size-5);
     QPushButton *signin_button_widget = signin_button->getWidget_button();
@@ -57,7 +57,6 @@ void initRegister(StackedWidgets *App, QWidget* window) {
     button_container_layout->setAlignment(Qt::AlignCenter);
     button_container_layout->setContentsMargins(0, app_height / 10, 0, 0);
 	
-	// Submit Button Container Widget (Made so the Submit Button Widget could be centered as a Widget)
 	QWidget *signin_button_container = new QWidget(window);
     QHBoxLayout *signin_button_container_layout = new QHBoxLayout(signin_button_container);
     signin_button_container_layout->setAlignment(Qt::AlignCenter);
