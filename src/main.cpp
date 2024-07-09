@@ -28,6 +28,8 @@ int main(int argc, char *argv[]) {
 
     app_width = screenWidth / 2;
     app_height = screenHeight / 2;
+	if(screenWidth < 1800)
+   		int default_font_size = 22;
 
 	StackedWidgets stack1;
 	QWidget loginApp;
