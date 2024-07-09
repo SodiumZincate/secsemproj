@@ -3,76 +3,76 @@
 #include <QtCore/QDebug>
 
 void StackedWidgets::changeWindow_forward() {
-    setCurrentIndex(stacked_windows.currentIndex()+1);   // Move to the next widget in the stacked windows
+    setCurrentIndex(stacked_windows.currentIndex()+1);
 }
 
 void StackedWidgets::changeWindow_backward() {
-    setCurrentIndex(stacked_windows.currentIndex()-1);   // Move to the previous widget in the stacked windows
+    setCurrentIndex(stacked_windows.currentIndex()-1);
 }
 
 void LoginUI::init(QWidget* parent) {
-    QSize widget_size(app_width, app_height / 10);   // Calculate size for the login widget
+    QSize widget_size(app_width, app_height / 10);
 
-    login_widget = new QWidget(parent);   // Create a new QWidget for the login UI
-    login_widget->setFixedSize(widget_size);   // Set fixed size for the login widget
-    login_layout = new QHBoxLayout(login_widget);   // Create a horizontal layout for the login UI
-    login_layout->setAlignment(Qt::AlignLeft);   // Set alignment of the login layout to left 
-    login_layout->setContentsMargins(app_width / 12, 0, 0, 0);   // Set margins for the login layout
+    login_widget = new QWidget(parent);
+    login_widget->setFixedSize(widget_size);
+    login_layout = new QHBoxLayout(login_widget);
+    login_layout->setAlignment(Qt::AlignLeft);
+    login_layout->setContentsMargins(app_width / 12, 0, 0, 0);
 }
 
 QWidget* LoginUI::getWidget() {
-    return login_widget;   // Return the login widget
+    return login_widget;
 }
 
 QHBoxLayout* LoginUI::getHLayout() {
-    return login_layout;   // Return the horizontal layout of the login UI
+    return login_layout;
 }
 
 void LoginText::init(QWidget* parent, QString text, int font_size) {
-    login_text = new QLabel(parent);   // Create a new QLabel for displaying text
-    login_text->setFont(QFont("Sans", font_size));   // Set font and size for the label
-    login_text->setText(text);   // Set text to display in the label
-    login_text->setAlignment(Qt::AlignCenter);   // Set alignment of the text in the label
-    login_text->setMargin(60);   // Set margin around the label
+    login_text = new QLabel(parent);
+    login_text->setFont(QFont("Sans", font_size));
+    login_text->setText(text);
+    login_text->setAlignment(Qt::AlignCenter);
+    login_text->setMargin(60);
 }
 
 QLabel* LoginText::getWidget_label() {
-    return login_text;   // Return the label widget
+    return login_text;
 }
 
 void LoginButton::init(QWidget* parent, QString text, int font_size) {
-    button_widget = new QPushButton(parent);   // Create a new QPushButton for user interaction
-    button_widget->setText(text);   // Set text to display on the button
-    button_widget->setFont(QFont("Sans", font_size - 12));   // Set font and size for the button text
-    button_widget->setFixedSize(QSize(app_width / 4, app_height / 16));   // Set fixed size for the button
+    button_widget = new QPushButton(parent);
+    button_widget->setText(text);
+    button_widget->setFont(QFont("Sans", font_size - 12));
+    button_widget->setFixedSize(QSize(app_width / 4, app_height / 16));
 }
 
 QPushButton* LoginButton::getWidget_button() {
-    return button_widget;   // Return the button widget
+    return button_widget;
 }
 
 void WidgetComponent::init(QWidget* parent, QString widget_text) {
-    widget_label = new QLabel(parent);   // Create a new QLabel for displaying widget text
-    widget_label->setFont(QFont("Sans", default_font_size - 6));   // Set font and size for the label
-    widget_label->setText(widget_text);   // Set text to display in the label
-    widget_label->setAlignment(Qt::AlignLeft);   // Set alignment of the text in the label
-    widget_label->setFixedSize(QSize(app_width / 6, app_height / 10));   // Set fixed size for the label
-    widget_label->setContentsMargins(0, app_height / 40, 0, 0);   // Set margins for the label
+    widget_label = new QLabel(parent);
+    widget_label->setFont(QFont("Sans", default_font_size - 6));
+    widget_label->setText(widget_text);
+    widget_label->setAlignment(Qt::AlignLeft);
+    widget_label->setFixedSize(QSize(app_width / 6, app_height / 10));
+    widget_label->setContentsMargins(0, app_height / 40, 0, 0);
 
-    widget_edit = new QLineEdit(parent);   // Create a new QLineEdit for user input
-    widget_edit->setFixedSize(QSize(app_width * 2 / 3, app_height / 10));   // Set fixed size for the line edit
-    widget_edit->setFont(QFont("Sans", default_font_size - 10));   // Set font and size for the text input
-    widget_edit->setPlaceholderText(widget_text);   // Set placeholder text for the line edit
-    widget_edit->setAlignment(Qt::AlignLeft);   // Set alignment of text in the line edit
-    widget_edit->setTextMargins(20, 0, 0, 5);   // Set text margins for the line edit
+    widget_edit = new QLineEdit(parent);
+    widget_edit->setFixedSize(QSize(app_width * 2 / 3, app_height / 10));
+    widget_edit->setFont(QFont("Sans", default_font_size - 10));
+    widget_edit->setPlaceholderText(widget_text);
+    widget_edit->setAlignment(Qt::AlignLeft);
+    widget_edit->setTextMargins(20, 0, 0, 5);
 }
 
 QLabel* WidgetComponent::getWidget_label() {
-    return widget_label;   // Return the label widget
+    return widget_label;
 }
 
 QLineEdit* WidgetComponent::getWidget_edit() {
-    return widget_edit;   // Return the line edit widget
+    return widget_edit;
 }
 
 QString WidgetComponent::getFieldText(){
@@ -109,8 +109,8 @@ bool WidgetComponent::checkSamePassword(WidgetComponent* retype_password_compone
 
 void WidgetComponent::togglePasswordVisibility(QPushButton *showButton){
 	if(widget_edit->echoMode() == QLineEdit::Password){
-		widget_edit->setEchoMode(QLineEdit::Normal);   // Show password
-		showButton->setIcon(QIcon("requisite/assets/images/eye_hidden.png"));   // Set icon for hiding password
+		widget_edit->setEchoMode(QLineEdit::Normal);
+		showButton->setIcon(QIcon("requisite/assets/images/eye_hidden.png"));
 	}
 	else if(widget_edit->echoMode() == QLineEdit::Normal){
 		widget_edit->setEchoMode(QLineEdit::Password);
