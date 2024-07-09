@@ -171,7 +171,7 @@ void initRegister(StackedWidgets *App, QWidget* window) {
 			});
 
 	// Connection for changing pages
-	QObject::connect(signin_button_widget, &QPushButton::clicked, App, &StackedWidgets::changeWindow_backward);
+	QObject::connect(signin_button_widget, &QPushButton::clicked, App, &StackedWidgets::changeWindow_forward);
 
     // Layout of the main UI
     QVBoxLayout *main_layout = new QVBoxLayout(window);
@@ -273,7 +273,7 @@ void initLogin(StackedWidgets *App, QWidget* window) {
     QObject::connect(button_widget, &QPushButton::clicked, password_component, &WidgetComponent::updateEditText);
 
 	QObject::connect(button_widget, &QPushButton::clicked, 
-	[username_component, password_component]() {
+	[username_component, password_component, App]() {
 		std::string username_text, password_text;
 		username_text = (username_component->getFieldText()).toStdString();
 		password_text = (password_component->getFieldText()).toStdString();
@@ -299,6 +299,7 @@ void initLogin(StackedWidgets *App, QWidget* window) {
 				if(strcmp(username_text.c_str(), streamList[1].c_str())==0 
 				&& strcmp(password_text.c_str(), streamList[3].c_str())==0) {
 					std::cout << "You are logged in" << std::endl;
+					App->changeWindow_forward();
 				}
 				else{
 
@@ -312,7 +313,7 @@ void initLogin(StackedWidgets *App, QWidget* window) {
 		});
 
 	// Connection for checking same password in both password fields
-	QObject::connect(signin_button_widget, &QPushButton::clicked, App, &StackedWidgets::changeWindow_forward);
+	QObject::connect(signin_button_widget, &QPushButton::clicked, App, &StackedWidgets::changeWindow_backward);
 
     // Layout of the main UI
     QVBoxLayout *main_layout = new QVBoxLayout(window);

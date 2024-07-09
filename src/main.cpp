@@ -44,12 +44,12 @@ int main(int argc, char *argv[]) {
 	initRegister(&stack1, &registerApp);
 	initDashboard(&stack1, &dashboardApp);
 
-	stack1.addWidget(&loginApp);
 	stack1.addWidget(&registerApp);
+	stack1.addWidget(&loginApp);
 	stack1.addWidget(&dashboardApp);
 
 	// Set initial page to login page
-	stack1.setCurrentIndex(0);
+	stack1.setCurrentIndex(1);
 
 	// stack1.addtoLayout();
 	stack1.mainWidget.setLayout(stack1.appLayout);
