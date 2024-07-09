@@ -320,3 +320,30 @@ void initLogin(StackedWidgets *App, QWidget* window) {
     main_layout->setAlignment(Qt::AlignCenter);
     window->setLayout(main_layout);
 }
+
+void initDashboard(StackedWidgets *App, QWidget* window){
+	window->setWindowTitle("Sign in");
+
+	QWidget *textbox_widget = new QWidget(window);
+    QVBoxLayout *textbox_widget_layout = new QVBoxLayout(textbox_widget);
+    textbox_widget_layout->setAlignment(Qt::AlignCenter); // Center align the contents
+
+    // Username Widget
+    LoginUI *username = new LoginUI();
+    username->init(window);
+    QWidget *username_widget = username->getWidget();
+    QHBoxLayout *username_layout = username->getHLayout();
+
+	WidgetComponent *username_component = new WidgetComponent();
+	username_component->init(username_widget, "Username");
+
+	username_layout->addWidget(username_component->getWidget_label());
+    username_layout->addWidget(username_component->getWidget_edit());
+
+	textbox_widget_layout->addWidget(username_widget);
+	
+	QVBoxLayout *main_layout = new QVBoxLayout(window);
+    main_layout->addWidget(textbox_widget);
+    main_layout->setAlignment(Qt::AlignCenter);
+    window->setLayout(main_layout);
+}

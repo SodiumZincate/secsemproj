@@ -62,14 +62,15 @@ void build(char** argv) {
 			"Qt6Gui",
 			"sqlite3",
 			#ifdef _WIN32
-            "ws2_32", // Requrired for server
+            "ws2_32", // Requrired for server on windows
 			#endif
 		})
 		.src({
-			"src/loginUI.cpp",
+			// "src/loginUI.cpp",
 			"src/main.cpp",
-			"src/loginWidget.cpp",
-			"src/db.cpp"
+			// "src/practice.cpp"
+			// "src/loginWidget.cpp",
+			// "src/db.cpp"
 		})
 		.moc_src({
 			"src/loginUI.h"
