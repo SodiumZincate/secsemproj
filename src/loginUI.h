@@ -29,29 +29,13 @@ public:
 	}
     // void addtoLayout() {
 
-class StackedWidgets : public QObject { // Inherits from QObject, the base class for all Qt objects.
-    Q_OBJECT // Macro for enabling Qt's meta-object features, such as signals and slots.
-public:
-    QWidget mainWidget; // The main widget container. This is the parent widget for other UI elements.
-    QHBoxLayout *appLayout; // A horizontal layout to arrange widgets within mainWidget.
-    QStackedWidget stacked_windows; // A stack of widgets, where only one widget is visible at a time.
-
-    StackedWidgets() { // Constructor
-        appLayout = new QHBoxLayout(&mainWidget); // Initialize the horizontal layout with mainWidget as its parent.
-        appLayout->addWidget(&stacked_windows); // Add the QStackedWidget to the horizontal layout.
-    }
-
-    void addWidget(QWidget* widget) { // Adds a new widget to the QStackedWidget.
-        stacked_windows.addWidget(widget); // Adds the widget to the stack.
-    }
-
-    void setCurrentIndex(int index) { // Sets the current visible widget by index.
-        stacked_windows.setCurrentIndex(index); // Changes the visible widget in the QStackedWidget to the specified index.
-    }
-
-public slots:
-    void changeWindow_forward(); // Slot to change the visible widget to the next one.
-    void changeWindow_backward(); // Slot to change the visible widget to the previous one.
+    // }
+    void setCurrentIndex(int index) {
+        stacked_windows.setCurrentIndex(index);
+	}
+	public slots:
+		void changeWindow_forward();
+		void changeWindow_backward();
 };
 
 // Functions to initialize Login page
@@ -59,33 +43,35 @@ void initLogin(StackedWidgets *App, QWidget* window);
 // Functions to initialize Register page
 void initRegister(StackedWidgets *App, QWidget* window);
 
+void initDashboard(StackedWidgets *App, QWidget* window);
+
 // Main class for the widgets in login/Register page
 // (Username, Email, Password) widgets
 class LoginUI {
 private:
-    QWidget *login_widget;    // Widget container for the login UI
-    QHBoxLayout *login_layout;    // Horizontal layout for arranging login UI elements
+    QWidget *login_widget;
+    QHBoxLayout *login_layout;
 public:
-    void init(QWidget*);    // Method to initialize the login UI
-    QWidget* getWidget();    // Method to retrieve the login widget
-    QHBoxLayout* getHLayout();    // Method to retrieve the horizontal layout
+    void init(QWidget*);
+    QWidget* getWidget();
+    QHBoxLayout* getHLayout();
 };
 
 // Class for Head Text and other miscellanous text in login/Register page
 class LoginText {
 private:
-    QLabel* login_text;    // Label widget for displaying text in the login UI
+    QLabel* login_text;
 public:
-    void init(QWidget*, QString, int font_size = default_font_size);    // Method to initialize the text label
-    QLabel* getWidget_label();    // Method to retrieve the label widget
+    void init(QWidget*, QString, int font_size = default_font_size);
+    QLabel* getWidget_label();
 };
 
 // Class for buttons in login/Register page
 class LoginButton{
 public:
-    QPushButton* button_widget;    // Button widget for user interaction
-    void init(QWidget*, QString, int font_size = default_font_size);    // Method to initialize the button
-    QPushButton* getWidget_button();    // Method to retrieve the button widget
+    QPushButton* button_widget;
+    void init(QWidget*, QString, int font_size = default_font_size);
+    QPushButton* getWidget_button();
 };
 
 // Sub class for the individual input field widgets in login/Register page
@@ -93,9 +79,9 @@ public:
 class WidgetComponent : public QObject {
     Q_OBJECT // A QT macro that allows the use of slots
 private:
-    QString field_text;    // Text stored within the widget component
-    QLabel *widget_label;    // Label widget for displaying text
-    QLineEdit *widget_edit;    // Line edit widget for user input
+	QString field_text;
+    QLabel *widget_label;
+    QLineEdit *widget_edit;
 public:
     void init(QWidget*, QString);
     QLabel* getWidget_label();
@@ -104,5 +90,5 @@ public:
 	void togglePasswordVisibility(QPushButton*);
     bool checkSamePassword(WidgetComponent* password_component);
 public slots:
-    void updateEditText();    // Slot method to update text in the line edit
+	void updateEditText();
 };

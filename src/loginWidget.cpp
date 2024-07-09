@@ -149,13 +149,13 @@ void initRegister(StackedWidgets *App, QWidget* window) {
 			username_text = (username_component->getFieldText()).toStdString();
 			email_text = (email_component->getFieldText()).toStdString();
 			password_text = (password_component->getFieldText()).toStdString();
-			std::cout << username_text << email_text << password_text << std::endl; 
+
+			std::string clientReq = username_text + "\n" + email_text + "\n" + password_text + "\n"; 
+			std::stringstream clientRes;
 
 			if(isSamePassword){
 				if(username_text != "" && email_text != "" && password_text != ""){
-					int errorDatabase = initDatabase(
-						username_text, email_text, password_text
-					);
+					int errorDatabase = updateDatabase(clientReq, "insert", clientRes);
 					if(errorDatabase!=0){
 						std::cout << "\nError initializing database" << std::endl;
 					}
@@ -270,6 +270,45 @@ void initLogin(StackedWidgets *App, QWidget* window) {
 	// Connection of submit button with username and password text fields
 	QObject::connect(button_widget, &QPushButton::clicked, username_component, &WidgetComponent::updateEditText);
     QObject::connect(button_widget, &QPushButton::clicked, password_component, &WidgetComponent::updateEditText);
+
+	QObject::connect(button_widget, &QPushButton::clicked, 
+	[username_component, password_component]() {
+		std::string username_text, password_text;
+		username_text = (username_component->getFieldText()).toStdString();
+		password_text = (password_component->getFieldText()).toStdString();
+
+		std::string clientReq = username_text + "\n";
+		std::stringstream clientRes;
+		std::string streamLine;
+		std::vector<std::string> streamList;
+
+		if(username_text != "" && password_text != ""){
+			int errorDatabase = updateDatabase(clientReq, "query", clientRes);
+			if(errorDatabase!=0){
+				std::cout << "\nError initializing database" << std::endl;
+			}
+			else{
+				while(getline(clientRes, streamLine, '\n')){
+					streamList.push_back(streamLine);
+					std::cout << "Streamline: " << streamLine << std::endl;
+					std::cout << "Username: " << username_text << std::endl;
+					std::cout << "Password: " << password_text << std::endl;
+					
+				}
+				if(strcmp(username_text.c_str(), streamList[1].c_str())==0 
+				&& strcmp(password_text.c_str(), streamList[3].c_str())==0) {
+					std::cout << "You are logged in" << std::endl;
+				}
+				else{
+
+					std::cout << "Incorrect Credentials" << std::endl;
+				}
+			}
+		}
+		else{
+			std::cout << "Fields can't be empty" << std::endl;
+		}
+		});
 
 	// Connection for checking same password in both password fields
 	QObject::connect(signin_button_widget, &QPushButton::clicked, App, &StackedWidgets::changeWindow_forward);

@@ -3,6 +3,9 @@
 #include <QtWidgets/QStackedWidget>
 #include <QtWidgets/QHBoxLayout>
 #include "loginUI.h"
+#include "loginWidget.cpp"
+#include "loginUI.cpp"
+#include "db.cpp"
 
 int app_height = 0;
 int app_width = 0;
@@ -34,13 +37,16 @@ int main(int argc, char *argv[]) {
 	StackedWidgets stack1;
 	QWidget loginApp;
 	QWidget registerApp;
+	QWidget dashboardApp;
 
 	// Initializa login and register pages
 	initLogin(&stack1, &loginApp);
 	initRegister(&stack1, &registerApp);
+	initDashboard(&stack1, &dashboardApp);
 
 	stack1.addWidget(&loginApp);
 	stack1.addWidget(&registerApp);
+	stack1.addWidget(&dashboardApp);
 
 	// Set initial page to login page
 	stack1.setCurrentIndex(0);
