@@ -75,21 +75,26 @@ QLineEdit* WidgetComponent::getWidget_edit() {
     return widget_edit;
 }
 
-QString WidgetComponent::getEditText(){
+QString WidgetComponent::getFieldText(){
 	return field_text;
 }
 
 void WidgetComponent::updateEditText() {
 	if(QString(widget_edit->text()) == ""){
+		field_text = "";
 		widget_edit->setText("");
 		widget_edit->setPlaceholderText("Field can't be empty");
 		widget_edit->setStyleSheet("QLineEdit { placeholder-text-color: #FB3B3B }");
 	}
+	else{
+		field_text = widget_edit->text();
+	}
 }
 
-void WidgetComponent::checkSamePassword(WidgetComponent* retype_password_component) {
+bool WidgetComponent::checkSamePassword(WidgetComponent* retype_password_component) {
     if(QString(this->widget_edit->text()) == QString(retype_password_component->widget_edit->text())){
 		qDebug(qUtf8Printable(this->widget_edit->text()));
+		return true;
 	}
 	else{
 		this->widget_edit->setText("");
@@ -98,6 +103,7 @@ void WidgetComponent::checkSamePassword(WidgetComponent* retype_password_compone
 		retype_password_component->widget_edit->setText("");
 		retype_password_component->widget_edit->setPlaceholderText("Passwords don't match");
 		retype_password_component->widget_edit->setStyleSheet("QLineEdit { placeholder-text-color: #FB3B3B }");
+		return false;
 	}
 }
 

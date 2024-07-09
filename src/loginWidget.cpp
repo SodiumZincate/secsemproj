@@ -1,4 +1,5 @@
 #include "loginUI.h"
+#include "db.h"
 
 void initRegister(StackedWidgets *App, QWidget* window) {
 
@@ -56,6 +57,7 @@ void initRegister(StackedWidgets *App, QWidget* window) {
     button_container_layout->setAlignment(Qt::AlignCenter);
     button_container_layout->setContentsMargins(0, app_height / 10, 0, 0);
 	
+	// Submit Button Container Widget (Made so the Submit Button Widget could be centered as a Widget)
 	QWidget *signin_button_container = new QWidget(window);
     QHBoxLayout *signin_button_container_layout = new QHBoxLayout(signin_button_container);
     signin_button_container_layout->setAlignment(Qt::AlignCenter);
@@ -81,6 +83,7 @@ void initRegister(StackedWidgets *App, QWidget* window) {
 	// Hiding text input on Password Field
     retype_password_component->getWidget_edit()->setEchoMode(QLineEdit::Password);
 	
+	// Widget for showing and hiding password field
 	QPushButton *showButton = new QPushButton(password_component->getWidget_edit());
 	showButton->setIcon(QIcon("requisite/assets/images/eye_shown.png"));
 	showButton->setFixedHeight(password_component->getWidget_edit()->height()/2);
@@ -89,6 +92,7 @@ void initRegister(StackedWidgets *App, QWidget* window) {
 			password_component->togglePasswordVisibility(showButton);
 			});
 
+	// Widget for showing and hiding retype password field
 	QPushButton *showRetypeButton = new QPushButton(retype_password_component->getWidget_edit());
 	showRetypeButton->setIcon(QIcon("requisite/assets/images/eye_shown.png"));
 	showRetypeButton->setFixedHeight(retype_password_component->getWidget_edit()->height()/2);
@@ -133,11 +137,40 @@ void initRegister(StackedWidgets *App, QWidget* window) {
     QObject::connect(button_widget, &QPushButton::clicked, password_component, &WidgetComponent::updateEditText);
     QObject::connect(button_widget, &QPushButton::clicked, retype_password_component, &WidgetComponent::updateEditText);
 
+	// QObject::disconnect(button_widget, &QPushButton::clicked, username_component, &WidgetComponent::updateEditText);
+    // QObject::disconnect(button_widget, &QPushButton::clicked, email_component, &WidgetComponent::updateEditText);
+    // QObject::disconnect(button_widget, &QPushButton::clicked, password_component, &WidgetComponent::updateEditText);
+    // QObject::disconnect(button_widget, &QPushButton::clicked, retype_password_component, &WidgetComponent::updateEditText);
+
+	// Connection for checking same password in both password fields
 	QObject::connect(button_widget, &QPushButton::clicked, 
-    	[password_component, retype_password_component]() {
-			password_component->checkSamePassword(retype_password_component);
+    	[username_component, email_component, password_component, retype_password_component]() {
+			bool isSamePassword = password_component->checkSamePassword(retype_password_component);
+			std::string username_text, email_text, password_text;
+			username_text = (username_component->getFieldText()).toStdString();
+			email_text = (email_component->getFieldText()).toStdString();
+			password_text = (password_component->getFieldText()).toStdString();
+
+			std::string clientReq = username_text + "\n" + email_text + "\n" + password_text + "\n"; 
+			std::stringstream clientRes;
+
+			if(isSamePassword){
+				if(username_text != "" && email_text != "" && password_text != ""){
+					int errorDatabase = updateDatabase(clientReq, "insert", clientRes);
+					if(errorDatabase!=0){
+						std::cout << "\nError initializing database" << std::endl;
+					}
+				}
+				else{
+					std::cout << "Fields can't be empty" << std::endl;
+				}
+			}
+			else{
+				std::cout << "Passwords do not match" << std::endl;
+			}
 			});
 
+	// Connection for changing pages
 	QObject::connect(signin_button_widget, &QPushButton::clicked, App, &StackedWidgets::changeWindow_backward);
 
     // Layout of the main UI
@@ -238,10 +271,111 @@ void initLogin(StackedWidgets *App, QWidget* window) {
 	// Connection of submit button with username and password text fields
 	QObject::connect(button_widget, &QPushButton::clicked, username_component, &WidgetComponent::updateEditText);
     QObject::connect(button_widget, &QPushButton::clicked, password_component, &WidgetComponent::updateEditText);
+
+	QObject::connect(button_widget, &QPushButton::clicked, 
+	[username_component, password_component]() {
+		std::string username_text, password_text;
+		username_text = (username_component->getFieldText()).toStdString();
+		password_text = (password_component->getFieldText()).toStdString();
+
+		std::string clientReq = username_text + "\n";
+		std::stringstream clientRes;
+		std::string streamLine;
+		std::vector<std::string> streamList;
+
+		if(username_text != "" && password_text != ""){
+			int errorDatabase = updateDatabase(clientReq, "query", clientRes);
+			if(errorDatabase!=0){
+				std::cout << "\nError initializing database" << std::endl;
+			}
+			else{
+				while(getline(clientRes, streamLine, '\n')){
+					streamList.push_back(streamLine);
+					std::cout << "Streamline: " << streamLine << std::endl;
+					std::cout << "Username: " << username_text << std::endl;
+					std::cout << "Password: " << password_text << std::endl;
+					
+				}
+				if(strcmp(username_text.c_str(), streamList[1].c_str())==0 
+				&& strcmp(password_text.c_str(), streamList[3].c_str())==0) {
+					std::cout << "You are logged in" << std::endl;
+				}
+				else{
+
+					std::cout << "Incorrect Credentials" << std::endl;
+				}
+			}
+		}
+		else{
+			std::cout << "Fields can't be empty" << std::endl;
+		}
+		});
+
+	// Connection for checking same password in both password fields
 	QObject::connect(signin_button_widget, &QPushButton::clicked, App, &StackedWidgets::changeWindow_forward);
 
     // Layout of the main UI
     QVBoxLayout *main_layout = new QVBoxLayout(window);
+    main_layout->addWidget(textbox_widget);
+    main_layout->setAlignment(Qt::AlignCenter);
+    window->setLayout(main_layout);
+}
+
+void initDashboard(StackedWidgets *App, QWidget* window){
+	window->setWindowTitle("Dashboard");
+
+	QWidget *textbox_widget = new QWidget(window);
+    QVBoxLayout *textbox_widget_layout = new QVBoxLayout(textbox_widget);
+    textbox_widget_layout->setAlignment(Qt::AlignCenter); // Center align the contents
+
+	LoginText *mainText = new LoginText();
+	mainText->init(window, "LEAGUE MANAGER");
+	QLabel *mainLabel = mainText->getWidget_label();
+
+	LoginText *leagueText = new LoginText();
+	leagueText->init(window, "Your Leagues", default_font_size-4);
+	QLabel *leagueLabel = leagueText->getWidget_label();
+	leagueLabel->setMargin(20);
+
+	LoginButton *button1 = new LoginButton();
+	button1->init(window, "League 1", default_font_size+6);
+	QPushButton *button1_widget = button1->getWidget_button();
+	button1_widget->setCursor(Qt::PointingHandCursor);
+	button1_widget->setStyleSheet("QPushButton{text-decoration:underline;border:none;}");
+
+	LoginButton *button2 = new LoginButton();
+	button2->init(window, "League 2", default_font_size+6);
+	QPushButton *button2_widget = button2->getWidget_button();
+	button2_widget->setCursor(Qt::PointingHandCursor);
+	button2_widget->setStyleSheet("QPushButton{text-decoration:underline;border:none;}");
+
+	LoginButton *leagueButton = new LoginButton();
+	leagueButton->init(window, "Add League", default_font_size+10);
+	QPushButton *leagueButton_widget = leagueButton->getWidget_button();
+	leagueButton_widget->setFixedSize(app_width/4, app_height/12);
+
+	QWidget *button_container = new QWidget(window);
+    QVBoxLayout *button_container_layout = new QVBoxLayout(button_container);
+    button_container_layout->setAlignment(Qt::AlignCenter);
+    button_container_layout->setContentsMargins(0, app_height / 8, 0, 0);
+
+	QWidget *league_button_container = new QWidget(window);
+    QVBoxLayout *league_button_container_layout = new QVBoxLayout(league_button_container);
+    league_button_container_layout->setAlignment(Qt::AlignCenter);
+    league_button_container_layout->setContentsMargins(0, app_height / 5, 0, 0);
+
+	button_container_layout->addWidget(leagueLabel);
+	button_container_layout->addWidget(button1_widget);
+	button_container_layout->addWidget(button2_widget);
+
+	league_button_container_layout->addWidget(leagueButton_widget);
+
+	textbox_widget_layout->addWidget(mainLabel);
+	// textbox_widget_layout->addWidget(leagueLabel);
+	textbox_widget_layout->addWidget(button_container);
+	textbox_widget_layout->addWidget(league_button_container);
+
+	QVBoxLayout *main_layout = new QVBoxLayout(window);
     main_layout->addWidget(textbox_widget);
     main_layout->setAlignment(Qt::AlignCenter);
     window->setLayout(main_layout);
