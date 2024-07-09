@@ -322,7 +322,7 @@ void initLogin(StackedWidgets *App, QWidget* window) {
 }
 
 void initDashboard(StackedWidgets *App, QWidget* window){
-	window->setWindowTitle("Sign in");
+	window->setWindowTitle("Dashboard");
 
 	QWidget *textbox_widget = new QWidget(window);
     QVBoxLayout *textbox_widget_layout = new QVBoxLayout(textbox_widget);
