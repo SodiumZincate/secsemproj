@@ -343,7 +343,7 @@ mainLabel->setFixedHeight(app_height/8);
     leaguetext->init(window,"Your Leagues",default_font_size-3);
     QLabel *leagueLabel_widget= leaguetext->getWidget_label();
     leagueLabel_widget->setMargin(10);
-    leagueLabel_widget->setAlignment(Qt::AlignTop);
+    leagueLabel_widget->setAlignment(Qt::AlignTop | Qt::AlignCenter);
 
 //Back Button
     LoginButton *backButton= new LoginButton();
