@@ -13,7 +13,7 @@ class Team
 {
     //properties of a team that are fixed, initialized
     public:
-    string name;
+    string team_name;
     int team_id;
 
     //properties of a team that are not fixed
@@ -35,7 +35,7 @@ class Team
 
 Team::Team(string a, int b)
 {
-    name = a;
+    team_name = a;
     team_id = b;
 }
 
@@ -115,7 +115,7 @@ void init_teams_array(Team T[], int s)
     int i, j;
     for (i = 0; i < s; i++)
     {
-        T[i].name = "";
+        T[i].team_name = "";
         T[i].team_id = i+1; 
     }
 }
