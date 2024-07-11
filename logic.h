@@ -39,17 +39,17 @@ Team::Team(string name, int id)
     team_id = id;
 }
 
-void Team::update_team_data(int f, int name)
+void Team::update_team_data(int goals_for, int goals_against)
 {
     team_mp++;
 
-    if (f > name)
+    if (goals_for > goals_against)
     {
         team_w++;
         team_points += 3;
     }
     
-    else if (f < name)
+    else if (goals_for < goals_against)
     {
         team_l++;
     }
@@ -60,9 +60,9 @@ void Team::update_team_data(int f, int name)
         team_points += 1;
     }
 
-    team_gf += f;
-    team_ga += name;
-    team_gd += (f - name);
+    team_gf += goals_for;
+    team_ga += goals_against;
+    team_gd += (goals_for - goals_against);
 }
 
 //class for name league
