@@ -8,114 +8,109 @@ using namespace std;
 
 #define MAX_TEAMS 50
 
-//class for a team
+//class for name team
 class Team
 {
-    //properties of a team that are fixed, initialized
+    //properties of name team that are fixed, initialized
     public:
     string team_name;
     int team_id;
 
-    //properties of a team that are not fixed
+    //properties of name team that are not fixed
     public:
-    int mp = 0;
-    int w = 0;
-    int d = 0;
-    int l = 0;
-    int gf = 0;
-    int ga = 0;
-    int gd = 0;
-    int points = 0;
+    int team_mp = 0;
+    int team_w = 0;
+    int team_d = 0;
+    int team_l = 0;
+    int team_gf = 0;
+    int team_ga = 0;
+    int team_gd = 0;
+    int team_points = 0;
 
     public:
     Team();
-    Team(string a, int b); //constructor which initializes name and team id
-    void update_team_data(int f, int a); //function that updates a team data
+    Team(string name, int id); //constructor which initializes name and team id
+    void update_team_data(int goals_for, int goals_against); //function that updates name team data
 };
 
-Team::Team(string a, int b)
+Team::Team(string name, int id)
 {
-    team_name = a;
-    team_id = b;
+    team_name = name;
+    team_id = id;
 }
 
-void Team::update_team_data(int f, int a)
+void Team::update_team_data(int f, int name)
 {
-    mp++;
+    team_mp++;
 
-    if (f > a)
+    if (f > name)
     {
-        w++;
-        points += 3;
+        team_w++;
+        team_points += 3;
     }
     
-    else if (f < a)
+    else if (f < name)
     {
-        l++;
+        team_l++;
     }
 
     else
     {
-        d++;
-        points += 1;
+        team_d++;
+        team_points += 1;
     }
 
-    gf += f;
-    ga += a;
-    gd += (f - a);
+    team_gf += f;
+    team_ga += name;
+    team_gd += (f - name);
 }
 
-//class for a league
+//class for name league
 class League
 {
-    //properties of a team, all fixed, initialized
+    //properties of name team, all fixed, initialized
     public:
-    string name;
+    string league_name;
     int league_id;
-    int group_stages;
-    int round_robin;
-    int qualifiers;
-    int groups;
-    int team_number;
+    int league_group_stages;
+    int league_round_robin;
+    int league_qualifiers;
+    int league_groups;
+    int league_team_number;
 
-    //array of teams for a league
+    //array of teams for name league
     Team T[MAX_TEAMS];
 
     public:
     League();
-    League(string a, int b, int c, int d, int e, int f, int g);  //constructor which initializes all properties
-    void update_league_positions(); //function to update position of teams in a league based on points 
+    League(string name, int id, int gs, int rr, int q, int g, int n);  //constructor which initializes all properties
+    void update_league_positions(); //function to update position of teams in name league based on points 
 };
 
-League::League(string a, int b, int c, int d, int e, int f, int g)
+League::League(string name, int id, int gs, int rr, int q, int g, int n)
 {
-    name = a;
-    league_id = b;
-    group_stages = c;
-    round_robin = d;
-    qualifiers = e;
-    groups = f;
-    team_number = g;
+    league_name = name;
+    league_id = id;
+    league_group_stages = gs;
+    league_round_robin = rr;
+    league_qualifiers = q;
+    league_groups = g;
+    league_team_number = n;
 }
 
 void League::update_league_positions()
 { 
     int i, j; 
-    for (i = 0; i < team_number - 1; i++) 
+    for (i = 0; i < league_team_number - 1; i++) 
 
-        for (j = 0; j < team_number - i - 1; j++) 
+        for (j = 0; j < league_team_number - i - 1; j++) 
 
-            if (T[j].points > T[j + 1].points) 
+            if (T[j].team_points > T[j + 1].team_points) 
                 swap(T[j], T[j + 1]); 
 } 
 
-//function to initialize teams' fixed properties in a league
-void init_teams_array(Team T[], int s)
+//function to initialize teams' fixed properties in name league
+void init_teams_array()
 {
-    int i, j;
-    for (i = 0; i < s; i++)
-    {
-        T[i].team_name = "";
-        T[i].team_id = i+1; 
-    }
+
 }
