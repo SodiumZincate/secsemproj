@@ -8,6 +8,7 @@
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QStackedWidget>
 #include <QtWidgets/QToolButton>
+#include <QtWidgets/QComboBox>
 #include <iostream>
 
 extern int default_font_size;
@@ -44,6 +45,8 @@ void initLogin(StackedWidgets *App, QWidget* window);
 void initRegister(StackedWidgets *App, QWidget* window);
 
 void initDashboard(StackedWidgets *App, QWidget* window);
+
+void initAddLeague(StackedWidgets *App, QWidget* window);
 
 // Main class for the widgets in login/Register page
 // (Username, Email, Password) widgets

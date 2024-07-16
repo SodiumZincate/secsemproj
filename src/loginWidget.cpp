@@ -301,7 +301,6 @@ void initLogin(StackedWidgets *App, QWidget* window) {
 					std::cout << "You are logged in" << std::endl;
 				}
 				else{
-
 					std::cout << "Incorrect Credentials" << std::endl;
 				}
 			}
@@ -351,6 +350,21 @@ mainLabel->setFixedHeight(app_height/8);
     QPushButton *backButton_widget = backButton->getWidget_button();
     backButton_widget->setFixedSize(app_width/8,app_height/12);
 // backButton_widget->setStyleSheet("QPushButton{background-color:green}");
+	
+    //Username text
+ 	/*LoginText *usernameText = new LoginText();
+    usernameText ->init(window,"Username",default_font_size-3);
+    QLabel *usernameText_widget=usernameText->getWidget_label();
+	usernameText_widget->setFixedHeight(app_height/4);
+    usernameText_widget->setAlignment(Qt::AlignRight);*/
+
+
+    LoginText *usernameText = new LoginText();
+    usernameText ->init(window, "username" ,default_font_size-3);
+    QLabel *usernameText_widget=usernameText->getWidget_label();
+    usernameText_widget->setAlignment(Qt::AlignRight);
+    usernameText_widget->setFixedHeight(app_height/4);
+
 
     //League button 1
     LoginButton *button1 =new LoginButton();
@@ -363,7 +377,7 @@ button1_widget->setStyleSheet("QPushButton{text-decoration:underline;border:none
     LoginButton *button2= new LoginButton();
     button2->init(window,"League 2",default_font_size+6);
     QPushButton *button2_widget=button2->getWidget_button();
-     button2_widget->setCursor(Qt::PointingHandCursor);
+	button2_widget->setCursor(Qt::PointingHandCursor);
 button2_widget->setStyleSheet("QPushButton{text-decoration:underline;border:none;}");
 
     LoginButton *leagueButton =new LoginButton();
@@ -371,16 +385,25 @@ button2_widget->setStyleSheet("QPushButton{text-decoration:underline;border:none
     QPushButton *leagueButton_widget=leagueButton->getWidget_button();
     leagueButton_widget->setFixedSize(app_width/4,app_width/14);
 
+	//NavBar
+    QWidget *NavBar = new QWidget(window);
+    QHBoxLayout *NavBar_layout = new QHBoxLayout(NavBar);
+    NavBar->setFixedHeight(app_height/6);
+    NavBar_layout->setContentsMargins(0, 0, 0, 0);
+	//NavBar->setStyleSheet("QWidget{background-color:yellow}");
+
 //Backbutton Container
     QWidget *backButton_container = new QWidget(window);
-// backButton_container->setStyleSheet("QPushButton{background-color:yellow}");
-
-    QVBoxLayout *backButton_container_layout = new QVBoxLayout(backButton_container);
-    backButton_container->setFixedHeight(app_height/8);
-    backButton_container_layout->setAlignment(Qt::AlignTop | Qt::AlignLeft);
+    QHBoxLayout *backButton_container_layout = new QHBoxLayout(backButton_container);
+    backButton_container->setFixedHeight(app_height/6);
+    backButton_container_layout->setAlignment(Qt::AlignLeft);
     backButton_container_layout->setContentsMargins(0, 0, 0, 0);
 
     backButton_container_layout->addWidget(backButton_widget);
+    // backButton_container_layout->addWidget(usernameText_widget, 0, Qt::AlignRight);
+
+	NavBar_layout->addWidget(backButton_container);
+	NavBar_layout->addWidget(usernameText_widget);
 
     //Container for league buttons
     QWidget *button_container = new QWidget(window);
@@ -400,7 +423,7 @@ button2_widget->setStyleSheet("QPushButton{text-decoration:underline;border:none
 
     leagueButton_container_layout->addWidget(leagueButton_widget);
 
-    textbox_widget_layout->addWidget(backButton_container);
+    textbox_widget_layout->addWidget(NavBar);
     textbox_widget_layout->addWidget(mainLabel);
     textbox_widget_layout->addWidget(button_container);
     textbox_widget_layout->addWidget(leagueButton_container);
