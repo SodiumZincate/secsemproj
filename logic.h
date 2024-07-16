@@ -3,20 +3,21 @@
 #include <algorithm>
 #include <iostream>
 #include <string>
+#include <sstream>
 
 using namespace std;
 
 #define MAX_TEAMS 50
 
-//class for name team
+//class for a team
 class Team
 {
-    //properties of name team that are fixed, initialized
+    //properties of a team that are fixed, initialized
     public:
     string team_name;
     int team_id;
 
-    //properties of name team that are not fixed
+    //properties of a team that are not fixed
     public:
     int team_mp = 0;
     int team_w = 0;
@@ -27,10 +28,11 @@ class Team
     int team_gd = 0;
     int team_points = 0;
 
+    //methods
     public:
     Team();
-    Team(string name, int id); //constructor which initializes name and team id
-    void update_team_data(int goals_for, int goals_against); //function that updates name team data
+    Team(string name, int id); //constructor which initializes team name and team id
+    void update_team_data(int goals_for, int goals_against); //function that updates a team data
 };
 
 Team::Team(string name, int id)
@@ -65,10 +67,10 @@ void Team::update_team_data(int goals_for, int goals_against)
     team_gd += (goals_for - goals_against);
 }
 
-//class for name league
+//class for a league
 class League
 {
-    //properties of name team, all fixed, initialized
+    //properties of a league, all fixed, initialized
     public:
     string league_name;
     int league_id;
@@ -78,13 +80,14 @@ class League
     int league_groups;
     int league_team_number;
 
-    //array of teams for name league
+    //array of teams for a league
     Team T[MAX_TEAMS];
 
     public:
     League();
     League(string name, int id, int gs, int rr, int q, int g, int n);  //constructor which initializes all properties
     void update_league_positions(); //function to update position of teams in name league based on points 
+    void init_teams_array(string input_string, Team T[]); //function to initialize teams' fixed properties(name, id) in a league, based on the input string
 };
 
 League::League(string name, int id, int gs, int rr, int q, int g, int n)
@@ -102,15 +105,47 @@ void League::update_league_positions()
 { 
     int i, j; 
     for (i = 0; i < league_team_number - 1; i++) 
-
+    {
         for (j = 0; j < league_team_number - i - 1; j++) 
-
+        {
             if (T[j].team_points > T[j + 1].team_points) 
-                swap(T[j], T[j + 1]); 
+            swap(T[j], T[j + 1]); 
+        }
+    }
 } 
 
-//function to initialize teams' fixed properties in name league
-void init_teams_array()
+void League::init_teams_array(string input_string, Team T[])
 {
+    string input_names_a[MAX_TEAMS];
+    string input_ids_a[MAX_TEAMS];
 
+    string token;
+    int i = 0;
+    stringstream tokenStream(input_string);
+    while(getline(tokenStream, token, '\n'))
+    {
+        if ((token.c_str())[0] >= 48 && (token.c_str())[0] <= 57)
+            input_ids_a[i] = stoi(token);
+        else
+        {
+            input_names_a[i] = token;
+            i++;
+        }
+    }        
+
+    for (i = 0; i < league_team_number; i++)
+    {
+        T[i].team_name = input_names_a[i];
+        T[i].team_id = stoi(input_ids_a[i]);
+    }
+
+    int j;
+    for (i = 0; i < league_team_number - 1; i++) 
+    {
+        for (j = 0; j < league_team_number - i - 1; j++) 
+        {
+            if (strcmp((T[j].team_name.c_str()) , T[j + 1].team_name.c_str()) > 0)
+            swap(T[j], T[j + 1]); 
+        }
+    }
 }
