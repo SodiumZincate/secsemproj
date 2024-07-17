@@ -66,14 +66,14 @@ void build(char** argv) {
 			#endif
 		})
 		.src({
-			// "src/loginUI.cpp",
+			// "src/appUI.cpp",
 			"src/main.cpp",
 			// "src/practice.cpp"
 			// "src/loginWidget.cpp",
 			// "src/db.cpp"
 		})
 		.moc_src({
-			"src/loginUI.h"
+			"src/appUI.h"
 		})
 		.build_moc()  // Generate .moc.cpp files
         .compile()    // Compile all source files

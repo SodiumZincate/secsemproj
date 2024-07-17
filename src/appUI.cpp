@@ -1,4 +1,4 @@
-#include "loginUI.h"
+#include "appUI.h"
 #include <QtWidgets/QVBoxLayout>
 #include <QtCore/QDebug>
 
@@ -10,7 +10,7 @@ void StackedWidgets::changeWindow_backward() {
     setCurrentIndex(stacked_windows.currentIndex()-1);
 }
 
-void LoginUI::init(QWidget* parent) {
+void appUI::init(QWidget* parent) {
     QSize widget_size(app_width, app_height / 10);
 
     login_widget = new QWidget(parent);
@@ -20,15 +20,15 @@ void LoginUI::init(QWidget* parent) {
     login_layout->setContentsMargins(app_width / 12, 0, 0, 0);
 }
 
-QWidget* LoginUI::getWidget() {
+QWidget* appUI::getWidget() {
     return login_widget;
 }
 
-QHBoxLayout* LoginUI::getHLayout() {
+QHBoxLayout* appUI::getHLayout() {
     return login_layout;
 }
 
-void LoginText::init(QWidget* parent, QString text, int font_size) {
+void appText::init(QWidget* parent, QString text, int font_size) {
     login_text = new QLabel(parent);
     login_text->setFont(QFont("Sans", font_size));
     login_text->setText(text);
@@ -36,18 +36,18 @@ void LoginText::init(QWidget* parent, QString text, int font_size) {
     login_text->setMargin(60);
 }
 
-QLabel* LoginText::getWidget_label() {
+QLabel* appText::getWidget_label() {
     return login_text;
 }
 
-void LoginButton::init(QWidget* parent, QString text, int font_size) {
+void appButton::init(QWidget* parent, QString text, int font_size) {
     button_widget = new QPushButton(parent);
     button_widget->setText(text);
     button_widget->setFont(QFont("Sans", font_size - 12));
     button_widget->setFixedSize(QSize(app_width / 4, app_height / 16));
 }
 
-QPushButton* LoginButton::getWidget_button() {
+QPushButton* appButton::getWidget_button() {
     return button_widget;
 }
 

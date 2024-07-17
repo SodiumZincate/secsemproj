@@ -2,9 +2,11 @@
 #include <QtGui/QScreen>
 #include <QtWidgets/QStackedWidget>
 #include <QtWidgets/QHBoxLayout>
-#include "loginUI.h"
-#include "loginWidget.cpp"
-#include "loginUI.cpp"
+#include "appUI.h"
+#include "loginpage.cpp"
+#include "appUI.cpp"
+#include "homepage.cpp"
+#include "formpage.cpp"
 #include "db.cpp"
 
 int app_height = 0;
@@ -36,24 +38,24 @@ int main(int argc, char *argv[]) {
 	#endif
 
 	StackedWidgets stack1;
-	QWidget loginApp;
 	QWidget registerApp;
+	QWidget loginApp;
 	QWidget dashboardApp;
 	QWidget addleagueApp;
 
 	// Initializa login and register pages
-	initLogin(&stack1, &loginApp);
 	initRegister(&stack1, &registerApp);
+	initLogin(&stack1, &loginApp);
 	initDashboard(&stack1, &dashboardApp);
 	initAddLeague(&stack1, &addleagueApp);
 
-	stack1.addWidget(&loginApp);
 	stack1.addWidget(&registerApp);
+	stack1.addWidget(&loginApp);
 	stack1.addWidget(&dashboardApp);
 	stack1.addWidget(&addleagueApp);
 
 	// Set initial page to login page
-	stack1.setCurrentIndex(3);
+	stack1.setCurrentIndex(2);
 
 
 	// stack1.addtoLayout();
