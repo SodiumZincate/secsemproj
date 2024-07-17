@@ -6,9 +6,9 @@ void initRegister(StackedWidgets *App, QWidget* window) {
 	window->setWindowTitle("Sign in");
 
     // Main Widget
-    QWidget *textbox_widget = new QWidget(window);
-    QVBoxLayout *textbox_widget_layout = new QVBoxLayout(textbox_widget);
-    textbox_widget_layout->setAlignment(Qt::AlignCenter); // Center align the contents
+    QWidget *main_widget = new QWidget(window);
+    QVBoxLayout *main_widget_layout = new QVBoxLayout(main_widget);
+    main_widget_layout->setAlignment(Qt::AlignCenter); // Center align the contents
    
     // Username Widget
     LoginUI *username = new LoginUI();
@@ -44,7 +44,7 @@ void initRegister(StackedWidgets *App, QWidget* window) {
     button->init(window, "Submit");
     QPushButton *button_widget = button->getWidget_button();
 
-    // Sign in Button Widget
+    // Submit Button Widget
 	LoginButton *signin_button = new LoginButton();
     signin_button->init(window, "Already have an account? Sign in", default_font_size-5);
     QPushButton *signin_button_widget = signin_button->getWidget_button();
@@ -57,6 +57,7 @@ void initRegister(StackedWidgets *App, QWidget* window) {
     button_container_layout->setAlignment(Qt::AlignCenter);
     button_container_layout->setContentsMargins(0, app_height / 10, 0, 0);
 	
+	// Submit Button Container Widget (Made so the Submit Button Widget could be centered as a Widget)
 	QWidget *signin_button_container = new QWidget(window);
     QHBoxLayout *signin_button_container_layout = new QHBoxLayout(signin_button_container);
     signin_button_container_layout->setAlignment(Qt::AlignCenter);
@@ -122,13 +123,13 @@ void initRegister(StackedWidgets *App, QWidget* window) {
 	signin_button_container_layout->addWidget(signin_button_widget);
 
     // Addition of sub-widgets to the main Widget
-    textbox_widget_layout->addWidget(login_label);
-    textbox_widget_layout->addWidget(username_widget);
-    textbox_widget_layout->addWidget(email_widget);
-    textbox_widget_layout->addWidget(password_widget);
-	textbox_widget_layout->addWidget(retype_password_widget);
-    textbox_widget_layout->addWidget(button_container);
-	textbox_widget_layout->addWidget(signin_button_container);
+    main_widget_layout->addWidget(login_label);
+    main_widget_layout->addWidget(username_widget);
+    main_widget_layout->addWidget(email_widget);
+    main_widget_layout->addWidget(password_widget);
+	main_widget_layout->addWidget(retype_password_widget);
+    main_widget_layout->addWidget(button_container);
+	main_widget_layout->addWidget(signin_button_container);
 
 	// Connection of submit button with username, email and password text fields
     QObject::connect(button_widget, &QPushButton::clicked, username_component, &WidgetComponent::updateEditText);
@@ -174,7 +175,7 @@ void initRegister(StackedWidgets *App, QWidget* window) {
 
     // Layout of the main UI
     QVBoxLayout *main_layout = new QVBoxLayout(window);
-    main_layout->addWidget(textbox_widget);
+    main_layout->addWidget(main_widget);
     main_layout->setAlignment(Qt::AlignCenter);
     window->setLayout(main_layout);
 }
@@ -184,9 +185,9 @@ void initLogin(StackedWidgets *App, QWidget* window) {
 	window->setWindowTitle("Sign up");
 
     // Main Widget
-    QWidget *textbox_widget = new QWidget(window);
-    QVBoxLayout *textbox_widget_layout = new QVBoxLayout(textbox_widget);
-    textbox_widget_layout->setAlignment(Qt::AlignCenter); // Center align the contents
+    QWidget *main_widget = new QWidget(window);
+    QVBoxLayout *main_widget_layout = new QVBoxLayout(main_widget);
+    main_widget_layout->setAlignment(Qt::AlignCenter); // Center align the contents
 
     // Username Widget
     LoginUI *username = new LoginUI();
@@ -261,11 +262,11 @@ void initLogin(StackedWidgets *App, QWidget* window) {
 	signin_button_container_layout->addWidget(signin_button_widget);
 
     // Addition of sub-widgets to the main Widget
-    textbox_widget_layout->addWidget(login_label);
-    textbox_widget_layout->addWidget(username_widget);
-    textbox_widget_layout->addWidget(password_widget);
-    textbox_widget_layout->addWidget(button_container);
-	textbox_widget_layout->addWidget(signin_button_container);
+    main_widget_layout->addWidget(login_label);
+    main_widget_layout->addWidget(username_widget);
+    main_widget_layout->addWidget(password_widget);
+    main_widget_layout->addWidget(button_container);
+	main_widget_layout->addWidget(signin_button_container);
 
 	// Connection of submit button with username and password text fields
 	QObject::connect(button_widget, &QPushButton::clicked, username_component, &WidgetComponent::updateEditText);
@@ -314,7 +315,7 @@ void initLogin(StackedWidgets *App, QWidget* window) {
 
     // Layout of the main UI
     QVBoxLayout *main_layout = new QVBoxLayout(window);
-    main_layout->addWidget(textbox_widget);
+    main_layout->addWidget(main_widget);
     main_layout->setAlignment(Qt::AlignCenter);
     window->setLayout(main_layout);
 }
@@ -322,11 +323,11 @@ void initLogin(StackedWidgets *App, QWidget* window) {
 void initDashboard(StackedWidgets *App, QWidget* window){
 	window->setWindowTitle("Dashboard");
 
-QWidget *textbox_widget = new QWidget(window);
-textbox_widget->setFixedSize(app_width*3/2, app_height*3/2);
-// textbox_widget->setStyleSheet("QWidget{background-color:red}");
-    QVBoxLayout *textbox_widget_layout = new QVBoxLayout(textbox_widget);
-    //textbox_widget_layout->setAlignment(Qt::AlignCenter); // Center align the contents
+QWidget *main_widget = new QWidget(window);
+main_widget->setFixedSize(app_width*3/2, app_height*3/2);
+// main_widget->setStyleSheet("QWidget{background-color:red}");
+    QVBoxLayout *main_widget_layout = new QVBoxLayout(main_widget);
+    //main_widget_layout->setAlignment(Qt::AlignCenter); // Center align the contents
 
     LoginText *maintext = new LoginText();
     maintext->init(window,"League Manager");
@@ -349,21 +350,12 @@ mainLabel->setFixedHeight(app_height/8);
     QPushButton *backButton_widget = backButton->getWidget_button();
     backButton_widget->setFixedSize(app_width/8,app_height/12);
 // backButton_widget->setStyleSheet("QPushButton{background-color:green}");
-	
-    //Username text
- 	/*LoginText *usernameText = new LoginText();
-    usernameText ->init(window,"Username",default_font_size-3);
-    QLabel *usernameText_widget=usernameText->getWidget_label();
-	usernameText_widget->setFixedHeight(app_height/4);
-    usernameText_widget->setAlignment(Qt::AlignRight);*/
-
 
     LoginText *usernameText = new LoginText();
     usernameText ->init(window, "username" ,default_font_size-3);
     QLabel *usernameText_widget=usernameText->getWidget_label();
     usernameText_widget->setAlignment(Qt::AlignRight);
     usernameText_widget->setFixedHeight(app_height/4);
-
 
     //League button 1
     LoginButton *button1 =new LoginButton();
@@ -376,7 +368,9 @@ button1_widget->setStyleSheet("QPushButton{text-decoration:underline;border:none
     LoginButton *button2= new LoginButton();
     button2->init(window,"League 2",default_font_size+6);
     QPushButton *button2_widget=button2->getWidget_button();
-	button2_widget->setCursor(Qt::PointingHandCursor);
+      
+     button2_widget->setCursor(Qt::PointingHandCursor);
+  
 button2_widget->setStyleSheet("QPushButton{text-decoration:underline;border:none;}");
 
     LoginButton *leagueButton =new LoginButton();
@@ -422,6 +416,22 @@ button2_widget->setStyleSheet("QPushButton{text-decoration:underline;border:none
 
     leagueButton_container_layout->addWidget(leagueButton_widget);
 
+    main_widget_layout->addWidget(backButton_container);
+    main_widget_layout->addWidget(mainLabel);
+    main_widget_layout->addWidget(button_container);
+    main_widget_layout->addWidget(leagueButton_container);
+
+QObject::connect(backButton_widget, &QPushButton::clicked, App, &StackedWidgets::changeWindow_backward);
+QObject::connect(leagueButton_widget, &QPushButton::clicked, App, &StackedWidgets::changeWindow_forward);
+
+    //Container for League button
+    QWidget *leagueButton_container = new QWidget(window);
+    QVBoxLayout *leagueButton_container_layout = new QVBoxLayout(leagueButton_container);
+    leagueButton_container_layout->setAlignment(Qt::AlignCenter);
+    leagueButton_container_layout->setContentsMargins(0, app_height /5, 0, 0);
+
+    leagueButton_container_layout->addWidget(leagueButton_widget);
+
     textbox_widget_layout->addWidget(NavBar);
     textbox_widget_layout->addWidget(mainLabel);
     textbox_widget_layout->addWidget(button_container);
@@ -432,6 +442,125 @@ QObject::connect(leagueButton_widget, &QPushButton::clicked, App, &StackedWidget
 
 QVBoxLayout *main_layout = new QVBoxLayout(window);
     main_layout->addWidget(textbox_widget);
+
+QVBoxLayout *main_layout = new QVBoxLayout(window);
+    main_layout->addWidget(main_widget);
     main_layout->setAlignment(Qt::AlignCenter);
     window->setLayout(main_layout);
+}
+
+void initAddLeague(StackedWidgets *App, QWidget* window){
+    window->setWindowTitle("Add League");
+
+    QWidget *main_widget = new QWidget(window);
+    main_widget->setFixedSize(app_width*3/2, app_height*3/2);
+    // main_widget->setStyleSheet("QWidget{background-color:red}");
+    QVBoxLayout *main_widget_layout = new QVBoxLayout(main_widget);
+    main_widget_layout->setAlignment(Qt::AlignCenter); // Center align the contents
+
+    LoginText *main_text=new LoginText();
+    main_text->init(window,"ADD LEAGUE");
+    QLabel *main_label=main_text->getWidget_label();
+
+    LoginUI *team_name=new LoginUI();
+    team_name->init(window);
+    QWidget *team_name_widget=team_name->getWidget();
+    QHBoxLayout *team_name_layout=team_name->getHLayout();
+    
+
+    WidgetComponent *team_name_component=new WidgetComponent();
+    team_name_component->init(team_name_widget,"Team Name");
+    
+    QLabel *team_name_label=team_name_component->getWidget_label();
+
+    QLineEdit *team_name_edit=team_name_component->getWidget_edit();
+
+
+    team_name_layout->addWidget(team_name_label);
+    team_name_layout->addWidget(team_name_edit);
+    
+    QWidget *group_stage=new QWidget(window);
+    group_stage->setFixedHeight(app_height/8);
+    QHBoxLayout *group_stage_layout=new QHBoxLayout(group_stage);
+    group_stage_layout->setAlignment(Qt::AlignLeft);
+
+    LoginText *group_text=new LoginText();
+    group_text->init(window,"No. of group stages: ",default_font_size-10);
+    QLabel *group_label=group_text->getWidget_label();
+    group_label->setFixedWidth(app_width/2);
+
+    QComboBox *combobox=new QComboBox(window);
+    combobox->addItems({"1","2","3"});
+    group_stage_layout->addWidget(group_label);
+    group_stage_layout->addWidget(combobox);
+
+
+    QWidget *round_robin=new QWidget(window);
+    round_robin->setFixedHeight(app_height/8);
+    QHBoxLayout *round_robin_layout=new QHBoxLayout(round_robin);
+    round_robin_layout->setAlignment(Qt::AlignLeft);
+    LoginText *round_robin_text=new LoginText();
+    round_robin_text->init(window,"Round Robin: ",default_font_size-10);
+    QLabel *round_robin_label=round_robin_text->getWidget_label();
+    round_robin_label->setFixedWidth(app_width/2);
+    QComboBox *round_robin_combobox=new QComboBox(window);
+    round_robin_combobox->addItems({"1","2"});
+    round_robin_layout->addWidget(round_robin_label);
+    round_robin_layout->addWidget(round_robin_combobox);
+    
+
+    QWidget *qualifiers=new QWidget(window);
+    qualifiers->setFixedHeight(app_height/8);
+    QHBoxLayout *qualifiers_layout=new QHBoxLayout(qualifiers);
+    qualifiers_layout->setAlignment(Qt::AlignLeft);
+    LoginText *qualifiers_text=new LoginText();
+    qualifiers_text->init(window,"Qualifier: ",default_font_size-10);
+    QLabel *qualifiers_label=qualifiers_text->getWidget_label();
+    qualifiers_label->setFixedWidth(app_width/2);
+    QComboBox *qualifiers_combobox=new QComboBox(window);
+    qualifiers_combobox->addItems({"1","2","4"});
+    qualifiers_layout->addWidget(qualifiers_label);
+    qualifiers_layout->addWidget(qualifiers_combobox);
+
+
+    QWidget *no_of_groups=new QWidget(window);
+    no_of_groups->setFixedHeight(app_height/8);
+    QHBoxLayout *no_of_groups_layout=new QHBoxLayout(no_of_groups);
+    no_of_groups_layout->setAlignment(Qt::AlignLeft);
+    LoginText *no_of_groups_text=new LoginText();
+    no_of_groups_text->init(window,"No of groups: ",default_font_size-10);
+    QLabel *no_of_groups_label=no_of_groups_text->getWidget_label();
+    no_of_groups_label->setFixedWidth(app_width/2);
+    QComboBox *no_of_groups_combobox=new QComboBox(window);
+    no_of_groups_combobox->addItems({"1","2","4","8"});
+    no_of_groups_layout->addWidget(no_of_groups_label);
+    no_of_groups_layout->addWidget(no_of_groups_combobox);
+
+
+    
+
+
+
+    
+
+    main_widget_layout->addWidget(main_label);
+    main_widget_layout->addWidget(team_name_widget);
+    main_widget_layout->addWidget(group_stage);
+    main_widget_layout->addWidget(round_robin);
+    main_widget_layout->addWidget(qualifiers);
+    main_widget_layout->addWidget(no_of_groups);
+
+
+
+
+
+
+
+    QVBoxLayout *main_layout = new QVBoxLayout(window);
+    main_layout->addWidget(main_widget);
+
+    main_layout->setAlignment(Qt::AlignCenter);
+    window->setLayout(main_layout);
+
+
 }

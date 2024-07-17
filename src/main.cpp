@@ -39,18 +39,22 @@ int main(int argc, char *argv[]) {
 	QWidget loginApp;
 	QWidget registerApp;
 	QWidget dashboardApp;
+	QWidget addleagueApp;
 
 	// Initializa login and register pages
 	initLogin(&stack1, &loginApp);
 	initRegister(&stack1, &registerApp);
 	initDashboard(&stack1, &dashboardApp);
+	initAddLeague(&stack1, &addleagueApp);
 
 	stack1.addWidget(&loginApp);
 	stack1.addWidget(&registerApp);
 	stack1.addWidget(&dashboardApp);
+	stack1.addWidget(&addleagueApp);
 
 	// Set initial page to login page
-	stack1.setCurrentIndex(2);
+	stack1.setCurrentIndex(3);
+
 
 	// stack1.addtoLayout();
 	stack1.mainWidget.setLayout(stack1.appLayout);
