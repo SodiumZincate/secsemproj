@@ -171,7 +171,7 @@ void initRegister(StackedWidgets *App, QWidget* window) {
 			});
 
 	// Connection for changing pages
-	QObject::connect(signin_button_widget, &QPushButton::clicked, App, &StackedWidgets::changeWindow_backward);
+	QObject::connect(signin_button_widget, &QPushButton::clicked, App, &StackedWidgets::changeWindow_forward);
 
     // Layout of the main UI
     QVBoxLayout *main_layout = new QVBoxLayout(window);
@@ -311,7 +311,7 @@ void initLogin(StackedWidgets *App, QWidget* window) {
 		});
 
 	// Connection for checking same password in both password fields
-	QObject::connect(signin_button_widget, &QPushButton::clicked, App, &StackedWidgets::changeWindow_forward);
+	QObject::connect(signin_button_widget, &QPushButton::clicked, App, &StackedWidgets::changeWindow_backward);
 
     // Layout of the main UI
     QVBoxLayout *main_layout = new QVBoxLayout(window);

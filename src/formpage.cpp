@@ -5,15 +5,55 @@ void initAddLeague(StackedWidgets *App, QWidget* window){
     window->setWindowTitle("Add League");
 
     QWidget *main_widget = new QWidget(window);
-    main_widget->setFixedSize(app_width, app_height);
-    // main_widget->setStyleSheet("QWidget{background-color:red}");
+    main_widget->setFixedSize(app_width*3/2, app_height*3/2);
+    // main_widget->setStyleSheet("QWidget{background-color:blue}");
     QVBoxLayout *main_widget_layout = new QVBoxLayout(main_widget);
     main_widget_layout->setAlignment(Qt::AlignCenter); // Center align the contents
+
+    QWidget *sub_widget = new QWidget(window);
+    sub_widget->setFixedSize(app_width, app_height*3/2);
+    // sub_widget->setStyleSheet("QWidget{background-color:red}");
+    QVBoxLayout *sub_widget_layout = new QVBoxLayout(sub_widget);
+    sub_widget_layout->setAlignment(Qt::AlignTop);
 
     appText *main_text=new appText();
     main_text->init(window,"ADD LEAGUE");
     QLabel *main_label=main_text->getWidget_label();
 
+	//NavBar
+    QWidget *NavBar = new QWidget(window);
+    NavBar->setFixedSize(app_width*3/2, app_height/6);
+	// NavBar->setStyleSheet("QWidget{background-color:yellow}");
+    QHBoxLayout *NavBar_layout = new QHBoxLayout(NavBar);
+    NavBar_layout->setAlignment(Qt::AlignTop);
+
+	//Username text
+    appText *usernameText = new appText();
+    usernameText ->init(window, "username" ,default_font_size-3);
+    QLabel *usernameText_widget=usernameText->getWidget_label();
+    usernameText_widget->setAlignment(Qt::AlignRight);
+    usernameText_widget->setFixedHeight(app_height/4);
+
+	//Back Button
+    appButton *backButton= new appButton();
+    backButton->init(window,"BACK",default_font_size-2);
+    QPushButton *backButton_widget = backButton->getWidget_button();
+    backButton_widget->setFixedSize(app_width/8,app_height/12);
+	// backButton_widget->setStyleSheet("QPushButton{background-color:green}");
+
+	//Backbutton Container
+    QWidget *backButton_container = new QWidget(window);
+    QHBoxLayout *backButton_container_layout = new QHBoxLayout(backButton_container);
+    backButton_container->setFixedHeight(app_height/6);
+    backButton_container_layout->setAlignment(Qt::AlignLeft);
+    backButton_container_layout->setContentsMargins(0, 0, 0, 0);
+
+    backButton_container_layout->addWidget(backButton_widget);
+
+	NavBar_layout->addWidget(backButton_container);
+	NavBar_layout->addWidget(usernameText_widget);
+
+	//
 	QWidget *league_name = new QWidget(window);
 	// league_name->setStyleSheet("QWidget{background-color:red}");
     league_name->setFixedHeight(app_height/8);
@@ -87,12 +127,17 @@ void initAddLeague(StackedWidgets *App, QWidget* window){
     no_of_groups_layout->addWidget(no_of_groups_label);
     no_of_groups_layout->addWidget(no_of_groups_combobox);
 
-    main_widget_layout->addWidget(main_label);
-    main_widget_layout->addWidget(league_name);
-    main_widget_layout->addWidget(group_stage);
-    main_widget_layout->addWidget(round_robin);
-    main_widget_layout->addWidget(qualifiers);
-    main_widget_layout->addWidget(no_of_groups);
+    sub_widget_layout->addWidget(main_label);
+    sub_widget_layout->addWidget(league_name);
+    sub_widget_layout->addWidget(group_stage);
+    sub_widget_layout->addWidget(round_robin);
+    sub_widget_layout->addWidget(qualifiers);
+    sub_widget_layout->addWidget(no_of_groups);
+
+	main_widget_layout->addWidget(NavBar,0,Qt::AlignTop);
+	main_widget_layout->addWidget(sub_widget,0, Qt::AlignCenter);
+
+	QObject::connect(backButton_widget, &QPushButton::clicked, App, &StackedWidgets::changeWindow_backward);
 
     QVBoxLayout *main_layout = new QVBoxLayout(window);
     main_layout->addWidget(main_widget);

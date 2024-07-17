@@ -135,7 +135,7 @@ void LabelComboComponent::init(
     widget_label->setFont(QFont("Sans", font_size));
     widget_label->setText(widget_text);
     widget_label->setAlignment(Qt::AlignLeft);
-	widget_label->setContentsMargins(0,16,0,0);
+	widget_label->setContentsMargins(0,20,0,0);
     widget_label->setFixedSize(QSize(app_width / 3, app_height / 10));
 
     widget_combobox = new QComboBox(parent);
