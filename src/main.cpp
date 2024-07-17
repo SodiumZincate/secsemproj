@@ -26,7 +26,7 @@ int main(int argc, char *argv[]) {
     app_height = screenHeight / 2;
 	
 	#ifdef _WIN32
-		if(screenWidth < 1800)
+		if(screenWidth < 1500)
    			default_font_size = 22;
 		else
 			default_font_size = 26;
@@ -38,18 +38,21 @@ int main(int argc, char *argv[]) {
 	QWidget loginApp;
 	QWidget registerApp;
 	QWidget dashboardApp;
+	QWidget addleagueApp;
 
 	// Initializa login and register pages
 	initLogin(&stack1, &loginApp);
 	initRegister(&stack1, &registerApp);
 	initDashboard(&stack1, &dashboardApp);
+	initAddLeague(&stack1, &addleagueApp);
 
 	stack1.addWidget(&loginApp);
 	stack1.addWidget(&registerApp);
 	stack1.addWidget(&dashboardApp);
+	stack1.addWidget(&addleagueApp);
 
 	// Set initial page to login page
-	stack1.setCurrentIndex(0);
+	stack1.setCurrentIndex(3);
 
 	// stack1.addtoLayout();
 	stack1.mainWidget.setLayout(stack1.appLayout);
