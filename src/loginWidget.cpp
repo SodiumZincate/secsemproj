@@ -9,7 +9,7 @@ void initRegister(StackedWidgets *App, QWidget* window) {
     QWidget *textbox_widget = new QWidget(window);
     QVBoxLayout *textbox_widget_layout = new QVBoxLayout(textbox_widget);
     textbox_widget_layout->setAlignment(Qt::AlignCenter); // Center align the contents
-
+   
     // Username Widget
     LoginUI *username = new LoginUI();
     username->init(window);
@@ -300,7 +300,6 @@ void initLogin(StackedWidgets *App, QWidget* window) {
 					std::cout << "You are logged in" << std::endl;
 				}
 				else{
-
 					std::cout << "Incorrect Credentials" << std::endl;
 				}
 			}
@@ -323,58 +322,115 @@ void initLogin(StackedWidgets *App, QWidget* window) {
 void initDashboard(StackedWidgets *App, QWidget* window){
 	window->setWindowTitle("Dashboard");
 
-	QWidget *textbox_widget = new QWidget(window);
+QWidget *textbox_widget = new QWidget(window);
+textbox_widget->setFixedSize(app_width*3/2, app_height*3/2);
+// textbox_widget->setStyleSheet("QWidget{background-color:red}");
     QVBoxLayout *textbox_widget_layout = new QVBoxLayout(textbox_widget);
-    textbox_widget_layout->setAlignment(Qt::AlignCenter); // Center align the contents
+    //textbox_widget_layout->setAlignment(Qt::AlignCenter); // Center align the contents
 
-	LoginText *mainText = new LoginText();
-	mainText->init(window, "LEAGUE MANAGER");
-	QLabel *mainLabel = mainText->getWidget_label();
+    LoginText *maintext = new LoginText();
+    maintext->init(window,"League Manager");
+    QLabel *mainLabel= maintext->getWidget_label();
+mainLabel->setMargin(0);
+mainLabel->setFixedHeight(app_height/8);
+// mainLabel->setStyleSheet("QLabel{background-color:blue}");
+    mainLabel->setAlignment(Qt::AlignTop | Qt::AlignHCenter);
 
-	LoginText *leagueText = new LoginText();
-	leagueText->init(window, "Your Leagues", default_font_size-4);
-	QLabel *leagueLabel = leagueText->getWidget_label();
-	leagueLabel->setMargin(20);
+    //League Text
+    LoginText *leaguetext = new LoginText();
+    leaguetext->init(window,"Your Leagues",default_font_size-3);
+    QLabel *leagueLabel_widget= leaguetext->getWidget_label();
+    leagueLabel_widget->setMargin(10);
+    leagueLabel_widget->setAlignment(Qt::AlignTop | Qt::AlignCenter);
 
-	LoginButton *button1 = new LoginButton();
-	button1->init(window, "League 1", default_font_size+6);
-	QPushButton *button1_widget = button1->getWidget_button();
-	button1_widget->setCursor(Qt::PointingHandCursor);
-	button1_widget->setStyleSheet("QPushButton{text-decoration:underline;border:none;}");
+//Back Button
+    LoginButton *backButton= new LoginButton();
+    backButton->init(window,"BACK",default_font_size-2);
+    QPushButton *backButton_widget = backButton->getWidget_button();
+    backButton_widget->setFixedSize(app_width/8,app_height/12);
+// backButton_widget->setStyleSheet("QPushButton{background-color:green}");
+	
+    //Username text
+ 	/*LoginText *usernameText = new LoginText();
+    usernameText ->init(window,"Username",default_font_size-3);
+    QLabel *usernameText_widget=usernameText->getWidget_label();
+	usernameText_widget->setFixedHeight(app_height/4);
+    usernameText_widget->setAlignment(Qt::AlignRight);*/
 
-	LoginButton *button2 = new LoginButton();
-	button2->init(window, "League 2", default_font_size+6);
-	QPushButton *button2_widget = button2->getWidget_button();
+
+    LoginText *usernameText = new LoginText();
+    usernameText ->init(window, "username" ,default_font_size-3);
+    QLabel *usernameText_widget=usernameText->getWidget_label();
+    usernameText_widget->setAlignment(Qt::AlignRight);
+    usernameText_widget->setFixedHeight(app_height/4);
+
+
+    //League button 1
+    LoginButton *button1 =new LoginButton();
+    button1->init(window,"League 1",default_font_size+6);
+    QPushButton *button1_widget=button1->getWidget_button();
+    button1_widget->setCursor(Qt::PointingHandCursor);
+button1_widget->setStyleSheet("QPushButton{text-decoration:underline;border:none;}");
+  
+    //League button 2
+    LoginButton *button2= new LoginButton();
+    button2->init(window,"League 2",default_font_size+6);
+    QPushButton *button2_widget=button2->getWidget_button();
 	button2_widget->setCursor(Qt::PointingHandCursor);
-	button2_widget->setStyleSheet("QPushButton{text-decoration:underline;border:none;}");
+button2_widget->setStyleSheet("QPushButton{text-decoration:underline;border:none;}");
 
-	LoginButton *leagueButton = new LoginButton();
-	leagueButton->init(window, "Add League", default_font_size+10);
-	QPushButton *leagueButton_widget = leagueButton->getWidget_button();
-	leagueButton_widget->setFixedSize(app_width/4, app_height/12);
+    LoginButton *leagueButton =new LoginButton();
+    leagueButton->init(window,"Add league",default_font_size+10);
+    QPushButton *leagueButton_widget=leagueButton->getWidget_button();
+    leagueButton_widget->setFixedSize(app_width/4,app_width/14);
 
-	QWidget *button_container = new QWidget(window);
+	//NavBar
+    QWidget *NavBar = new QWidget(window);
+    QHBoxLayout *NavBar_layout = new QHBoxLayout(NavBar);
+    NavBar->setFixedHeight(app_height/6);
+    NavBar_layout->setContentsMargins(0, 0, 0, 0);
+	//NavBar->setStyleSheet("QWidget{background-color:yellow}");
+
+//Backbutton Container
+    QWidget *backButton_container = new QWidget(window);
+    QHBoxLayout *backButton_container_layout = new QHBoxLayout(backButton_container);
+    backButton_container->setFixedHeight(app_height/6);
+    backButton_container_layout->setAlignment(Qt::AlignLeft);
+    backButton_container_layout->setContentsMargins(0, 0, 0, 0);
+
+    backButton_container_layout->addWidget(backButton_widget);
+    // backButton_container_layout->addWidget(usernameText_widget, 0, Qt::AlignRight);
+
+	NavBar_layout->addWidget(backButton_container);
+	NavBar_layout->addWidget(usernameText_widget);
+
+    //Container for league buttons
+    QWidget *button_container = new QWidget(window);
     QVBoxLayout *button_container_layout = new QVBoxLayout(button_container);
     button_container_layout->setAlignment(Qt::AlignCenter);
-    button_container_layout->setContentsMargins(0, app_height / 8, 0, 0);
+    button_container_layout->setContentsMargins(0, app_height / 10, 0, 0);
 
-	QWidget *league_button_container = new QWidget(window);
-    QVBoxLayout *league_button_container_layout = new QVBoxLayout(league_button_container);
-    league_button_container_layout->setAlignment(Qt::AlignCenter);
-    league_button_container_layout->setContentsMargins(0, app_height / 5, 0, 0);
+    button_container_layout->addWidget(leagueLabel_widget);
+    button_container_layout->addWidget(button1_widget);
+    button_container_layout->addWidget(button2_widget);
 
-	button_container_layout->addWidget(leagueLabel);
-	button_container_layout->addWidget(button1_widget);
-	button_container_layout->addWidget(button2_widget);
+    //Container for League button
+    QWidget *leagueButton_container = new QWidget(window);
+    QVBoxLayout *leagueButton_container_layout = new QVBoxLayout(leagueButton_container);
+    leagueButton_container_layout->setAlignment(Qt::AlignCenter);
+    leagueButton_container_layout->setContentsMargins(0, app_height /5, 0, 0);
 
-	league_button_container_layout->addWidget(leagueButton_widget);
+    leagueButton_container_layout->addWidget(leagueButton_widget);
 
-	textbox_widget_layout->addWidget(mainLabel);
-	// textbox_widget_layout->addWidget(leagueLabel);
-	textbox_widget_layout->addWidget(button_container);
-	textbox_widget_layout->addWidget(league_button_container);
+    textbox_widget_layout->addWidget(NavBar);
+    textbox_widget_layout->addWidget(mainLabel);
+    textbox_widget_layout->addWidget(button_container);
+    textbox_widget_layout->addWidget(leagueButton_container);
 
-	QVBoxLayout *main_layout = new QVBoxLayout(window);
+QObject::connect(backButton_widget, &QPushButton::clicked, App, &StackedWidgets::changeWindow_backward);
+QObject::connect(leagueButton_widget, &QPushButton::clicked, App, &StackedWidgets::changeWindow_forward);
+
+QVBoxLayout *main_layout = new QVBoxLayout(window);
     main_layout->addWidget(textbox_widget);
     main_layout->setAlignment(Qt::AlignCenter);
     window->setLayout(main_layout);
