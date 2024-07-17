@@ -51,7 +51,7 @@ QPushButton* appButton::getWidget_button() {
     return button_widget;
 }
 
-void WidgetComponent::init(QWidget* parent, QString widget_text) {
+void LabelEditComponent::init(QWidget* parent, QString widget_text) {
     widget_label = new QLabel(parent);
     widget_label->setFont(QFont("Sans", default_font_size - 6));
     widget_label->setText(widget_text);
@@ -63,23 +63,30 @@ void WidgetComponent::init(QWidget* parent, QString widget_text) {
     widget_edit->setFixedSize(QSize(app_width * 2 / 3, app_height / 10));
     widget_edit->setFont(QFont("Sans", default_font_size - 10));
     widget_edit->setPlaceholderText(widget_text);
+	QObject::connect(widget_edit, &QLineEdit::textEdited, [this, widget_text](){
+		widget_edit->setPlaceholderText(widget_text);
+		QPalette palette = widget_edit->palette();
+		palette.setColor(QPalette::PlaceholderText, QColor(0, 0, 0, 128));
+		widget_edit->setPalette(palette);
+	});
+
     widget_edit->setAlignment(Qt::AlignLeft);
     widget_edit->setTextMargins(20, 0, 0, 5);
 }
 
-QLabel* WidgetComponent::getWidget_label() {
+QLabel* LabelEditComponent::getWidget_label() {
     return widget_label;
 }
 
-QLineEdit* WidgetComponent::getWidget_edit() {
+QLineEdit* LabelEditComponent::getWidget_edit() {
     return widget_edit;
 }
 
-QString WidgetComponent::getFieldText(){
+QString LabelEditComponent::getFieldText(){
 	return field_text;
 }
 
-void WidgetComponent::updateEditText() {
+void LabelEditComponent::updateEditText() {
 	if(QString(widget_edit->text()) == ""){
 		field_text = "";
 		widget_edit->setText("");
@@ -91,7 +98,7 @@ void WidgetComponent::updateEditText() {
 	}
 }
 
-bool WidgetComponent::checkSamePassword(WidgetComponent* retype_password_component) {
+bool LabelEditComponent::checkSamePassword(LabelEditComponent* retype_password_component) {
     if(QString(this->widget_edit->text()) == QString(retype_password_component->widget_edit->text())){
 		qDebug(qUtf8Printable(this->widget_edit->text()));
 		return true;
@@ -107,7 +114,7 @@ bool WidgetComponent::checkSamePassword(WidgetComponent* retype_password_compone
 	}
 }
 
-void WidgetComponent::togglePasswordVisibility(QPushButton *showButton){
+void LabelEditComponent::togglePasswordVisibility(QPushButton *showButton){
 	if(widget_edit->echoMode() == QLineEdit::Password){
 		widget_edit->setEchoMode(QLineEdit::Normal);
 		showButton->setIcon(QIcon("requisite/assets/images/eye_hidden.png"));
@@ -116,4 +123,31 @@ void WidgetComponent::togglePasswordVisibility(QPushButton *showButton){
 		widget_edit->setEchoMode(QLineEdit::Password);
 		showButton->setIcon(QIcon("requisite/assets/images/eye_shown.png"));
 	}
+}
+
+void LabelComboComponent::init(
+	QWidget* parent,
+	QString widget_text,
+	QStringList combobox_list,
+	int font_size)
+	{
+	widget_label = new QLabel(parent);
+    widget_label->setFont(QFont("Sans", font_size));
+    widget_label->setText(widget_text);
+    widget_label->setAlignment(Qt::AlignLeft);
+	widget_label->setContentsMargins(0,16,0,0);
+    widget_label->setFixedSize(QSize(app_width / 3, app_height / 10));
+
+    widget_combobox = new QComboBox(parent);
+    widget_combobox->setFixedSize(QSize(app_width*63/100, app_height / 10));
+    widget_combobox->setFont(QFont("Sans", font_size));
+    widget_combobox->addItems(combobox_list);
+}
+
+QLabel* LabelComboComponent::getWidget_label() {
+    return widget_label;
+}
+
+QComboBox* LabelComboComponent::getWidget_combo() {
+    return widget_combobox;
 }

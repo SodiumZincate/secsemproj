@@ -65,10 +65,10 @@ void initRegister(StackedWidgets *App, QWidget* window) {
     signin_button_widget->setFixedSize(QSize(app_width / 2, app_height / 32));
 
     // Initialization of Widget Components
-    WidgetComponent *username_component = new WidgetComponent();
-    WidgetComponent *email_component = new WidgetComponent();
-    WidgetComponent *password_component = new WidgetComponent();
-	WidgetComponent *retype_password_component = new WidgetComponent();
+    LabelEditComponent *username_component = new LabelEditComponent();
+    LabelEditComponent *email_component = new LabelEditComponent();
+    LabelEditComponent *password_component = new LabelEditComponent();
+	LabelEditComponent *retype_password_component = new LabelEditComponent();
 
     username_component->init(username_widget, "Username");
     email_component->init(email_widget, "Email");
@@ -132,15 +132,15 @@ void initRegister(StackedWidgets *App, QWidget* window) {
 	main_widget_layout->addWidget(signin_button_container);
 
 	// Connection of submit button with username, email and password text fields
-    QObject::connect(button_widget, &QPushButton::clicked, username_component, &WidgetComponent::updateEditText);
-    QObject::connect(button_widget, &QPushButton::clicked, email_component, &WidgetComponent::updateEditText);
-    QObject::connect(button_widget, &QPushButton::clicked, password_component, &WidgetComponent::updateEditText);
-    QObject::connect(button_widget, &QPushButton::clicked, retype_password_component, &WidgetComponent::updateEditText);
+    QObject::connect(button_widget, &QPushButton::clicked, username_component, &LabelEditComponent::updateEditText);
+    QObject::connect(button_widget, &QPushButton::clicked, email_component, &LabelEditComponent::updateEditText);
+    QObject::connect(button_widget, &QPushButton::clicked, password_component, &LabelEditComponent::updateEditText);
+    QObject::connect(button_widget, &QPushButton::clicked, retype_password_component, &LabelEditComponent::updateEditText);
 
-	// QObject::disconnect(button_widget, &QPushButton::clicked, username_component, &WidgetComponent::updateEditText);
-    // QObject::disconnect(button_widget, &QPushButton::clicked, email_component, &WidgetComponent::updateEditText);
-    // QObject::disconnect(button_widget, &QPushButton::clicked, password_component, &WidgetComponent::updateEditText);
-    // QObject::disconnect(button_widget, &QPushButton::clicked, retype_password_component, &WidgetComponent::updateEditText);
+	// QObject::disconnect(button_widget, &QPushButton::clicked, username_component, &LabelEditComponent::updateEditText);
+    // QObject::disconnect(button_widget, &QPushButton::clicked, email_component, &LabelEditComponent::updateEditText);
+    // QObject::disconnect(button_widget, &QPushButton::clicked, password_component, &LabelEditComponent::updateEditText);
+    // QObject::disconnect(button_widget, &QPushButton::clicked, retype_password_component, &LabelEditComponent::updateEditText);
 
 	// Connection for checking same password in both password fields
 	QObject::connect(button_widget, &QPushButton::clicked, 
@@ -231,9 +231,9 @@ void initLogin(StackedWidgets *App, QWidget* window) {
     signin_button_widget->setFixedSize(QSize(app_width / 2, app_height / 32));
 
     // Initialization of Widget Components
-    WidgetComponent *username_component = new WidgetComponent();
-    WidgetComponent *email_component = new WidgetComponent();
-    WidgetComponent *password_component = new WidgetComponent();
+    LabelEditComponent *username_component = new LabelEditComponent();
+    LabelEditComponent *email_component = new LabelEditComponent();
+    LabelEditComponent *password_component = new LabelEditComponent();
 
     username_component->init(username_widget, "Username");
     password_component->init(password_widget, "Password");
@@ -269,8 +269,8 @@ void initLogin(StackedWidgets *App, QWidget* window) {
 	main_widget_layout->addWidget(signin_button_container);
 
 	// Connection of submit button with username and password text fields
-	QObject::connect(button_widget, &QPushButton::clicked, username_component, &WidgetComponent::updateEditText);
-    QObject::connect(button_widget, &QPushButton::clicked, password_component, &WidgetComponent::updateEditText);
+	QObject::connect(button_widget, &QPushButton::clicked, username_component, &LabelEditComponent::updateEditText);
+    QObject::connect(button_widget, &QPushButton::clicked, password_component, &LabelEditComponent::updateEditText);
 
 	QObject::connect(button_widget, &QPushButton::clicked, 
 	[username_component, password_component]() {

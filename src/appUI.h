@@ -9,6 +9,7 @@
 #include <QtWidgets/QStackedWidget>
 #include <QtWidgets/QToolButton>
 #include <QtWidgets/QComboBox>
+#include <QtWidgets/QSizePolicy>
 #include <iostream>
 
 extern int default_font_size;
@@ -80,7 +81,7 @@ public:
 
 // Sub class for the individual input field widgets in login/Register page
 // each object of this class represents a text label and its input field
-class WidgetComponent : public QObject {
+class LabelEditComponent : public QObject {
     Q_OBJECT // A QT macro that allows the use of slots
 private:
 	QString field_text;
@@ -92,7 +93,18 @@ public:
     QLineEdit* getWidget_edit();
 	QString getFieldText();
 	void togglePasswordVisibility(QPushButton*);
-    bool checkSamePassword(WidgetComponent* password_component);
+    bool checkSamePassword(LabelEditComponent* password_component);
 public slots:
 	void updateEditText();
+};
+
+class LabelComboComponent : public QObject {
+    Q_OBJECT // A QT macro that allows the use of slots
+private:
+    QLabel *widget_label;
+    QComboBox *widget_combobox;
+public:
+    void init(QWidget*, QString, QStringList, int font_size = default_font_size);
+    QLabel* getWidget_label();
+    QComboBox* getWidget_combo();
 };

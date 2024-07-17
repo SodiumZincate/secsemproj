@@ -5,7 +5,7 @@ void initAddLeague(StackedWidgets *App, QWidget* window){
     window->setWindowTitle("Add League");
 
     QWidget *main_widget = new QWidget(window);
-    main_widget->setFixedSize(app_width*3/2, app_height*3/2);
+    main_widget->setFixedSize(app_width, app_height);
     // main_widget->setStyleSheet("QWidget{background-color:red}");
     QVBoxLayout *main_widget_layout = new QVBoxLayout(main_widget);
     main_widget_layout->setAlignment(Qt::AlignCenter); // Center align the contents
@@ -14,77 +14,81 @@ void initAddLeague(StackedWidgets *App, QWidget* window){
     main_text->init(window,"ADD LEAGUE");
     QLabel *main_label=main_text->getWidget_label();
 
-    appUI *team_name=new appUI();
-    team_name->init(window);
-    QWidget *team_name_widget=team_name->getWidget();
-    QHBoxLayout *team_name_layout=team_name->getHLayout();
+	QWidget *league_name = new QWidget(window);
+	// league_name->setStyleSheet("QWidget{background-color:red}");
+    league_name->setFixedHeight(app_height/8);
+    QHBoxLayout *league_name_layout=new QHBoxLayout(league_name);
+    league_name_layout->setAlignment(Qt::AlignLeft);
 
-    WidgetComponent *team_name_component=new WidgetComponent();
-    team_name_component->init(team_name_widget,"Team Name");
+    LabelEditComponent *league_name_component=new LabelEditComponent();
+    league_name_component->init(league_name,"League Name");
+    QLabel *league_name_label=league_name_component->getWidget_label();
+    league_name_label->setFixedSize(QSize(app_width / 4, app_height / 10));
+    QLineEdit *league_name_edit=league_name_component->getWidget_edit();
+	league_name_edit->setFixedSize(app_width*72/100, app_height/10);
+
+    league_name_layout->addWidget(league_name_label);
+    league_name_layout->addWidget(league_name_edit);
     
-    QLabel *team_name_label=team_name_component->getWidget_label();
-
-    QLineEdit *team_name_edit=team_name_component->getWidget_edit();
-
-    team_name_layout->addWidget(team_name_label);
-    team_name_layout->addWidget(team_name_edit);
-    
+	//
     QWidget *group_stage=new QWidget(window);
+	// group_stage->setStyleSheet("QWidget{background-color:red}");
     group_stage->setFixedHeight(app_height/8);
     QHBoxLayout *group_stage_layout=new QHBoxLayout(group_stage);
     group_stage_layout->setAlignment(Qt::AlignLeft);
 
-    appText *group_text=new appText();
-    group_text->init(window,"No. of group stages: ",default_font_size-10);
-    QLabel *group_label=group_text->getWidget_label();
-    group_label->setFixedWidth(app_width/2);
+	LabelComboComponent *group_stage_component = new LabelComboComponent();
+	group_stage_component->init(window, "No. of Group Stages: ", {"0","1","2"}, default_font_size-10);
+    QLabel *group_stage_label = group_stage_component->getWidget_label();
+    QComboBox *group_stage_combobox = group_stage_component->getWidget_combo();
+	
+    group_stage_layout->addWidget(group_stage_label);
+    group_stage_layout->addWidget(group_stage_combobox);
 
-    QComboBox *combobox=new QComboBox(window);
-    combobox->addItems({"1","2","3"});
-    group_stage_layout->addWidget(group_label);
-    group_stage_layout->addWidget(combobox);
-
+	//
     QWidget *round_robin=new QWidget(window);
     round_robin->setFixedHeight(app_height/8);
     QHBoxLayout *round_robin_layout=new QHBoxLayout(round_robin);
     round_robin_layout->setAlignment(Qt::AlignLeft);
-    appText *round_robin_text=new appText();
-    round_robin_text->init(window,"Round Robin: ",default_font_size-10);
-    QLabel *round_robin_label=round_robin_text->getWidget_label();
-    round_robin_label->setFixedWidth(app_width/2);
-    QComboBox *round_robin_combobox=new QComboBox(window);
-    round_robin_combobox->addItems({"1","2"});
-    round_robin_layout->addWidget(round_robin_label);
-    round_robin_layout->addWidget(round_robin_combobox); 
 
-    QWidget *qualifiers=new QWidget(window);
+	LabelComboComponent *round_robin_component = new LabelComboComponent();
+	round_robin_component->init(window, "Round Robin: ", {"1","2"}, default_font_size-10);
+    QLabel *round_robin_label = round_robin_component->getWidget_label();
+    QComboBox *round_robin_combobox = round_robin_component->getWidget_combo();
+	
+    round_robin_layout->addWidget(round_robin_label);
+    round_robin_layout->addWidget(round_robin_combobox);
+
+	//
+	QWidget *qualifiers=new QWidget(window);
     qualifiers->setFixedHeight(app_height/8);
     QHBoxLayout *qualifiers_layout=new QHBoxLayout(qualifiers);
     qualifiers_layout->setAlignment(Qt::AlignLeft);
-    appText *qualifiers_text=new appText();
-    qualifiers_text->init(window,"Qualifier: ",default_font_size-10);
-    QLabel *qualifiers_label=qualifiers_text->getWidget_label();
-    qualifiers_label->setFixedWidth(app_width/2);
-    QComboBox *qualifiers_combobox=new QComboBox(window);
-    qualifiers_combobox->addItems({"1","2","4"});
+
+	LabelComboComponent *qualifiers_component = new LabelComboComponent();
+	qualifiers_component->init(window, "Qualifiers: ", {"1","2","4"}, default_font_size-10);
+    QLabel *qualifiers_label = qualifiers_component->getWidget_label();
+    QComboBox *qualifiers_combobox = qualifiers_component->getWidget_combo();
+
     qualifiers_layout->addWidget(qualifiers_label);
     qualifiers_layout->addWidget(qualifiers_combobox);
 
-    QWidget *no_of_groups=new QWidget(window);
+	//
+	QWidget *no_of_groups=new QWidget(window);
     no_of_groups->setFixedHeight(app_height/8);
     QHBoxLayout *no_of_groups_layout=new QHBoxLayout(no_of_groups);
     no_of_groups_layout->setAlignment(Qt::AlignLeft);
-    appText *no_of_groups_text=new appText();
-    no_of_groups_text->init(window,"No of groups: ",default_font_size-10);
-    QLabel *no_of_groups_label=no_of_groups_text->getWidget_label();
-    no_of_groups_label->setFixedWidth(app_width/2);
-    QComboBox *no_of_groups_combobox=new QComboBox(window);
-    no_of_groups_combobox->addItems({"1","2","4","8"});
+
+	LabelComboComponent *no_of_groups_component = new LabelComboComponent();
+	no_of_groups_component->init(window, "No of groups: ", {"1","2","4","8"}, default_font_size-10);
+    QLabel *no_of_groups_label = no_of_groups_component->getWidget_label();
+    QComboBox *no_of_groups_combobox = no_of_groups_component->getWidget_combo();
+
     no_of_groups_layout->addWidget(no_of_groups_label);
     no_of_groups_layout->addWidget(no_of_groups_combobox);
 
     main_widget_layout->addWidget(main_label);
-    main_widget_layout->addWidget(team_name_widget);
+    main_widget_layout->addWidget(league_name);
     main_widget_layout->addWidget(group_stage);
     main_widget_layout->addWidget(round_robin);
     main_widget_layout->addWidget(qualifiers);
