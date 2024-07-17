@@ -47,6 +47,8 @@ void initRegister(StackedWidgets *App, QWidget* window);
 void initDashboard(StackedWidgets *App, QWidget* window);
 void initAddLeague(StackedWidgets *App, QWidget* window);
 
+void initAddLeague(StackedWidgets *App, QWidget* window);
+
 // Main class for the widgets in login/Register page
 // (Username, Email, Password) widgets
 class LoginUI {

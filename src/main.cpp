@@ -21,6 +21,7 @@ int main(int argc, char *argv[]) {
 
 	screenWidth = screenSize.width();
     screenHeight = screenSize.height();
+	std::cout << screenWidth << std::endl;
 
     app_width = screenWidth / 2;
     app_height = screenHeight / 2;
@@ -53,6 +54,7 @@ int main(int argc, char *argv[]) {
 
 	// Set initial page to login page
 	stack1.setCurrentIndex(3);
+
 
 	// stack1.addtoLayout();
 	stack1.mainWidget.setLayout(stack1.appLayout);
