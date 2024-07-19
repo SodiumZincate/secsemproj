@@ -10,6 +10,9 @@
 #include <QtWidgets/QToolButton>
 #include <QtWidgets/QComboBox>
 #include <QtWidgets/QSizePolicy>
+#include <QtWidgets/QTableWidget>
+#include <QtWidgets/QHeaderView>
+#include <QtWidgets/QScrollBar>
 #include <iostream>
 
 extern int default_font_size;
