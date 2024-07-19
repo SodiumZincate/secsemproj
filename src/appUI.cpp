@@ -49,7 +49,7 @@ void appText::init(QWidget* parent, QString text, int font_size) {
     login_text->setFont(QFont("Sans", font_size));
     login_text->setText(text);
     login_text->setAlignment(Qt::AlignCenter);
-    login_text->setMargin(60);
+    login_text->setMargin(app_width/42);
 }
 
 QLabel* appText::getWidget_label() {

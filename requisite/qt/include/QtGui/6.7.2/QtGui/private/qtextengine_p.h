@@ -481,7 +481,7 @@ public:
 
     inline bool ensureSpace(int nGlyphs) const {
         if (layoutData->glyphLayout.numGlyphs - layoutData->used < nGlyphs)
-            return layoutData->reallocate((((layoutData->used + nGlyphs)*3/2 + 15) >> 4) << 4);
+            return layoutData->reallocate((((layoutData->used + nGlyphs) + 15) >> 4) << 4);
         return true;
     }
 

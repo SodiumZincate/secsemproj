@@ -25,18 +25,18 @@ int main(int argc, char *argv[]) {
 	screenWidth = screenSize.width();
     screenHeight = screenSize.height();
 	std::cout << screenWidth << std::endl;
+	std::cout << screenHeight << std::endl;
+
+	#ifdef _WIN32
+        default_font_size = screenWidth/65;
+	#elif defined(__linux__)
+		default_font_size = screenWidth/75;
+	#endif
 
     app_width = screenWidth / 2;
     app_height = screenHeight / 2;
 	
-	#ifdef _WIN32
-		if(screenWidth < 1500)
-   			default_font_size = 22;
-		else
-			default_font_size = 26;
-	#elif defined(__linux__)
-		default_font_size = 34;
-	#endif
+	std::cout << screenWidth << std::endl;
 
 	StackedWidgets stack1;
 	QWidget registerApp;
@@ -69,6 +69,7 @@ int main(int argc, char *argv[]) {
 	stack1.mainWidget.setFont(QFont("Sans", default_font_size - 12));
     stack1.mainWidget.resize(app_width*3/2, app_height*3/2);
     stack1.mainWidget.show();
+    stack1.mainWidget.showMaximized();
 
     return app.exec();
 }
