@@ -5,8 +5,8 @@ using namespace std;
 int updateDatabase(string clientReq, string mode, stringstream &clientRes) {
 	httplib::Client cli("localhost", 8080);
 	
-	if (strcmp(mode.c_str(), "insert") == 0){
-		if (auto res = cli.Post("/login/insert?=login.db", clientReq, "text/plain")) {
+	if (strcmp(mode.c_str(), "register") == 0){
+		if (auto res = cli.Post("/login/register?=login.db", clientReq, "text/plain")) {
 			cout << res->status << endl;
 			cout << res->get_header_value("Content-Type") << endl;
 		}

@@ -70,10 +70,11 @@ void run_server() {
         res.set_content(content, "text/plain");
     });
 
-	svr.Post("/login/insert", [upload_dir](const Request &req, Response &res) {
+	svr.Post("/login/register", [upload_dir](const Request &req, Response &res) {
 		string cli_req = req.body;
+        std::string filepath = upload_dir + "/" + "login.db";
+		// queryDatabase(cli_req, filepath, res);
 
-        std::string filepath = upload_dir + "/" + "leaguedata.db";
 		insertDatabase(cli_req, filepath);
     });
 

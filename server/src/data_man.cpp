@@ -138,7 +138,6 @@ void insertDatabase(string cli_req, string file)
 	}
 
 	std::cout << "Table Contents: " << std::endl;
-	query(db);
 
 	sqlite3_close(db);
 	

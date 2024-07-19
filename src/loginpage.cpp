@@ -144,31 +144,65 @@ void initRegister(StackedWidgets *App, QWidget* window) {
 
 	// Connection for checking same password in both password fields
 	QObject::connect(button_widget, &QPushButton::clicked, 
-    	[username_component, email_component, password_component, retype_password_component]() {
+    	[=]() {
 			bool isSamePassword = password_component->checkSamePassword(retype_password_component);
 			std::string username_text, email_text, password_text;
 			username_text = (username_component->getFieldText()).toStdString();
 			email_text = (email_component->getFieldText()).toStdString();
 			password_text = (password_component->getFieldText()).toStdString();
 
-			std::string clientReq = username_text + "\n" + email_text + "\n" + password_text + "\n"; 
-			std::stringstream clientRes;
+		std::string clientReq = username_text + "\n";
+		std::stringstream clientRes;
+		std::string streamLine;
+		std::vector<std::string> streamList;
 
-			if(isSamePassword){
-				if(username_text != "" && email_text != "" && password_text != ""){
-					int errorDatabase = updateDatabase(clientReq, "insert", clientRes);
-					if(errorDatabase!=0){
-						std::cout << "\nError initializing database" << std::endl;
-					}
-				}
-				else{
-					std::cout << "Fields can't be empty" << std::endl;
-				}
+		if(username_text != "" && password_text != ""){
+			int errorDatabase = updateDatabase(clientReq, "query", clientRes);
+			if(errorDatabase!=0){
+				std::cout << "\nError initializing database" << std::endl;
 			}
 			else{
-				std::cout << "Passwords do not match" << std::endl;
+				while(getline(clientRes, streamLine, '\n')){
+					streamList.push_back(streamLine);
+					std::cout << "Streamline: " << streamLine << std::endl;
+					std::cout << "Username: " << username_text << std::endl;
+					std::cout << "Password: " << password_text << std::endl;
+				}
+				if(strcmp(username_text.c_str(), streamList[1].c_str())==0) {
+					std::cout << "You are already registered" << std::endl;
+					username_component->usernameExists(true);
+					email_component->deleteEditText();
+					password_component->deleteEditText();
+					retype_password_component->deleteEditText();
+				}
+				else{
+					clientReq = username_text + "\n" + email_text + "\n" + password_text + "\n"; 
+					clientRes.clear();
+
+					if(isSamePassword){
+						if(username_text != "" && email_text != "" && password_text != ""){
+							int errorDatabase = updateDatabase(clientReq, "register", clientRes);
+							if(errorDatabase!=0){
+								std::cout << "\nError initializing database" << std::endl;
+							}
+							else{
+								username_component->deleteEditText();
+								email_component->deleteEditText();
+								password_component->deleteEditText();
+								retype_password_component->deleteEditText();
+								App->changeWindow_forward();
+							}
+						}
+					}
+					else{
+						std::cout << "Passwords do not match" << std::endl;
+					}
+				}
 			}
-			});
+		}
+		else{
+			std::cout << "Fields can't be empty" << std::endl;
+		}});
 
 	// Connection for changing pages
 	QObject::connect(signin_button_widget, &QPushButton::clicked, App, &StackedWidgets::changeWindow_forward);
@@ -310,6 +344,8 @@ void initLogin(StackedWidgets *App, QWidget* window) {
 				}
 				else{
 					std::cout << "Incorrect Credentials" << std::endl;
+					username_component->usernameExists(false);
+					password_component->usernameExists(false);
 				}
 			}
 		}

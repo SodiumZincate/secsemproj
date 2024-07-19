@@ -119,6 +119,21 @@ void LabelEditComponent::deleteEditText() {
 	field_text = "";
 }
 
+void LabelEditComponent::usernameExists(bool userExists) {
+	if(userExists){
+		field_text = "";
+		widget_edit->setText("");
+		widget_edit->setPlaceholderText("Username already exists");
+		widget_edit->setStyleSheet("QLineEdit { placeholder-text-color: #FB3B3B }");
+	}
+	else{
+		field_text = "";
+		widget_edit->setText("");
+		widget_edit->setPlaceholderText("Incorrect Credentials");
+		widget_edit->setStyleSheet("QLineEdit { placeholder-text-color: #FB3B3B }");
+	}
+}
+
 bool LabelEditComponent::checkSamePassword(LabelEditComponent* retype_password_component) {
     if(QString(this->widget_edit->text()) == QString(retype_password_component->widget_edit->text())){
 		qDebug(qUtf8Printable(this->widget_edit->text()));

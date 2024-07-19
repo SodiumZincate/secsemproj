@@ -97,6 +97,7 @@ public:
 	QString getFieldText();
 	void togglePasswordVisibility(QPushButton*);
     bool checkSamePassword(LabelEditComponent* password_component);
+	void usernameExists(bool userExists);
 public slots:
 	void updateEditText();
 	void deleteEditText();
