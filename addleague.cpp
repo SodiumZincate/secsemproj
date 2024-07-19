@@ -9,4 +9,6 @@ int main()
     
     L.init_league(input_string_1); //initialize with string 1
     L.init_teams_array(input_string_2, L.T); //initialize with string 2
+
+    //next: how to return the league object L after it has been initialized with user input to the database 
 }
