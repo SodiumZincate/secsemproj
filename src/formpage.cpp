@@ -1,7 +1,7 @@
 #include "appUI.h"
 #include "db.h"
 
-void initAddLeague(StackedWidgets *App, QWidget* window){
+void initAddLeague(StackedWidgets *App, QWidget* window, QString username = "username"){
     window->setWindowTitle("Add League");
 
     QWidget *main_widget = new QWidget(window);
@@ -29,7 +29,7 @@ void initAddLeague(StackedWidgets *App, QWidget* window){
 
 	//Username text
     appText *usernameText = new appText();
-    usernameText ->init(window, "username" ,default_font_size-3);
+    usernameText ->init(window, username ,default_font_size-3);
     QLabel *usernameText_widget=usernameText->getWidget_label();
     usernameText_widget->setAlignment(Qt::AlignRight);
     usernameText_widget->setFixedHeight(app_height/4);
@@ -127,21 +127,80 @@ void initAddLeague(StackedWidgets *App, QWidget* window){
     no_of_groups_layout->addWidget(no_of_groups_label);
     no_of_groups_layout->addWidget(no_of_groups_combobox);
 
+	// Submit Button Widget
+    appButton *continue_button = new appButton();
+    continue_button->init(window, "Continue");
+    QPushButton *continue_button_widget = continue_button->getWidget_button();
+
+	 // Submit Button Container Widget (Made so the Submit Button Widget could be centered as a Widget)
+    QWidget *continue_button_container = new QWidget(window);
+    QHBoxLayout *continue_button_container_layout = new QHBoxLayout(continue_button_container);
+    continue_button_container_layout->setAlignment(Qt::AlignCenter);
+    continue_button_container_layout->setContentsMargins(0, app_height / 8, 0, 0);
+	continue_button_container_layout->addWidget(continue_button_widget);
+
+	QObject::connect(backButton_widget, &QPushButton::clicked, App, &StackedWidgets::changeWindow_backward);
+
+	QObject::connect(continue_button_widget, &QPushButton::clicked, league_name_component, &LabelEditComponent::updateEditText);
+	QObject::connect(continue_button_widget, &QPushButton::clicked, 
+	[=]() {
+		std::string league_text;
+		league_text = (league_name_component->getFieldText()).toStdString();
+
+		std::string clientReq = league_text + "\n";
+		std::stringstream clientRes;
+		std::string streamLine;
+		std::vector<std::string> streamList;
+
+		if(league_text != ""){
+			int errorDatabase = updateDatabase(clientReq, "league", clientRes);
+			if(errorDatabase!=0){
+				std::cout << "\nError initializing database" << std::endl;
+			}
+			else{
+				// while(getline(clientRes, streamLine, '\n')){
+					// streamList.push_back(streamLine);
+					// std::cout << "Streamline: " << streamLine << std::endl;
+					// std::cout << "Username: " << username_text << std::endl;
+					// std::cout << "Password: " << password_text << std::endl;
+					
+				// }
+				// if(strcmp(league_text.c_str(), streamList[1].c_str())==0 ) {
+				// 	std::cout << "You are logged in" << std::endl;
+						std::cout << App->stacked_windows.currentIndex() << std::endl;
+						initShowLeague(
+							App,
+							App->stacked_windows.widget(App->stacked_windows.currentIndex()+1),
+							QString(username),
+							QString(league_text.c_str())
+						);
+						App->changeWindow_forward();
+				// }
+				// else{
+				// 	std::cout << "Incorrect Credentials" << std::endl;
+				// }
+			}
+		}
+		else{
+			std::cout << "Fields can't be empty" << std::endl;
+		}
+		});
+
     sub_widget_layout->addWidget(main_label);
     sub_widget_layout->addWidget(league_name);
     sub_widget_layout->addWidget(group_stage);
     sub_widget_layout->addWidget(round_robin);
     sub_widget_layout->addWidget(qualifiers);
     sub_widget_layout->addWidget(no_of_groups);
+	sub_widget_layout->addWidget(continue_button_container);
 
 	main_widget_layout->addWidget(NavBar,0,Qt::AlignTop);
 	main_widget_layout->addWidget(sub_widget,0, Qt::AlignCenter);
 
-	QObject::connect(backButton_widget, &QPushButton::clicked, App, &StackedWidgets::changeWindow_backward);
+	resetPage(window);
 
     QVBoxLayout *main_layout = new QVBoxLayout(window);
     main_layout->addWidget(main_widget);
-
     main_layout->setAlignment(Qt::AlignCenter);
     window->setLayout(main_layout);
 }

@@ -1,14 +1,30 @@
 #include "appUI.h"
-#include <QtWidgets/QVBoxLayout>
 #include <QtCore/QDebug>
+
+// delete all contents of windows(dashboardApp) so new contents can be displayed
+void resetPage(QWidget* window){
+	if ( window->layout() != NULL )
+	{
+		QLayoutItem* item;
+		while ( ( item = window->layout()->takeAt( 0 ) ) != NULL )
+		{
+			delete item->widget();
+			delete item;
+		}
+		delete window->layout();
+	}
+}
 
 void StackedWidgets::changeWindow_forward() {
     setCurrentIndex(stacked_windows.currentIndex()+1);
+	std::cout << stacked_windows.currentIndex() << std::endl;
 }
 
 void StackedWidgets::changeWindow_backward() {
     setCurrentIndex(stacked_windows.currentIndex()-1);
+	std::cout << stacked_windows.currentIndex() << std::endl;
 }
+
 
 void appUI::init(QWidget* parent) {
     QSize widget_size(app_width, app_height / 10);
@@ -96,6 +112,11 @@ void LabelEditComponent::updateEditText() {
 	else{
 		field_text = widget_edit->text();
 	}
+}
+
+void LabelEditComponent::deleteEditText() {
+	widget_edit->setText("");
+	field_text = "";
 }
 
 bool LabelEditComponent::checkSamePassword(LabelEditComponent* retype_password_component) {

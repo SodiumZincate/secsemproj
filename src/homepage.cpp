@@ -1,14 +1,14 @@
 #include "appUI.h"
 #include "db.h"
 
-void initDashboard(StackedWidgets *App, QWidget* window){
+void initDashboard(StackedWidgets *App, QWidget* window, QString username = "username"){
 	window->setWindowTitle("Dashboard");
 
-	QWidget *textbox_widget = new QWidget(window);
-	textbox_widget->setFixedSize(app_width*3/2, app_height*3/2);
-	// textbox_widget->setStyleSheet("QWidget{background-color:red}");
-	QVBoxLayout *textbox_widget_layout = new QVBoxLayout(textbox_widget);
-	//textbox_widget_layout->setAlignment(Qt::AlignCenter); // Center align the contents
+	QWidget *main_widget = new QWidget(window);
+	main_widget->setFixedSize(app_width*3/2, app_height*3/2);
+	// main_widget->setStyleSheet("QWidget{background-color:red}");
+	QVBoxLayout *main_widget_layout = new QVBoxLayout(main_widget);
+	//main_widget_layout->setAlignment(Qt::AlignCenter); // Center align the contents
 
     appText *maintext = new appText();
     maintext->init(window,"League Manager");
@@ -27,7 +27,7 @@ void initDashboard(StackedWidgets *App, QWidget* window){
 
 	//Back Button
     appButton *backButton= new appButton();
-    backButton->init(window,"BACK",default_font_size-2);
+    backButton->init(window,"Log Out",default_font_size-2);
     QPushButton *backButton_widget = backButton->getWidget_button();
     backButton_widget->setFixedSize(app_width/8,app_height/12);
 	// backButton_widget->setStyleSheet("QPushButton{background-color:green}");
@@ -41,7 +41,7 @@ void initDashboard(StackedWidgets *App, QWidget* window){
 
 
     appText *usernameText = new appText();
-    usernameText ->init(window, "username" ,default_font_size-3);
+    usernameText ->init(window, username ,default_font_size-3);
     QLabel *usernameText_widget=usernameText->getWidget_label();
     usernameText_widget->setAlignment(Qt::AlignRight);
     usernameText_widget->setFixedHeight(app_height/4);
@@ -104,16 +104,28 @@ void initDashboard(StackedWidgets *App, QWidget* window){
 
     leagueButton_container_layout->addWidget(leagueButton_widget);
 
-    textbox_widget_layout->addWidget(NavBar);
-    textbox_widget_layout->addWidget(mainLabel);
-    textbox_widget_layout->addWidget(button_container);
-    textbox_widget_layout->addWidget(leagueButton_container);
+    main_widget_layout->addWidget(NavBar);
+    main_widget_layout->addWidget(mainLabel);
+    main_widget_layout->addWidget(button_container);
+    main_widget_layout->addWidget(leagueButton_container);
 
 	QObject::connect(backButton_widget, &QPushButton::clicked, App, &StackedWidgets::changeWindow_backward);
-	QObject::connect(leagueButton_widget, &QPushButton::clicked, App, &StackedWidgets::changeWindow_forward);
+	QObject::connect(leagueButton_widget, &QPushButton::clicked,
+	[=](){
+		std::cout << App->stacked_windows.currentIndex() << std::endl;
+		initAddLeague(
+			App,
+			App->stacked_windows.widget(App->stacked_windows.currentIndex()+1),
+			QString(username)
+		);
+		App->changeWindow_forward();
+	}
+	);
+
+	resetPage(window);
 
 	QVBoxLayout *main_layout = new QVBoxLayout(window);
-    main_layout->addWidget(textbox_widget);
+    main_layout->addWidget(main_widget);
     main_layout->setAlignment(Qt::AlignCenter);
     window->setLayout(main_layout);
 }

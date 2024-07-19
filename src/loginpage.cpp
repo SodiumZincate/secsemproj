@@ -273,7 +273,7 @@ void initLogin(StackedWidgets *App, QWidget* window) {
     QObject::connect(button_widget, &QPushButton::clicked, password_component, &LabelEditComponent::updateEditText);
 
 	QObject::connect(button_widget, &QPushButton::clicked, 
-	[username_component, password_component]() {
+	[=]() {
 		std::string username_text, password_text;
 		username_text = (username_component->getFieldText()).toStdString();
 		password_text = (password_component->getFieldText()).toStdString();
@@ -294,11 +294,19 @@ void initLogin(StackedWidgets *App, QWidget* window) {
 					std::cout << "Streamline: " << streamLine << std::endl;
 					std::cout << "Username: " << username_text << std::endl;
 					std::cout << "Password: " << password_text << std::endl;
-					
 				}
 				if(strcmp(username_text.c_str(), streamList[1].c_str())==0 
 				&& strcmp(password_text.c_str(), streamList[3].c_str())==0) {
 					std::cout << "You are logged in" << std::endl;
+					std::cout << App->stacked_windows.currentIndex() << std::endl;
+					initDashboard(
+						App,
+						App->stacked_windows.widget(App->stacked_windows.currentIndex()+1),
+						QString(username_text.c_str())
+					);
+					username_component->deleteEditText();
+					password_component->deleteEditText();
+					App->changeWindow_forward();
 				}
 				else{
 					std::cout << "Incorrect Credentials" << std::endl;

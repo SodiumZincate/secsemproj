@@ -7,6 +7,7 @@
 #include "appUI.cpp"
 #include "homepage.cpp"
 #include "formpage.cpp"
+#include "leaguepage.cpp"
 #include "db.cpp"
 
 int app_height = 0;
@@ -42,20 +43,23 @@ int main(int argc, char *argv[]) {
 	QWidget loginApp;
 	QWidget dashboardApp;
 	QWidget addleagueApp;
+	QWidget showLeagueApp;
 
 	// Initializa login and register pages
 	initRegister(&stack1, &registerApp);
 	initLogin(&stack1, &loginApp);
-	initDashboard(&stack1, &dashboardApp);
-	initAddLeague(&stack1, &addleagueApp);
+	// initDashboard(&stack1, &dashboardApp);
+	// initAddLeague(&stack1, &addleagueApp);
+	// initShowLeague(&stack1, &showLeagueApp);
 
 	stack1.addWidget(&registerApp);
 	stack1.addWidget(&loginApp);
 	stack1.addWidget(&dashboardApp);
 	stack1.addWidget(&addleagueApp);
+	stack1.addWidget(&showLeagueApp);
 
 	// Set initial page to login page
-	stack1.setCurrentIndex(2);
+	stack1.setCurrentIndex(1);
 
 
 	// stack1.addtoLayout();
