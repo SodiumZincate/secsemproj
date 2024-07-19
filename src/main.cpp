@@ -48,9 +48,9 @@ int main(int argc, char *argv[]) {
 	// Initializa login and register pages
 	initRegister(&stack1, &registerApp);
 	initLogin(&stack1, &loginApp);
-	// initDashboard(&stack1, &dashboardApp);
-	// initAddLeague(&stack1, &addleagueApp);
-	// initShowLeague(&stack1, &showLeagueApp);
+	initDashboard(&stack1, &dashboardApp);
+	initAddLeague(&stack1, &addleagueApp);
+	initShowLeague(&stack1, &showLeagueApp);
 
 	stack1.addWidget(&registerApp);
 	stack1.addWidget(&loginApp);
@@ -59,7 +59,7 @@ int main(int argc, char *argv[]) {
 	stack1.addWidget(&showLeagueApp);
 
 	// Set initial page to login page
-	stack1.setCurrentIndex(1);
+	stack1.setCurrentIndex(2);
 
 
 	// stack1.addtoLayout();
