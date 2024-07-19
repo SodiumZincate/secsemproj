@@ -58,15 +58,19 @@ void initShowLeague(StackedWidgets *App, QWidget* window, QString username = "us
 	NavBar_layout->addWidget(usernameText_widget);
 
 	// Table
-	QTableWidget *league_table = new QTableWidget(10, 9, window);
-	league_table->setWindowTitle("QTableWidget Example");
+	QTableWidget *league_table = new QTableWidget(20, 9, window);
+	// league_table->setWindowTitle("QTableWidget Example");
     // league_table->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-    league_table->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    // league_table->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     // league_table->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Maximum);
 	league_table->setMinimumSize(app_width*5/4, app_height*5/4);
 	league_table->setColumnWidth(0, app_width/3);
 
-	QSize icon_size(app_width/league_table->rowCount()/2, app_width/league_table->rowCount()/2);
+	QScrollBar *scroll_bar = new QScrollBar();
+	league_table->setVerticalScrollBar(scroll_bar);
+
+	// QSize icon_size(app_width/league_table->rowCount()/2, app_width/league_table->rowCount()/2);
+	QSize icon_size(app_width/16, app_height/16);
 	league_table->setIconSize(icon_size);
 
 	for (int i = 0; i < league_table->columnCount(); i++) {
@@ -76,9 +80,23 @@ void initShowLeague(StackedWidgets *App, QWidget* window, QString username = "us
             league_table->horizontalHeader()->setSectionResizeMode(i, QHeaderView::Stretch);
         }
     }
-	for (int i = 0; i < league_table->rowCount(); i++) {
-		league_table->setRowHeight(i, app_height/8);
-    }
+	if(league_table->rowCount()<=4){
+		league_table->setMinimumSize(app_width*5/4, app_height*5/10);
+		league_table->setIconSize(QSize(app_width/14, app_height/14));
+	}
+	else if(league_table->rowCount()<=8){
+		league_table->setMinimumSize(app_width*5/4, app_height*5/6);
+		league_table->setIconSize(QSize(app_width/16, app_height/16));
+	}
+	if(league_table->rowCount()<12){
+		league_table->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+	}
+	else{
+		for (int i = 0; i < league_table->rowCount(); i++) {
+			league_table->setRowHeight(i, app_height/10);
+			league_table->verticalHeader()->setSectionResizeMode(i, QHeaderView::Fixed);
+		}
+	}
 
 	QStringList header_label_list = {
 		"Team Name",
