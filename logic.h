@@ -32,15 +32,8 @@ class Team
     //methods
     public:
     Team();
-    Team(string name, int id); //constructor which initializes team name and team id
     void update_team_data(int goals_for, int goals_against); //function that updates a team data
 };
-
-Team::Team(string name, int id)
-{
-    team_name = name;
-    team_id = id;
-}
 
 void Team::update_team_data(int goals_for, int goals_against)
 {
