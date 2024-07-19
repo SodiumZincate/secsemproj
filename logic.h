@@ -4,6 +4,7 @@
 #include <iostream>
 #include <string>
 #include <sstream>
+#include <vector>
 
 using namespace std;
 
@@ -85,21 +86,10 @@ class League
 
     public:
     League();
-    League(string name, int id, int gs, int rr, int q, int g, int n);  //constructor which initializes all properties
     void update_league_positions(); //function to update position of teams in name league based on points 
+    void init_league(string input_string); //function to initialize league's fixed properties, based on the input string
     void init_teams_array(string input_string, Team T[]); //function to initialize teams' fixed properties(name, id) in a league, based on the input string
 };
-
-League::League(string name, int id, int gs, int rr, int q, int g, int n)
-{
-    league_name = name;
-    league_id = id;
-    league_group_stages = gs;
-    league_round_robin = rr;
-    league_qualifiers = q;
-    league_groups = g;
-    league_team_number = n;
-}
 
 void League::update_league_positions()
 { 
@@ -113,6 +103,25 @@ void League::update_league_positions()
         }
     }
 } 
+
+void League::init_league(string input_string)
+{
+    string token;
+    int i = 0;
+    stringstream tokenStream(input_string);
+    vector<string> list;
+    while(getline(tokenStream, token, '\n'))
+    {
+        list.push_back(token);
+    }   
+    league_name = list[0];
+    league_id = stoi(list[1]);
+    league_group_stages = stoi(list[2]);
+    league_round_robin = stoi(list[3]);
+    league_qualifiers = stoi(list[4]);
+    league_groups = stoi(list[5]);
+    league_team_number = stoi(list[6]);
+}
 
 void League::init_teams_array(string input_string, Team T[])
 {
