@@ -11,10 +11,12 @@ void initShowLeague(StackedWidgets *App, QWidget* window, QString username = "us
     main_widget_layout->setAlignment(Qt::AlignCenter); // Center align the contents
 
     QWidget *sub_widget = new QWidget(window);
-    sub_widget->setFixedSize(app_width*3/2, app_height*3/2);
+    // sub_widget->setFixedSize(app_width*3/2, app_height*3/2);
     // sub_widget->setStyleSheet("QWidget{background-color:red}");
+	// sub_widget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Maximum);
     QVBoxLayout *sub_widget_layout = new QVBoxLayout(sub_widget);
     sub_widget_layout->setAlignment(Qt::AlignTop);
+	sub_widget_layout->setSpacing(80);
 
 	//NavBar
     QWidget *NavBar = new QWidget(window);
@@ -57,100 +59,139 @@ void initShowLeague(StackedWidgets *App, QWidget* window, QString username = "us
 	NavBar_layout->addWidget(leaguenameText_widget);
 	NavBar_layout->addWidget(usernameText_widget);
 
-	// Table
-	QTableWidget *league_table = new QTableWidget(8, 9, window);
-	// league_table->setWindowTitle("QTableWidget Example");
-    // league_table->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-    // league_table->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-    // league_table->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Maximum);
-	league_table->setMinimumSize(app_width*5/4, app_height*5/4);
-	league_table->setColumnWidth(0, app_width/3);
+	// // Table
+	// QTableWidget *league_table = new QTableWidget(8, 9, window);
+	// // league_table->setWindowTitle("QTableWidget Example");
+    // // league_table->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    // // league_table->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    // // league_table->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Maximum);
+	// league_table->setMinimumSize(app_width*5/4, app_height*5/4);
+	// league_table->setColumnWidth(0, app_width/3);
 
-	QScrollBar *scroll_bar = new QScrollBar();
-	league_table->setVerticalScrollBar(scroll_bar);
+	// QScrollBar *scroll_bar = new QScrollBar();
+	// league_table->setVerticalScrollBar(scroll_bar);
 
-	// QSize icon_size(app_width/league_table->rowCount()/2, app_width/league_table->rowCount()/2);
-	QSize icon_size(app_width/16, app_height/16);
-	league_table->setIconSize(icon_size);
+	// // QSize icon_size(app_width/league_table->rowCount()/2, app_width/league_table->rowCount()/2);
+	// QSize icon_size(app_width/16, app_height/16);
+	// league_table->setIconSize(icon_size);
 
-	QStringList header_label_list = {
-		"Team Name",
-		"MP",
-		"W",
-		"D",
-		"L",
-		"GF",
-		"GA",
-		"GD",
-		"Pts",
-	};
+	// Scroll Area
+	QScrollArea *scroll_area = new QScrollArea(window);
 
-	QStringList icons = {
-		"requisite/assets/images/logo/Atletic Club",
-        "requisite/assets/images/logo/Atletico Madrid",
-		"requisite/assets/images/logo/Barcelona",
-		"requisite/assets/images/logo/Girona",
-		"requisite/assets/images/logo/Real Betis",
-		"requisite/assets/images/logo/Real Madrid",
-		"requisite/assets/images/logo/Real Sociedad",
-		"requisite/assets/images/logo/Sevilla",
-    };
+	// scroll_area->setStyleSheet("QScrollArea { border: none; }");
+	scroll_area->setFixedWidth(app_width*3/2);
+	scroll_area->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+	scroll_area->setWidgetResizable(true);
 
-	QStringList team_names = {
-		"Atletic Club",
-        "Atletico Madrid",
-		"Barcelona",
-		"Girona",
-		"Real Betis",
-		"Real Madrid",
-		"Real Sociedad",
-		"Sevilla",
-    };
 
-	league_table->setHorizontalHeaderLabels(header_label_list);
-	for (int i = 0; i < league_table->rowCount(); i++) {
-		QPixmap pixmap(icons[i]);
-        QIcon icon(pixmap.scaled(800, 800, Qt::KeepAspectRatio, Qt::SmoothTransformation));
-        QTableWidgetItem *table_item = new QTableWidgetItem(icon, team_names[i], 0);
-		// QTableWidgetItem *table_item = new QTableWidgetItem(QIcon(icons[i]), team_names[i], 0);
-		table_item->setFlags(table_item->flags() & ~Qt::ItemIsEditable);
-		league_table->setItem(i, 0, table_item);
-    }
+	for(int i=0; i<4; i++){
+		// Label
+		appText *group_name = new appText();
+		group_name->init(window, QString((std::string("GROUP: ") + std::to_string(i+1)).c_str()), default_font_size-6);
+		QLabel *group_label = group_name->getWidget_label();
 
-	for (int i = 0; i < league_table->columnCount(); i++) {
-        if (i == 0) { 
-            league_table->horizontalHeader()->setSectionResizeMode(i, QHeaderView::Fixed);
-        } else {
-            league_table->horizontalHeader()->setSectionResizeMode(i, QHeaderView::Stretch);
-        }
-    }
-	if(league_table->rowCount()<=4){
-		league_table->setMinimumSize(app_width*5/4, app_height*5/10);
-		league_table->setIconSize(QSize(app_width/14, app_height/14));
-	}
-	else if(league_table->rowCount()<=8){
-		league_table->setMinimumSize(app_width*5/4, app_height*5/6);
-		league_table->setIconSize(QSize(app_width/16, app_height/16));
-	}
-	if(league_table->rowCount()<12){
-		league_table->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-	}
-	else{
-		for (int i = 0; i < league_table->rowCount(); i++) {
-			league_table->setRowHeight(i, app_height/10);
-			league_table->verticalHeader()->setSectionResizeMode(i, QHeaderView::Fixed);
+		// Table
+		QTableWidget *league_table = new QTableWidget(20, 9, window);
+		// league_table->setWindowTitle("QTableWidget Example");
+		// league_table->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+		// league_table->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+		// league_table->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+		league_table->setMinimumSize(app_width*3/2, app_height*5/4);
+		league_table->setColumnWidth(0, app_width/3);
+
+		// QScrollBar *scroll_bar = new QScrollBar();
+		// league_table->setVerticalScrollBar(scroll_bar);
+
+		// QSize icon_size(app_width/league_table->rowCount()/2, app_width/league_table->rowCount()/2);
+		QSize icon_size(app_width/16, app_height/16);
+		league_table->setIconSize(icon_size);
+
+		QStringList header_label_list = {
+			"Team Name",
+			"MP",
+			"W",
+			"D",
+			"L",
+			"GF",
+			"GA",
+			"GD",
+			"Pts",
+		};
+
+		QStringList icons;
+
+		QStringList team_names = {
+			"Atletic Club",
+			"Atletico Madrid",
+			"Barcelona",
+			"Girona",
+			"Real Betis",
+			"Real Madrid",
+			"Real Sociedad",
+			"Sevilla",
+		};
+
+		// for(const auto& entry : std::filesystem::directory_iterator("requisite/assets/images/logo")){
+		// 	std::string logo_name = entry.path().filename().string();
+		// 	std::string logo_dir = "requisite/assets/images/logo/" + logo_name;
+		// 	std::cout << logo_dir << std::endl;
+		// 	icons.push_back(QString(logo_dir.c_str()));
+		// 	icons.push_back(QString(logo_dir.c_str()));
+		// }
+		for(const auto& entry : team_names){
+			std::string logo_dir = "requisite/assets/images/logo/" + entry.toStdString() + ".png";
+			std::cout << logo_dir << std::endl;
+			icons.push_back(QString(logo_dir.c_str()));
 		}
+
+		league_table->setHorizontalHeaderLabels(header_label_list);
+		for (int j = 0; j < league_table->rowCount(); j++) {
+			QPixmap pixmap(icons[0]);
+			QIcon icon(pixmap.scaled(800, 800, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+			QTableWidgetItem *table_item = new QTableWidgetItem(icon, team_names[0], 0);
+			// QTableWidgetItem *table_item = new QTableWidgetItem(QIcon(icons[i]), team_names[i], 0);
+			table_item->setFlags(table_item->flags() & ~Qt::ItemIsEditable);
+			league_table->setItem(j, 0, table_item);
+		}
+		
+		for (int j = 0; j < league_table->columnCount(); j++) {
+			if (j == 0) { 
+				league_table->horizontalHeader()->setSectionResizeMode(j, QHeaderView::Fixed);
+			} else {
+				league_table->horizontalHeader()->setSectionResizeMode(j, QHeaderView::Stretch);
+			}
+		}
+		if(league_table->rowCount()<=4){
+			league_table->setMinimumSize(app_width*5/4, app_height*5/10);
+			league_table->setIconSize(QSize(app_width/14, app_height/14));
+		}
+		else if(league_table->rowCount()<=8){
+			league_table->setMinimumSize(app_width*5/4, app_height*5/6);
+			league_table->setIconSize(QSize(app_width/16, app_height/16));
+		}
+		if(league_table->rowCount()<12){
+			// league_table->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+		}
+		else{
+			for (int j = 0; j < league_table->rowCount(); j++) {
+				league_table->setRowHeight(j, app_height/10);
+				league_table->verticalHeader()->setSectionResizeMode(i, QHeaderView::Fixed);
+			}
+		}
+		sub_widget_layout->addWidget(group_label);
+		sub_widget_layout->addWidget(league_table);
 	}
 
 	QObject::connect(backButton_widget, &QPushButton::clicked, App, &StackedWidgets::changeWindow_backward);
 
-	resetPage(window);
 
-	sub_widget_layout->addWidget(league_table, 0, Qt::AlignCenter);
+    scroll_area->setWidget(sub_widget);
 
     main_widget_layout->addWidget(NavBar, 0, Qt::AlignTop);
-    main_widget_layout->addWidget(sub_widget, 1, Qt::AlignCenter | Qt::AlignTop);
+    main_widget_layout->addWidget(scroll_area);
 
+	resetPage(window);
+	
     QVBoxLayout *main_layout = new QVBoxLayout(window);
     main_layout->addWidget(main_widget);
     main_layout->setAlignment(Qt::AlignCenter);

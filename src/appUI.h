@@ -13,6 +13,7 @@
 #include <QtWidgets/QTableWidget>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QScrollBar>
+#include <QtWidgets/QScrollArea>
 #include <iostream>
 
 extern int default_font_size;
