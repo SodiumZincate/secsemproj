@@ -19,6 +19,8 @@ class Team
     //properties of a team that are fixed, initialized using user input
     string team_name;
     int team_id;
+    int team_user_id;
+    int team_league_id;
 
     //properties of a team that are fixed, initialized by program
     char team_group;
@@ -35,6 +37,8 @@ class Team
 
     //methods
     Team() {}
+    //function to initialize a team's fixed properties in a league, based on the input string from database
+    void init_team(string input_string);
     //function that updates a team data
     void update_team_data(int goals_for, int goals_against); 
 };
@@ -46,6 +50,7 @@ class League
 
     //properties of a league, all fixed, initialized
     int league_id;
+    int league_user_id;
     string league_name;
     int league_group_stages;
     int league_round_robin;
@@ -61,8 +66,8 @@ class League
     void update_league_positions(); 
     //function to initialize league's fixed properties, based on the input string from database
     void init_league(string input_string); 
-    //function to initialize teams' fixed properties(name, id) in a league, based on the input string from database
-    void init_teams_array(string input_string, Team T[]); 
-    //function that assigns a group to each team (in the pattern: team 1: A, team 2: B, team 3:C, team 4: A ...)
+    //function that sorts team array of a league alphabetically
+    void sort_teams_array();
+    //function that assigns a group to each team in a league (in the pattern: team 1: A, team 2: B, team 3:C, team 4: A ...)
     void init_group(Team T[]);
 };
