@@ -49,8 +49,8 @@ void League::init_league(string input_string)
     {
         list.push_back(token);
     }   
-    league_name = list[0];
-    league_id = stoi(list[1]);
+    league_id = stoi(list[0]);
+    league_name = list[1];
     league_group_stages = stoi(list[2]);
     league_round_robin = stoi(list[3]);
     league_qualifiers = stoi(list[4]);
@@ -91,5 +91,25 @@ void League::init_teams_array(string input_string, Team T[])
             if (strcmp((T[j].team_name.c_str()) , T[j + 1].team_name.c_str()) > 0)
             swap(T[j], T[j + 1]); 
         }
+    }
+}
+
+void League::init_group(Team T[])
+{
+    char group[20];
+    int i, j, k;
+    for (i = 0; i < league_groups; i++)
+    {
+        group[i] = (char) (65 + i);
+    }
+
+    k = 0;
+    for(int j = 0; j < league_groups; j++)
+    {
+        for (i = j; i < league_team_number; i += league_groups)
+        {
+            T[i].team_group = group[j];
+        }
+        k++;
     }
 }
