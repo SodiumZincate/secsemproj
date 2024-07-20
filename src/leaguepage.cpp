@@ -58,7 +58,7 @@ void initShowLeague(StackedWidgets *App, QWidget* window, QString username = "us
 	NavBar_layout->addWidget(usernameText_widget);
 
 	// Table
-	QTableWidget *league_table = new QTableWidget(20, 9, window);
+	QTableWidget *league_table = new QTableWidget(8, 9, window);
 	// league_table->setWindowTitle("QTableWidget Example");
     // league_table->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     // league_table->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
@@ -73,8 +73,52 @@ void initShowLeague(StackedWidgets *App, QWidget* window, QString username = "us
 	QSize icon_size(app_width/16, app_height/16);
 	league_table->setIconSize(icon_size);
 
+	QStringList header_label_list = {
+		"Team Name",
+		"MP",
+		"W",
+		"D",
+		"L",
+		"GF",
+		"GA",
+		"GD",
+		"Pts",
+	};
+
+	QStringList icons = {
+		"requisite/assets/images/logo/Atletic Club",
+        "requisite/assets/images/logo/Atletico Madrid",
+		"requisite/assets/images/logo/Barcelona",
+		"requisite/assets/images/logo/Girona",
+		"requisite/assets/images/logo/Real Betis",
+		"requisite/assets/images/logo/Real Madrid",
+		"requisite/assets/images/logo/Real Sociedad",
+		"requisite/assets/images/logo/Sevilla",
+    };
+
+	QStringList team_names = {
+		"Atletic Club",
+        "Atletico Madrid",
+		"Barcelona",
+		"Girona",
+		"Real Betis",
+		"Real Madrid",
+		"Real Sociedad",
+		"Sevilla",
+    };
+
+	league_table->setHorizontalHeaderLabels(header_label_list);
+	for (int i = 0; i < league_table->rowCount(); i++) {
+		QPixmap pixmap(icons[i]);
+        QIcon icon(pixmap.scaled(800, 800, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+        QTableWidgetItem *table_item = new QTableWidgetItem(icon, team_names[i], 0);
+		// QTableWidgetItem *table_item = new QTableWidgetItem(QIcon(icons[i]), team_names[i], 0);
+		table_item->setFlags(table_item->flags() & ~Qt::ItemIsEditable);
+		league_table->setItem(i, 0, table_item);
+    }
+
 	for (int i = 0; i < league_table->columnCount(); i++) {
-        if (i == 0) {
+        if (i == 0) { 
             league_table->horizontalHeader()->setSectionResizeMode(i, QHeaderView::Fixed);
         } else {
             league_table->horizontalHeader()->setSectionResizeMode(i, QHeaderView::Stretch);
@@ -95,35 +139,6 @@ void initShowLeague(StackedWidgets *App, QWidget* window, QString username = "us
 		for (int i = 0; i < league_table->rowCount(); i++) {
 			league_table->setRowHeight(i, app_height/10);
 			league_table->verticalHeader()->setSectionResizeMode(i, QHeaderView::Fixed);
-		}
-	}
-
-	QStringList header_label_list = {
-		"Team Name",
-		"MP",
-		"W",
-		"D",
-		"L",
-		"GF",
-		"GA",
-		"GD",
-		"Pts",
-	};
-
-	league_table->setHorizontalHeaderLabels(header_label_list);
-	for (int i = 0; i < league_table->rowCount(); i++) {
-		QTableWidgetItem *table_item = new QTableWidgetItem(QIcon("requisite/assets/images/real_madrid"), "Real Madrid", 0);
-		table_item->setFlags(table_item->flags() & ~Qt::ItemIsEditable);
-		league_table->setItem(i, 0, table_item);
-    }
-	
-	for(int row=0; row < league_table->rowCount(); row++){
-		for(int col=1; col < league_table->columnCount(); col++){
-			QIcon *table_icon = new QIcon("requisite/assets/images/real_madrid");
-			QTableWidgetItem *table_item = new QTableWidgetItem("0", 0);
-			table_item->setFlags(table_item->flags() & ~Qt::ItemIsEditable);
-			table_item->setSizeHint(icon_size);
-			league_table->setItem(row, col, table_item);
 		}
 	}
 
