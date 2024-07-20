@@ -1,9 +1,10 @@
 #pragma once
 
 #include <algorithm>
+#include <cstring>
 #include <iostream>
-#include <string>
 #include <sstream>
+#include <string>
 #include <vector>
 
 using namespace std;
@@ -31,7 +32,7 @@ class Team
 
     //methods
     public:
-    Team();
+    Team() {}
     void update_team_data(int goals_for, int goals_against); //function that updates a team data
 };
 
@@ -78,7 +79,7 @@ class League
     Team T[MAX_TEAMS];
 
     public:
-    League();
+    League() {}
     void update_league_positions(); //function to update position of teams in name league based on points 
     void init_league(string input_string); //function to initialize league's fixed properties, based on the input string
     void init_teams_array(string input_string, Team T[]); //function to initialize teams' fixed properties(name, id) in a league, based on the input string
