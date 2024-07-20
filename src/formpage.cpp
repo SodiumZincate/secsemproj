@@ -1,7 +1,7 @@
 #include "appUI.h"
 #include "db.h"
 
-void initAddLeague(StackedWidgets *App, QWidget* window, QString username = "username"){
+void initAddLeague(StackedWidgets *App, QWidget* window, QString username = "username", int user_id = 0){
     window->setWindowTitle("Add League");
 
     QWidget *main_widget = new QWidget(window);
@@ -69,6 +69,23 @@ void initAddLeague(StackedWidgets *App, QWidget* window, QString username = "use
 
     league_name_layout->addWidget(league_name_label);
     league_name_layout->addWidget(league_name_edit);
+
+	//
+	QWidget *no_of_teams = new QWidget(window);
+	// league_name->setStyleSheet("QWidget{background-color:red}");
+    no_of_teams->setFixedHeight(app_height/8);
+    QHBoxLayout *no_of_teams_layout=new QHBoxLayout(no_of_teams);
+    no_of_teams_layout->setAlignment(Qt::AlignLeft);
+
+    LabelEditComponent *no_of_teams_component=new LabelEditComponent();
+    no_of_teams_component->init(no_of_teams,"No. of Teams", default_font_size-4);
+    QLabel *no_of_teams_label  = no_of_teams_component->getWidget_label();
+    no_of_teams_label->setFixedSize(QSize(app_width / 4, app_height / 10));
+    QLineEdit *no_of_teams_edit = no_of_teams_component->getWidget_edit();
+	no_of_teams_edit->setFixedSize(app_width*72/100, app_height/10);
+
+    no_of_teams_layout->addWidget(no_of_teams_label);
+    no_of_teams_layout->addWidget(no_of_teams_edit);
     
 	//
     QWidget *group_stage=new QWidget(window);
@@ -142,43 +159,51 @@ void initAddLeague(StackedWidgets *App, QWidget* window, QString username = "use
 	QObject::connect(backButton_widget, &QPushButton::clicked, App, &StackedWidgets::changeWindow_backward);
 
 	QObject::connect(continue_button_widget, &QPushButton::clicked, league_name_component, &LabelEditComponent::updateEditText);
+	QObject::connect(continue_button_widget, &QPushButton::clicked, no_of_teams_component, &LabelEditComponent::updateEditText);
 	QObject::connect(continue_button_widget, &QPushButton::clicked, 
 	[=]() {
 		std::string league_text;
 		league_text = (league_name_component->getFieldText()).toStdString();
 
-		std::string clientReq = league_text + "\n";
+		int number_group_stage, number_round_robin, number_qualifiers, number_no_of_groups;
+
+		number_group_stage = (group_stage_component->getComboNumber());
+		number_round_robin = (round_robin_component->getComboNumber());
+		number_qualifiers = (qualifiers_component->getComboNumber());
+		number_no_of_groups = (no_of_groups_component->getComboNumber());
+
+		std::string number_no_of_teams;
+		number_no_of_teams = (no_of_teams_component->getFieldText()).toStdString();
+
+		std::cout << "User ID: " << user_id << std::endl;
+
+		std::string clientReq = 
+		std::to_string(user_id)
+		+ "\n" + league_text
+		+ "\n" + std::to_string(number_group_stage) 
+		+ "\n" + std::to_string(number_round_robin) 
+		+ "\n" + std::to_string(number_qualifiers) 
+		+ "\n" + std::to_string(number_no_of_groups)
+		+ "\n" + number_no_of_teams;
+
 		std::stringstream clientRes;
 		std::string streamLine;
 		std::vector<std::string> streamList;
 
 		if(league_text != ""){
-			int errorDatabase = updateDatabase(clientReq, "league", clientRes);
+			int errorDatabase = updateDatabase(clientReq, "insert_league", clientRes);
 			if(errorDatabase!=0){
 				std::cout << "\nError initializing database" << std::endl;
 			}
 			else{
-				// while(getline(clientRes, streamLine, '\n')){
-					// streamList.push_back(streamLine);
-					// std::cout << "Streamline: " << streamLine << std::endl;
-					// std::cout << "Username: " << username_text << std::endl;
-					// std::cout << "Password: " << password_text << std::endl;
-					
-				// }
-				// if(strcmp(league_text.c_str(), streamList[1].c_str())==0 ) {
-				// 	std::cout << "You are logged in" << std::endl;
-						std::cout << App->stacked_windows.currentIndex() << std::endl;
-						initShowLeague(
-							App,
-							App->stacked_windows.widget(App->stacked_windows.currentIndex()+1),
-							QString(username),
-							QString(league_text.c_str())
-						);
-						App->changeWindow_forward();
-				// }
-				// else{
-				// 	std::cout << "Incorrect Credentials" << std::endl;
-				// }
+				std::cout << App->stacked_windows.currentIndex() << std::endl;
+				initShowLeague(
+					App,
+					App->stacked_windows.widget(App->stacked_windows.currentIndex()+1),
+					QString(username),
+					QString(league_text.c_str())
+				);
+				App->changeWindow_forward();
 			}
 		}
 		else{
@@ -188,6 +213,7 @@ void initAddLeague(StackedWidgets *App, QWidget* window, QString username = "use
 
     sub_widget_layout->addWidget(main_label);
     sub_widget_layout->addWidget(league_name);
+    sub_widget_layout->addWidget(no_of_teams);
     sub_widget_layout->addWidget(group_stage);
     sub_widget_layout->addWidget(round_robin);
     sub_widget_layout->addWidget(qualifiers);

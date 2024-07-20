@@ -67,9 +67,9 @@ QPushButton* appButton::getWidget_button() {
     return button_widget;
 }
 
-void LabelEditComponent::init(QWidget* parent, QString widget_text) {
+void LabelEditComponent::init(QWidget* parent, QString widget_text, int font_size) {
     widget_label = new QLabel(parent);
-    widget_label->setFont(QFont("Sans", default_font_size - 6));
+    widget_label->setFont(QFont("Sans", font_size - 6));
     widget_label->setText(widget_text);
     widget_label->setAlignment(Qt::AlignLeft);
     widget_label->setFixedSize(QSize(app_width / 6, app_height / 10));
@@ -186,4 +186,10 @@ QLabel* LabelComboComponent::getWidget_label() {
 
 QComboBox* LabelComboComponent::getWidget_combo() {
     return widget_combobox;
+}
+
+int LabelComboComponent::getComboNumber() {
+    combo_number = widget_combobox->currentText().toInt();
+	std::cout << combo_number << std::endl;
+	return combo_number;
 }

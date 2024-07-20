@@ -1,7 +1,7 @@
 #include "appUI.h"
 #include "db.h"
 
-void initDashboard(StackedWidgets *App, QWidget* window, QString username = "username"){
+void initDashboard(StackedWidgets *App, QWidget* window, QString username = "username", int user_id = 0){
 	window->setWindowTitle("Dashboard");
 
 	QWidget *main_widget = new QWidget(window);
@@ -116,7 +116,8 @@ void initDashboard(StackedWidgets *App, QWidget* window, QString username = "use
 		initAddLeague(
 			App,
 			App->stacked_windows.widget(App->stacked_windows.currentIndex()+1),
-			QString(username)
+			QString(username),
+			user_id
 		);
 		App->changeWindow_forward();
 	}

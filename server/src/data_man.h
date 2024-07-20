@@ -21,6 +21,8 @@ static int callback(void* data, int argc, char **argv, char** azcolName);
 
 void query(sqlite3 *db);
 
+void insertDatabaseLeague(string, string);
+
 void insertDatabaseTeam(string, string);
 
 void insertDatabase(string, string);

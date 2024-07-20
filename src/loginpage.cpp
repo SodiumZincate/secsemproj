@@ -331,12 +331,14 @@ void initLogin(StackedWidgets *App, QWidget* window) {
 				}
 				if(strcmp(username_text.c_str(), streamList[1].c_str())==0 
 				&& strcmp(password_text.c_str(), streamList[3].c_str())==0) {
+					int user_id = stoi(streamList[0]);
 					std::cout << "You are logged in" << std::endl;
 					std::cout << App->stacked_windows.currentIndex() << std::endl;
 					initDashboard(
 						App,
 						App->stacked_windows.widget(App->stacked_windows.currentIndex()+1),
-						QString(username_text.c_str())
+						QString(username_text.c_str()),
+						user_id
 					);
 					username_component->deleteEditText();
 					password_component->deleteEditText();

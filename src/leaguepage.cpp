@@ -140,7 +140,7 @@ void initShowLeague(StackedWidgets *App, QWidget* window, QString username = "us
 		// }
 		for(const auto& entry : team_names){
 			std::string logo_dir = "requisite/assets/images/logo/" + entry.toStdString() + ".png";
-			std::cout << logo_dir << std::endl;
+			// std::cout << logo_dir << std::endl;
 			icons.push_back(QString(logo_dir.c_str()));
 		}
 

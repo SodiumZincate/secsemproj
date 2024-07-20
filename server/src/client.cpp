@@ -45,8 +45,8 @@ int main(int argc, char *argv[]) {
 			cout << "error code: " << res.error() << std::endl;
 		}
 	}
-	else if(strcmp(argv[1], "team") == 0){
-		if (auto res = cli.Post("/team/insert", "1\n1\n1\nArgentina\n1\n0\n0\n0\n0\n0\n0\n0", "text/plain")) {
+	else if(strcmp(argv[1], "league") == 0){
+		if (auto res = cli.Post("/league/insert", "1\nEURO CUP\n1\n2\n1\n4\n20", "text/plain")) {
 			cout << res->status << endl;
 			cout << res->get_header_value("Content-Type") << endl;
 		}

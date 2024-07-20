@@ -49,9 +49,9 @@ void initRegister(StackedWidgets *App, QWidget* window);
 // Functions to initialize Login page
 void initLogin(StackedWidgets *App, QWidget* window);
 
-void initDashboard(StackedWidgets *App, QWidget* window, QString username);
+void initDashboard(StackedWidgets *App, QWidget* window, QString username, int user_id);
 
-void initAddLeague(StackedWidgets *App, QWidget* window, QString username);
+void initAddLeague(StackedWidgets *App, QWidget* window, QString username, int user_id);
 
 void initShowLeague(StackedWidgets *App, QWidget* window, QString username, QString leaguename);
 
@@ -95,7 +95,7 @@ private:
     QLabel *widget_label;
     QLineEdit *widget_edit;
 public:
-    void init(QWidget*, QString);
+    void init(QWidget*, QString, int font_size = default_font_size);
     QLabel* getWidget_label();
     QLineEdit* getWidget_edit();
 	QString getFieldText();
@@ -112,8 +112,10 @@ class LabelComboComponent : public QObject {
 private:
     QLabel *widget_label;
     QComboBox *widget_combobox;
+	int combo_number;
 public:
     void init(QWidget*, QString, QStringList, int font_size = default_font_size);
+	int getComboNumber();
     QLabel* getWidget_label();
     QComboBox* getWidget_combo();
 };

@@ -59,7 +59,7 @@ int main(int argc, char *argv[]) {
 	stack1.addWidget(&showLeagueApp);
 
 	// Set initial page to login page
-	stack1.setCurrentIndex(4);
+	stack1.setCurrentIndex(1);
 
 
 	// stack1.addtoLayout();
