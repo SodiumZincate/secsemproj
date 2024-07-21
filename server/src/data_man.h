@@ -19,7 +19,9 @@ extern QueryResult QR1;
 
 static int callback(void* data, int argc, char **argv, char** azcolName);
 
-void query(sqlite3 *db);
+void queryTeam(sqlite3 *db);
+
+void queryLeague(sqlite3 *db);
 
 void insertDatabaseLeague(string, string);
 
@@ -30,3 +32,5 @@ void insertDatabase(string, string);
 void deleteDatabase(string, string);
 
 void queryDatabase(string, string, Response&);
+
+void queryDatabaseLeahueList(string, string, Response&);

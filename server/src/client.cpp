@@ -27,7 +27,7 @@ int main(int argc, char *argv[]) {
 		}
 	}
 	else if(strcmp(argv[1], "query") == 0){
-		if (auto res = cli.Post("/login/query", "no\nprasiddhapokh@gmail.com\n12345678", "text/plain")) {
+		if (auto res = cli.Post("/login/query", "Prasiddha\nprasiddhapokh@gmail.com\n12345678", "text/plain")) {
 			cout << res->status << endl;
 			cout << res->get_header_value("Content-Type") << endl;
 			cout << res->body << endl;
@@ -46,8 +46,18 @@ int main(int argc, char *argv[]) {
 		}
 	}
 	else if(strcmp(argv[1], "league") == 0){
-		if (auto res = cli.Post("/league/insert", "1\nEURO CUP\n1\n2\n1\n4\n20", "text/plain")) {
+		if (auto res = cli.Post("/league/insert", "16\nVery long name for testing\n1\n2\n1\n4\n20", "text/plain")) {
 			cout << res->status << endl;
+			cout << res->get_header_value("Content-Type") << endl;
+		}
+		else {
+			cout << "error code: " << res.error() << std::endl;
+		}
+	}
+	else if(strcmp(argv[1], "query_league_list") == 0){
+		if (auto res = cli.Post("/league/query_list", "16", "text/plain")) {
+			cout << res->status << endl;
+			cout << res->body << endl;
 			cout << res->get_header_value("Content-Type") << endl;
 		}
 		else {

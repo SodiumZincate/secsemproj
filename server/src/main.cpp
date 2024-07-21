@@ -114,6 +114,13 @@ void run_server() {
 		insertDatabaseLeague(cli_req, filepath);
     });
 
+	svr.Post("/league/query_list", [upload_dir](const Request &req, Response &res) {
+		string cli_req = req.body;
+
+        std::string filepath = upload_dir + "/" + "leaguedata.db";
+		queryDatabaseLeagueList(cli_req, filepath, res);
+    });
+
 	// svr.Post("/upload", [&](const httplib::Request &req, httplib::Response &res) {
 	// 	if(req.is_multipart_form_data()){
 	// 		for(const auto &file : req.files){

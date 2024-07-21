@@ -29,31 +29,31 @@ void StackedWidgets::changeWindow_backward() {
 void appUI::init(QWidget* parent) {
     QSize widget_size(app_width, app_height / 10);
 
-    login_widget = new QWidget(parent);
-    login_widget->setFixedSize(widget_size);
-    login_layout = new QHBoxLayout(login_widget);
-    login_layout->setAlignment(Qt::AlignLeft);
-    login_layout->setContentsMargins(app_width / 12, 0, 0, 0);
+    app_widget = new QWidget(parent);
+    app_widget->setFixedSize(widget_size);
+    app_layout = new QHBoxLayout(app_widget);
+    app_layout->setAlignment(Qt::AlignLeft);
+    app_layout->setContentsMargins(app_width / 12, 0, 0, 0);
 }
 
 QWidget* appUI::getWidget() {
-    return login_widget;
+    return app_widget;
 }
 
 QHBoxLayout* appUI::getHLayout() {
-    return login_layout;
+    return app_layout;
 }
 
 void appText::init(QWidget* parent, QString text, int font_size) {
-    login_text = new QLabel(parent);
-    login_text->setFont(QFont("Sans", font_size));
-    login_text->setText(text);
-    login_text->setAlignment(Qt::AlignCenter);
-    login_text->setMargin(app_width/42);
+    app_text = new QLabel(parent);
+    app_text->setFont(QFont("Sans", font_size));
+    app_text->setText(text);
+    app_text->setAlignment(Qt::AlignCenter);
+    app_text->setMargin(app_width/42);
 }
 
 QLabel* appText::getWidget_label() {
-    return login_text;
+    return app_text;
 }
 
 void appButton::init(QWidget* parent, QString text, int font_size) {
@@ -65,6 +65,12 @@ void appButton::init(QWidget* parent, QString text, int font_size) {
 
 QPushButton* appButton::getWidget_button() {
     return button_widget;
+}
+
+void appClickableText::mousePressEvent(QMouseEvent* event) {
+	if(event->button() == Qt::LeftButton){
+		emit clicked();
+	}
 }
 
 void LabelEditComponent::init(QWidget* parent, QString widget_text, int font_size) {

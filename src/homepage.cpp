@@ -9,69 +9,28 @@ void initDashboard(StackedWidgets *App, QWidget* window, QString username = "use
 	// main_widget->setStyleSheet("QWidget{background-color:red}");
 	QVBoxLayout *main_widget_layout = new QVBoxLayout(main_widget);
 	//main_widget_layout->setAlignment(Qt::AlignCenter); // Center align the contents
-
-    appText *maintext = new appText();
-    maintext->init(window,"League Manager");
-    QLabel *mainLabel= maintext->getWidget_label();
-	mainLabel->setMargin(0);
-	mainLabel->setFixedHeight(app_height/8);
-	// mainLabel->setStyleSheet("QLabel{background-color:blue}");
-    mainLabel->setAlignment(Qt::AlignTop | Qt::AlignHCenter);
-
-    //League Text
-    appText *leaguetext = new appText();
-    leaguetext->init(window,"Your Leagues",default_font_size-3);
-    QLabel *leagueLabel_widget= leaguetext->getWidget_label();
-    leagueLabel_widget->setMargin(10);
-    leagueLabel_widget->setAlignment(Qt::AlignTop | Qt::AlignCenter);
-
-	//Back Button
-    appButton *backButton= new appButton();
-    backButton->init(window,"Log Out",default_font_size-2);
-    QPushButton *backButton_widget = backButton->getWidget_button();
-    backButton_widget->setFixedSize(app_width/8,app_height/12);
-	// backButton_widget->setStyleSheet("QPushButton{background-color:green}");
 	
-    //Username text
- 	/*appText *usernameText = new appText();
-    usernameText ->init(window,"Username",default_font_size-3);
-    QLabel *usernameText_widget=usernameText->getWidget_label();
-	usernameText_widget->setFixedHeight(app_height/4);
-    usernameText_widget->setAlignment(Qt::AlignRight);*/
-
-
+	//Username Text
     appText *usernameText = new appText();
     usernameText ->init(window, username ,default_font_size-3);
     QLabel *usernameText_widget=usernameText->getWidget_label();
     usernameText_widget->setAlignment(Qt::AlignRight);
     usernameText_widget->setFixedHeight(app_height/4);
 
-
-    //League button 1
-    appButton *button1 =new appButton();
-    button1->init(window,"League 1",default_font_size+6);
-    QPushButton *button1_widget=button1->getWidget_button();
-    button1_widget->setCursor(Qt::PointingHandCursor);
-	button1_widget->setStyleSheet("QPushButton{text-decoration:underline;border:none;}");
-  
-    //League button 2
-    appButton *button2= new appButton();
-    button2->init(window,"League 2",default_font_size+6);
-    QPushButton *button2_widget=button2->getWidget_button();
-	button2_widget->setCursor(Qt::PointingHandCursor);
-	button2_widget->setStyleSheet("QPushButton{text-decoration:underline;border:none;}");
-
-    appButton *leagueButton =new appButton();
-    leagueButton->init(window,"Add league",default_font_size+10);
-    QPushButton *leagueButton_widget=leagueButton->getWidget_button();
-    leagueButton_widget->setFixedSize(app_width/4,app_width/14);
-
-	//NavBar
-    QWidget *NavBar = new QWidget(window);
-    QHBoxLayout *NavBar_layout = new QHBoxLayout(NavBar);
-    NavBar->setFixedHeight(app_height/6);
-    NavBar_layout->setContentsMargins(0, 0, 0, 0);
-	//NavBar->setStyleSheet("QWidget{background-color:yellow}");
+    // //League Text
+    // appText *leaguetext = new appText();
+    // leaguetext->init(window,"Your Leagues",default_font_size);
+    // QLabel *leagueLabel_widget= leaguetext->getWidget_label();
+    // leagueLabel_widget->setMargin(10);
+	// mainLabel->setStyleSheet("QLabel{text-decoration:bold;}");
+    // leagueLabel_widget->setAlignment(Qt::AlignTop | Qt::AlignCenter);
+	
+	//League Name Text
+	appText *mainText = new appText();
+    mainText ->init(window, "League Manager" ,default_font_size+10);
+    QLabel *mainText_widget = mainText->getWidget_label();
+    mainText_widget->setAlignment(Qt::AlignCenter);
+    mainText_widget->setFixedHeight(app_height/6);
 
 	//Backbutton Container
     QWidget *backButton_container = new QWidget(window);
@@ -80,22 +39,113 @@ void initDashboard(StackedWidgets *App, QWidget* window, QString username = "use
     backButton_container_layout->setAlignment(Qt::AlignLeft);
     backButton_container_layout->setContentsMargins(0, 0, 0, 0);
 
+	//Back Button
+    appButton *backButton= new appButton();
+    backButton->init(window,"Log Out",default_font_size-2);
+    QPushButton *backButton_widget = backButton->getWidget_button();
+    backButton_widget->setFixedSize(app_width/8,app_height/12);
+	// backButton_widget->setStyleSheet("QPushButton{background-color:green}");
+
     backButton_container_layout->addWidget(backButton_widget);
     // backButton_container_layout->addWidget(usernameText_widget, 0, Qt::AlignRight);
+	
+	//NavBar
+    QWidget *NavBar = new QWidget(window);
+    QHBoxLayout *NavBar_layout = new QHBoxLayout(NavBar);
+    NavBar->setFixedHeight(app_height/6);
+    NavBar_layout->setContentsMargins(0, 0, 0, 0);
+	//NavBar->setStyleSheet("QWidget{background-color:yellow}");
 
 	NavBar_layout->addWidget(backButton_container);
+	NavBar_layout->addWidget(mainText_widget);
 	NavBar_layout->addWidget(usernameText_widget);
+
+    appText *league_text = new appText();
+    league_text->init(window,"Your Leagues");
+    QLabel *leagueLabel_widget= league_text->getWidget_label();
+	leagueLabel_widget->setMargin(0);
+	leagueLabel_widget->setFixedHeight(app_height/8);
+	leagueLabel_widget->setStyleSheet("QLabel{color:blue}");
+    leagueLabel_widget->setAlignment(Qt::AlignTop | Qt::AlignHCenter);
 
     //Container for league buttons
     QWidget *button_container = new QWidget(window);
     QVBoxLayout *button_container_layout = new QVBoxLayout(button_container);
-    button_container_layout->setAlignment(Qt::AlignCenter);
+    button_container_layout->setAlignment(Qt::AlignTop | Qt::AlignHCenter);
     button_container_layout->setContentsMargins(0, app_height / 10, 0, 0);
 
-    button_container_layout->addWidget(leagueLabel_widget);
-    button_container_layout->addWidget(button1_widget);
-    button_container_layout->addWidget(button2_widget);
+	// Scroll Area
+	QScrollArea *scroll_area = new QScrollArea(window);
 
+	scroll_area->setStyleSheet("QScrollArea { border: none; }");
+	scroll_area->setFixedWidth(app_width);
+	scroll_area->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+	scroll_area->setWidgetResizable(true);
+
+	std::string clientReq = std::to_string(user_id);
+	std::stringstream clientRes;
+	std::string streamLine;
+	std::vector<std::string> streamList;
+	
+	int no_of_leagues = 0;
+	int errorDatabase = updateDatabase(clientReq, "query_league_list", clientRes);
+	if(errorDatabase!=0){
+		std::cout << "\nError initializing database" << std::endl;
+	}
+	else{
+		while(getline(clientRes, streamLine, '\n')){
+			streamList.push_back(streamLine);
+			std::cout << "League name: " << streamLine << std::endl;
+			if(strcmp(streamLine.c_str(), "") != 0){
+				no_of_leagues++;
+			}
+		}
+	}
+	std::cout << "Number of leagues: " << no_of_leagues << std::endl;
+
+	if(no_of_leagues == 0){
+		leagueLabel_widget->setStyleSheet({"QLabel{color:#FB3B3B}"});
+		leagueLabel_widget->setText("YOU DON'T HAVE ANY LEAGUES CURRENLY\nPRESS \"ADD LEAGUE\" TO ADD MORE LEAGUES");
+	}
+	else{
+		leagueLabel_widget->setText(("Your Leagues (" + std::to_string(no_of_leagues) + ")").c_str());
+	}
+    button_container_layout->addWidget(leagueLabel_widget);
+
+	for(int i = 0; i < no_of_leagues; i++){
+		appClickableText *league_name = new appClickableText();
+		QString text = (std::to_string(i+1) + ") <u>" + streamList[i] + "</u>").c_str();
+		league_name->init(window, text, default_font_size);
+		QLabel *league_name_widget = league_name->getWidget_label();
+		league_name_widget->setAlignment(Qt::AlignLeft);
+		// league_name_widget->setMargin(app_height/20);
+		league_name_widget->setCursor(Qt::PointingHandCursor);
+		league_name_widget->setFixedHeight(app_height/7);
+
+		std::cout << "Iterated" << std::endl;
+
+		button_container_layout->addWidget(league_name_widget, Qt::AlignTop);
+	}
+
+    // //League button 1
+    // appButton *button1 =new appButton();
+    // button1->init(window,"League 1",default_font_size+6);
+    // QPushButton *button1_widget=button1->getWidget_button();
+    // button1_widget->setCursor(Qt::PointingHandCursor);
+	// button1_widget->setStyleSheet("QPushButton{text-decoration:underline;border:none;}");
+  
+    // //League button 2
+    // appButton *button2= new appButton();
+    // button2->init(window,"League 2",default_font_size+6);
+    // QPushButton *button2_widget=button2->getWidget_button();
+	// button2_widget->setCursor(Qt::PointingHandCursor);
+	// button2_widget->setStyleSheet("QPushButton{text-decoration:underline;border:none;}");
+
+    appButton *leagueButton =new appButton();
+    leagueButton->init(window,"Add league",default_font_size+10);
+    QPushButton *leagueButton_widget=leagueButton->getWidget_button();
+    leagueButton_widget->setFixedSize(app_width/4,app_width/14);
+	
     //Container for League button
     QWidget *leagueButton_container = new QWidget(window);
     QVBoxLayout *leagueButton_container_layout = new QVBoxLayout(leagueButton_container);
@@ -104,9 +154,11 @@ void initDashboard(StackedWidgets *App, QWidget* window, QString username = "use
 
     leagueButton_container_layout->addWidget(leagueButton_widget);
 
+	scroll_area->setWidget(button_container);
+
     main_widget_layout->addWidget(NavBar);
-    main_widget_layout->addWidget(mainLabel);
-    main_widget_layout->addWidget(button_container);
+    main_widget_layout->addWidget(leagueLabel_widget);
+    main_widget_layout->addWidget(scroll_area, 0, Qt::AlignHCenter);
     main_widget_layout->addWidget(leagueButton_container);
 
 	QObject::connect(backButton_widget, &QPushButton::clicked, App, &StackedWidgets::changeWindow_backward);

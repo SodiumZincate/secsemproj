@@ -156,7 +156,16 @@ void initAddLeague(StackedWidgets *App, QWidget* window, QString username = "use
     continue_button_container_layout->setContentsMargins(0, app_height / 8, 0, 0);
 	continue_button_container_layout->addWidget(continue_button_widget);
 
-	QObject::connect(backButton_widget, &QPushButton::clicked, App, &StackedWidgets::changeWindow_backward);
+	QObject::connect(backButton_widget, &QPushButton::clicked,
+	[=](){
+		initDashboard(
+			App,
+			App->stacked_windows.widget(App->stacked_windows.currentIndex()-1),
+			username,
+			user_id
+		);
+		App->changeWindow_backward();
+	});
 
 	QObject::connect(continue_button_widget, &QPushButton::clicked, league_name_component, &LabelEditComponent::updateEditText);
 	QObject::connect(continue_button_widget, &QPushButton::clicked, no_of_teams_component, &LabelEditComponent::updateEditText);
@@ -200,7 +209,7 @@ void initAddLeague(StackedWidgets *App, QWidget* window, QString username = "use
 				initShowLeague(
 					App,
 					App->stacked_windows.widget(App->stacked_windows.currentIndex()+1),
-					QString(username),
+					username,
 					QString(league_text.c_str())
 				);
 				App->changeWindow_forward();

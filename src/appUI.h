@@ -14,6 +14,7 @@
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QScrollBar>
 #include <QtWidgets/QScrollArea>
+#include <QtGui/QMouseEvent>
 #include <iostream>
 
 extern int default_font_size;
@@ -57,28 +58,28 @@ void initShowLeague(StackedWidgets *App, QWidget* window, QString username, QStr
 
 void resetPage(QWidget* window);
 
-// Main class for the widgets in login/Register page
+// Main class for the widgets in the app
 // (Username, Email, Password) widgets
 class appUI {
 private:
-    QWidget *login_widget;
-    QHBoxLayout *login_layout;
+    QWidget *app_widget;
+    QHBoxLayout *app_layout;
 public:
     void init(QWidget*);
     QWidget* getWidget();
     QHBoxLayout* getHLayout();
 };
 
-// Class for Head Text and other miscellanous text in login/Register page
+// Class for Head Text and other miscellanous text in the app
 class appText {
 private:
-    QLabel* login_text;
+    QLabel* app_text;
 public:
     void init(QWidget*, QString, int font_size = default_font_size);
     QLabel* getWidget_label();
 };
 
-// Class for buttons in login/Register page
+// Class for buttons in the app
 class appButton{
 public:
     QPushButton* button_widget;
@@ -86,7 +87,16 @@ public:
     QPushButton* getWidget_button();
 };
 
-// Sub class for the individual input field widgets in login/Register page
+class appClickableText : public QLabel , public appText{
+	Q_OBJECT
+public:
+	void mousePressEvent(QMouseEvent* event);
+
+signals:
+	void clicked();
+};
+
+// Sub class for the individual input field widgets in the app
 // each object of this class represents a text label and its input field
 class LabelEditComponent : public QObject {
     Q_OBJECT // A QT macro that allows the use of slots
@@ -107,6 +117,8 @@ public slots:
 	void deleteEditText();
 };
 
+// Sub class for the individual input field widgets in the app
+// each object of this class represents a text label and its combobox i.e dropdown
 class LabelComboComponent : public QObject {
     Q_OBJECT // A QT macro that allows the use of slots
 private:
