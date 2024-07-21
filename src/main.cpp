@@ -19,6 +19,7 @@ int default_font_size;
 
 int main(int argc, char *argv[]) {
 	QApplication app(argc, argv);
+    QApplication::setStyle("Fusion");
     QScreen *screen = QGuiApplication::primaryScreen();
 	QSize screenSize = screen->size();
 
@@ -28,7 +29,7 @@ int main(int argc, char *argv[]) {
 	std::cout << screenHeight << std::endl;
 
 	#ifdef _WIN32
-        default_font_size = screenWidth/65;
+        default_font_size = screenWidth/70;
 	#elif defined(__linux__)
 		default_font_size = screenWidth/75;
 	#endif

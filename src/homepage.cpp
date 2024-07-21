@@ -64,7 +64,7 @@ void initDashboard(StackedWidgets *App, QWidget* window, QString username = "use
     league_text->init(window,"Your Leagues");
     QLabel *leagueLabel_widget= league_text->getWidget_label();
 	leagueLabel_widget->setMargin(0);
-	leagueLabel_widget->setFixedHeight(app_height/8);
+	leagueLabel_widget->setFixedHeight(app_height/6);
 	leagueLabel_widget->setStyleSheet("QLabel{color:blue}");
     leagueLabel_widget->setAlignment(Qt::AlignTop | Qt::AlignHCenter);
 
