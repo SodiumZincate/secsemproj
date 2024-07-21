@@ -91,7 +91,7 @@ void initShowLeague(StackedWidgets *App, QWidget* window, QString username = "us
 		QLabel *group_label = group_name->getWidget_label();
 
 		// Table
-		QTableWidget *league_table = new QTableWidget(20, 9, window);
+		QTableWidget *league_table = new QTableWidget(8, 9, window);
 		// league_table->setWindowTitle("QTableWidget Example");
 		// league_table->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 		// league_table->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
@@ -146,9 +146,9 @@ void initShowLeague(StackedWidgets *App, QWidget* window, QString username = "us
 
 		league_table->setHorizontalHeaderLabels(header_label_list);
 		for (int j = 0; j < league_table->rowCount(); j++) {
-			QPixmap pixmap(icons[0]);
+			QPixmap pixmap(icons[j]);
 			QIcon icon(pixmap.scaled(800, 800, Qt::KeepAspectRatio, Qt::SmoothTransformation));
-			QTableWidgetItem *table_item = new QTableWidgetItem(icon, team_names[0], 0);
+			QTableWidgetItem *table_item = new QTableWidgetItem(icon, team_names[j], 0);
 			// QTableWidgetItem *table_item = new QTableWidgetItem(QIcon(icons[i]), team_names[i], 0);
 			table_item->setFlags(table_item->flags() & ~Qt::ItemIsEditable);
 			league_table->setItem(j, 0, table_item);
@@ -170,7 +170,7 @@ void initShowLeague(StackedWidgets *App, QWidget* window, QString username = "us
 			league_table->setIconSize(QSize(app_width/16, app_height/16));
 		}
 		if(league_table->rowCount()<12){
-			// league_table->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+			league_table->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 		}
 		else{
 			for (int j = 0; j < league_table->rowCount(); j++) {
