@@ -27,21 +27,21 @@ void initShowLeague(StackedWidgets *App, QWidget* window, QString username = "us
 
 	//Username text
     appText *usernameText = new appText();
-    usernameText ->init(window, username ,default_font_size-3);
+    usernameText ->init(window, username ,default_font_size*0.9);
     QLabel *usernameText_widget=usernameText->getWidget_label();
     usernameText_widget->setAlignment(Qt::AlignRight);
     usernameText_widget->setFixedHeight(app_height/4);
 
 	//League Name Text
 	appText *leaguenameText = new appText();
-    leaguenameText ->init(window, leaguename ,default_font_size+10);
+    leaguenameText ->init(window, leaguename ,default_font_size*1.2);
     QLabel *leaguenameText_widget = leaguenameText->getWidget_label();
     leaguenameText_widget->setAlignment(Qt::AlignCenter);
     leaguenameText_widget->setFixedHeight(app_height/6);
 
 	//Back Button
     appButton *backButton= new appButton();
-    backButton->init(window,"BACK",default_font_size-2);
+    backButton->init(window,"BACK",default_font_size*0.9);
     QPushButton *backButton_widget = backButton->getWidget_button();
     backButton_widget->setFixedSize(app_width/8,app_height/12);
 	// backButton_widget->setStyleSheet("QPushButton{background-color:green}");
@@ -78,16 +78,15 @@ void initShowLeague(StackedWidgets *App, QWidget* window, QString username = "us
 	// Scroll Area
 	QScrollArea *scroll_area = new QScrollArea(window);
 
-	// scroll_area->setStyleSheet("QScrollArea { border: none; }");
+	scroll_area->setStyleSheet("QScrollArea { border: none; }");
 	scroll_area->setFixedWidth(app_width*3/2);
 	scroll_area->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 	scroll_area->setWidgetResizable(true);
 
-
 	for(int i=0; i<4; i++){
 		// Label
 		appText *group_name = new appText();
-		group_name->init(window, QString((std::string("GROUP: ") + std::to_string(i+1)).c_str()), default_font_size-6);
+		group_name->init(window, QString((std::string("GROUP: ") + std::to_string(i+1)).c_str()), default_font_size*0.8);
 		QLabel *group_label = group_name->getWidget_label();
 
 		// Table
@@ -145,10 +144,13 @@ void initShowLeague(StackedWidgets *App, QWidget* window, QString username = "us
 		}
 
 		league_table->setHorizontalHeaderLabels(header_label_list);
+        league_table->setFont(QFont("Sans", default_font_size*2));
+
 		for (int j = 0; j < league_table->rowCount(); j++) {
 			QPixmap pixmap(icons[j]);
 			QIcon icon(pixmap.scaled(800, 800, Qt::KeepAspectRatio, Qt::SmoothTransformation));
 			QTableWidgetItem *table_item = new QTableWidgetItem(icon, team_names[j], 0);
+            table_item->setFont(QFont("Sans", default_font_size*0.8));
 			// QTableWidgetItem *table_item = new QTableWidgetItem(QIcon(icons[i]), team_names[i], 0);
 			table_item->setFlags(table_item->flags() & ~Qt::ItemIsEditable);
 			league_table->setItem(j, 0, table_item);
@@ -162,7 +164,7 @@ void initShowLeague(StackedWidgets *App, QWidget* window, QString username = "us
 			}
 		}
 		if(league_table->rowCount()<=4){
-			league_table->setMinimumSize(app_width*5/4, app_height*5/10);
+			league_table->setMinimumSize(app_width*5/4, app_height/2);
 			league_table->setIconSize(QSize(app_width/14, app_height/14));
 		}
 		else if(league_table->rowCount()<=8){
@@ -173,9 +175,9 @@ void initShowLeague(StackedWidgets *App, QWidget* window, QString username = "us
 			league_table->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 		}
 		else{
+            league_table->verticalHeader()->setMinimumSectionSize(app_height/10);
 			for (int j = 0; j < league_table->rowCount(); j++) {
-				league_table->setRowHeight(j, app_height/10);
-				league_table->verticalHeader()->setSectionResizeMode(i, QHeaderView::Fixed);
+				league_table->verticalHeader()->setSectionResizeMode(j, QHeaderView::Fixed);
 			}
 		}
 		sub_widget_layout->addWidget(group_label);

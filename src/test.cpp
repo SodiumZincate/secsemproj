@@ -23,21 +23,21 @@ void initShowLeague(StackedWidgets *App, QWidget* window, QString username = "us
 
     // Username text
     appText *usernameText = new appText();
-    usernameText->init(window, username, default_font_size-3);
+    usernameText->init(window, username, default_font_size*0.9);
     QLabel *usernameText_widget = usernameText->getWidget_label();
     usernameText_widget->setAlignment(Qt::AlignRight);
     usernameText_widget->setFixedHeight(app_height/4);
 
     // League Name Text
     appText *leaguenameText = new appText();
-    leaguenameText->init(window, leaguename, default_font_size+10);
+    leaguenameText->init(window, leaguename, default_font_size*1.2);
     QLabel *leaguenameText_widget = leaguenameText->getWidget_label();
     leaguenameText_widget->setAlignment(Qt::AlignCenter);
     leaguenameText_widget->setFixedHeight(app_height/6);
 
     // Back Button
     appButton *backButton = new appButton();
-    backButton->init(window, "BACK", default_font_size-2);
+    backButton->init(window, "BACK", default_font_size*0.9);
     QPushButton *backButton_widget = backButton->getWidget_button();
     backButton_widget->setFixedSize(app_width/8, app_height/12);
 

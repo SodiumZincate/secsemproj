@@ -15,6 +15,81 @@ void resetPage(QWidget* window){
 	}
 }
 
+appDesign::appDesign(){
+	app_palette.setColor(QPalette::WindowText, QColor::fromRgbF(0, 0, 0));
+    app_palette.setColor(QPalette::Button, QColor::fromRgbF(0.937255, 0.937255, 0.937255));
+    app_palette.setColor(QPalette::Light, QColor::fromRgbF(1, 1, 1));
+    app_palette.setColor(QPalette::Midlight, QColor::fromRgbF(0.793042, 0.793042, 0.793042));
+    app_palette.setColor(QPalette::Dark, QColor::fromRgbF(0.624826, 0.624826, 0.624826));
+    app_palette.setColor(QPalette::Mid, QColor::fromRgbF(0.720958, 0.720958, 0.720958));
+    app_palette.setColor(QPalette::Text, QColor::fromRgbF(0, 0, 0));
+    app_palette.setColor(QPalette::BrightText, QColor::fromRgbF(1, 1, 1));
+    app_palette.setColor(QPalette::ButtonText, QColor::fromRgbF(0, 0, 0));
+    app_palette.setColor(QPalette::Base, QColor::fromRgbF(1, 1, 1));
+    app_palette.setColor(QPalette::Window, QColor::fromRgbF(0.937255, 0.937255, 0.937255));
+    app_palette.setColor(QPalette::Shadow, QColor::fromRgbF(0.462821, 0.462821, 0.462821));
+    app_palette.setColor(QPalette::Highlight, QColor::fromRgbF(0.188235, 0.54902, 0.776471));
+    app_palette.setColor(QPalette::HighlightedText, QColor::fromRgbF(1, 1, 1));
+    app_palette.setColor(QPalette::Link, QColor::fromRgbF(0, 0, 1));
+    app_palette.setColor(QPalette::LinkVisited, QColor::fromRgbF(1, 0, 1));
+    app_palette.setColor(QPalette::AlternateBase, QColor::fromRgbF(0.968627, 0.968627, 0.968627));
+    // app_palette.setColor(QPalette::NoRole, QColor::fromRgbF(0, 0, 0));
+    app_palette.setColor(QPalette::ToolTipBase, QColor::fromRgbF(1, 1, 0.862745));
+    app_palette.setColor(QPalette::ToolTipText, QColor::fromRgbF(0, 0, 0));
+    app_palette.setColor(QPalette::PlaceholderText, QColor::fromRgbF(0, 0, 0, 0.5));
+    app_palette.setColor(QPalette::Accent, QColor::fromRgbF(0.188235, 0.54902, 0.776471));
+    // app_palette.setColor(QPalette::NColorRoles, QColor::fromRgbF(0.745098, 0.745098, 0.745098));
+
+    app_style_sheet = R"(
+    QWidget {
+        color: #000000;
+        background-color: #FFFFFF;
+    }
+    QLineEdit {
+        border: 1px solid #CCCCCC;
+        padding: 5px;
+    }
+    QPushButton {
+        border: 2px solid #CCCCCC;
+        border-radius: 5px;
+    }
+    QPushButton:hover {
+        background-color: #E0E0E0;
+    }
+    QPushButton:pressed {
+        background-color: #D0D0D0;
+    }
+    QComboBox {
+        border: 1px solid #CCCCCC;
+        border-radius: 5px;
+        padding: 5px;
+        background-color: #FFFFFF;
+    }
+    QTableWidget {
+        border: 1px solid #CCCCCC;
+        background-color: #FFFFFF;
+    }
+
+    QHeaderView::section {
+        background-color: #E0E0E0;
+    }
+
+    QTableWidget::item {
+        background-color: #FFFFFF;
+        selection-background-color: #E0E0E0;
+        selection-color: #000000;
+    }
+
+    QTableWidget::item:hover {
+        background-color: #F5F5F5;
+    }
+
+    QTableWidget::item:selected {
+        border: 1px solid #1889C1;
+    }
+    )";
+}
+
 void StackedWidgets::changeWindow_forward() {
     setCurrentIndex(stacked_windows.currentIndex()+1);
 	std::cout << stacked_windows.currentIndex() << std::endl;
@@ -59,7 +134,7 @@ QLabel* appText::getWidget_label() {
 void appButton::init(QWidget* parent, QString text, int font_size) {
     button_widget = new QPushButton(parent);
     button_widget->setText(text);
-    button_widget->setFont(QFont("Sans", font_size - 12));
+    button_widget->setFont(QFont("Sans", font_size*0.6));
     button_widget->setFixedSize(QSize(app_width / 4, app_height / 16));
 }
 
@@ -75,7 +150,7 @@ void appClickableText::mousePressEvent(QMouseEvent* event) {
 
 void LabelEditComponent::init(QWidget* parent, QString widget_text, int font_size) {
     widget_label = new QLabel(parent);
-    widget_label->setFont(QFont("Sans", font_size - 6));
+    widget_label->setFont(QFont("Sans", font_size*0.8));
     widget_label->setText(widget_text);
     widget_label->setAlignment(Qt::AlignLeft);
     widget_label->setFixedSize(QSize(app_width / 6, app_height / 10));
@@ -83,8 +158,8 @@ void LabelEditComponent::init(QWidget* parent, QString widget_text, int font_siz
 
     widget_edit = new QLineEdit(parent);
     widget_edit->setFixedSize(QSize(app_width * 2 / 3, app_height / 10));
-    widget_edit->setFont(QFont("Sans", default_font_size - 10));
-    widget_edit->setPlaceholderText(widget_text);
+    widget_edit->setFont(QFont("Sans", font_size*0.8));
+    widget_edit->setPlaceholderText(widget_text);     
 	QObject::connect(widget_edit, &QLineEdit::textEdited, [this, widget_text](){
 		widget_edit->setPlaceholderText(widget_text);
 		QPalette palette = widget_edit->palette();
@@ -174,7 +249,7 @@ void LabelComboComponent::init(
 	int font_size)
 	{
 	widget_label = new QLabel(parent);
-    widget_label->setFont(QFont("Sans", font_size));
+    widget_label->setFont(QFont("Sans", font_size*0.8));
     widget_label->setText(widget_text);
     widget_label->setAlignment(Qt::AlignLeft);
 	widget_label->setContentsMargins(0,20,0,0);
@@ -182,7 +257,7 @@ void LabelComboComponent::init(
 
     widget_combobox = new QComboBox(parent);
     widget_combobox->setFixedSize(QSize(app_width*63/100, app_height / 10));
-    widget_combobox->setFont(QFont("Sans", font_size));
+    widget_combobox->setFont(QFont("Sans", font_size*0.9));
     widget_combobox->addItems(combobox_list);
 }
 

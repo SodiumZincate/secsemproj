@@ -64,10 +64,13 @@ int main(int argc, char *argv[]) {
 	// stack1.addtoLayout();
 	stack1.mainWidget.setLayout(stack1.appLayout);
 
+    appDesign *app_design = new appDesign();
+
 	stack1.mainWidget.setWindowTitle("League Manager");
-	stack1.mainWidget.setFont(QFont("Sans", default_font_size - 12));
+	stack1.mainWidget.setFont(QFont("Sans", default_font_size));
     stack1.mainWidget.resize(app_width*3/2, app_height*3/2);
-    stack1.mainWidget.setStyleSheet("QWidget{background-color : #efefef}");
+    stack1.mainWidget.setPalette(app_design->app_palette);
+    stack1.mainWidget.setStyleSheet(app_design->app_style_sheet);
     stack1.mainWidget.show();
     stack1.mainWidget.showMaximized();
 

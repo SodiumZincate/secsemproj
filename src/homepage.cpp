@@ -1,7 +1,7 @@
 #include "appUI.h"
 #include "db.h"
 
-void initDashboard(StackedWidgets *App, QWidget* window, QString username = "username", int user_id = 0){
+void initDashboard(StackedWidgets *App, QWidget* window, QString username = "username", int user_id = 15){
 	window->setWindowTitle("Dashboard");
 
 	QWidget *main_widget = new QWidget(window);
@@ -12,7 +12,7 @@ void initDashboard(StackedWidgets *App, QWidget* window, QString username = "use
 	
 	//Username Text
     appText *usernameText = new appText();
-    usernameText ->init(window, username ,default_font_size-3);
+    usernameText ->init(window, username ,default_font_size*0.8);
     QLabel *usernameText_widget=usernameText->getWidget_label();
     usernameText_widget->setAlignment(Qt::AlignRight);
     usernameText_widget->setFixedHeight(app_height/4);
@@ -27,7 +27,7 @@ void initDashboard(StackedWidgets *App, QWidget* window, QString username = "use
 	
 	//League Name Text
 	appText *mainText = new appText();
-    mainText ->init(window, "League Manager" ,default_font_size+10);
+    mainText ->init(window, "League Manager" ,default_font_size*1.2);
     QLabel *mainText_widget = mainText->getWidget_label();
     mainText_widget->setAlignment(Qt::AlignCenter);
     mainText_widget->setFixedHeight(app_height/6);
@@ -41,7 +41,7 @@ void initDashboard(StackedWidgets *App, QWidget* window, QString username = "use
 
 	//Back Button
     appButton *backButton= new appButton();
-    backButton->init(window,"Log Out",default_font_size-2);
+    backButton->init(window,"Log Out",default_font_size*0.9);
     QPushButton *backButton_widget = backButton->getWidget_button();
     backButton_widget->setFixedSize(app_width/8,app_height/12);
 	// backButton_widget->setStyleSheet("QPushButton{background-color:green}");
@@ -115,7 +115,7 @@ void initDashboard(StackedWidgets *App, QWidget* window, QString username = "use
 	for(int i = 0; i < no_of_leagues; i++){
 		appClickableText *league_name = new appClickableText();
 		QString text = (std::to_string(i+1) + ") <u>" + streamList[i] + "</u>").c_str();
-		league_name->init(window, text, default_font_size);
+		league_name->init(window, text, default_font_size*0.8);
 		QLabel *league_name_widget = league_name->getWidget_label();
 		league_name_widget->setAlignment(Qt::AlignLeft);
 		// league_name_widget->setMargin(app_height/20);
@@ -129,20 +129,20 @@ void initDashboard(StackedWidgets *App, QWidget* window, QString username = "use
 
     // //League button 1
     // appButton *button1 =new appButton();
-    // button1->init(window,"League 1",default_font_size+6);
+    // button1->init(window,"League 1",default_font_size*1.1);
     // QPushButton *button1_widget=button1->getWidget_button();
     // button1_widget->setCursor(Qt::PointingHandCursor);
 	// button1_widget->setStyleSheet("QPushButton{text-decoration:underline;border:none;}");
   
     // //League button 2
     // appButton *button2= new appButton();
-    // button2->init(window,"League 2",default_font_size+6);
+    // button2->init(window,"League 2",default_font_size*1.1);
     // QPushButton *button2_widget=button2->getWidget_button();
 	// button2_widget->setCursor(Qt::PointingHandCursor);
 	// button2_widget->setStyleSheet("QPushButton{text-decoration:underline;border:none;}");
 
     appButton *leagueButton =new appButton();
-    leagueButton->init(window,"Add league",default_font_size+10);
+    leagueButton->init(window,"Add league",default_font_size*1.2);
     QPushButton *leagueButton_widget=leagueButton->getWidget_button();
     leagueButton_widget->setFixedSize(app_width/4,app_width/14);
 	

@@ -20,6 +20,13 @@
 extern int default_font_size;
 extern int app_width, app_height, screenWidth, screenHeight;
 
+class appDesign{
+public:
+    appDesign();
+    QPalette app_palette;
+    QString app_style_sheet;
+};
+
 // Class for stacked widgets to store widgets in a stack
 class StackedWidgets : public QObject{
 	Q_OBJECT // A QT macro that allows the use of slots

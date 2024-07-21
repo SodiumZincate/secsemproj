@@ -46,7 +46,7 @@ void initRegister(StackedWidgets *App, QWidget* window) {
 
     // Submit Button Widget
 	appButton *signin_button = new appButton();
-    signin_button->init(window, "Already have an account? Sign in", default_font_size-5);
+    signin_button->init(window, "Already have an account? Sign in", default_font_size*0.8);
     QPushButton *signin_button_widget = signin_button->getWidget_button();
 	signin_button_widget->setCursor(Qt::PointingHandCursor);
 	signin_button_widget->setStyleSheet("QPushButton{text-decoration:underline;border:none;}");
@@ -247,7 +247,7 @@ void initLogin(StackedWidgets *App, QWidget* window) {
 
     // Submit Button Widget
 	appButton *signin_button = new appButton();
-    signin_button->init(window, "Don't already have an account? Sign up", default_font_size-5);
+    signin_button->init(window, "Don't already have an account? Sign up", default_font_size*0.8);
     QPushButton *signin_button_widget = signin_button->getWidget_button();
 	signin_button_widget->setCursor(Qt::PointingHandCursor);
 	signin_button_widget->setStyleSheet("QPushButton{text-decoration:underline;border:none;}");

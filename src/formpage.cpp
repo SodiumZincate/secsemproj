@@ -29,14 +29,14 @@ void initAddLeague(StackedWidgets *App, QWidget* window, QString username = "use
 
 	//Username text
     appText *usernameText = new appText();
-    usernameText ->init(window, username ,default_font_size-3);
+    usernameText ->init(window, username ,default_font_size*0.9);
     QLabel *usernameText_widget=usernameText->getWidget_label();
     usernameText_widget->setAlignment(Qt::AlignRight);
     usernameText_widget->setFixedHeight(app_height/4);
 
 	//Back Button
     appButton *backButton= new appButton();
-    backButton->init(window,"BACK",default_font_size-2);
+    backButton->init(window,"BACK",default_font_size*0.9);
     QPushButton *backButton_widget = backButton->getWidget_button();
     backButton_widget->setFixedSize(app_width/8,app_height/12);
 	// backButton_widget->setStyleSheet("QPushButton{background-color:green}");
@@ -78,7 +78,7 @@ void initAddLeague(StackedWidgets *App, QWidget* window, QString username = "use
     no_of_teams_layout->setAlignment(Qt::AlignLeft);
 
     LabelEditComponent *no_of_teams_component=new LabelEditComponent();
-    no_of_teams_component->init(no_of_teams,"No. of Teams", default_font_size-4);
+    no_of_teams_component->init(no_of_teams,"No. of Teams", default_font_size*0.8);
     QLabel *no_of_teams_label  = no_of_teams_component->getWidget_label();
     no_of_teams_label->setFixedSize(QSize(app_width / 4, app_height / 10));
     QLineEdit *no_of_teams_edit = no_of_teams_component->getWidget_edit();
@@ -95,7 +95,7 @@ void initAddLeague(StackedWidgets *App, QWidget* window, QString username = "use
     group_stage_layout->setAlignment(Qt::AlignLeft);
 
 	LabelComboComponent *group_stage_component = new LabelComboComponent();
-	group_stage_component->init(window, "No. of Group Stages: ", {"0","1","2"}, default_font_size-10);
+	group_stage_component->init(window, "No. of Group Stages: ", {"0","1","2"}, default_font_size*0.8);
     QLabel *group_stage_label = group_stage_component->getWidget_label();
     QComboBox *group_stage_combobox = group_stage_component->getWidget_combo();
 	
@@ -109,7 +109,7 @@ void initAddLeague(StackedWidgets *App, QWidget* window, QString username = "use
     round_robin_layout->setAlignment(Qt::AlignLeft);
 
 	LabelComboComponent *round_robin_component = new LabelComboComponent();
-	round_robin_component->init(window, "Round Robin: ", {"1","2"}, default_font_size-10);
+	round_robin_component->init(window, "Round Robin: ", {"1","2"}, default_font_size*0.8);
     QLabel *round_robin_label = round_robin_component->getWidget_label();
     QComboBox *round_robin_combobox = round_robin_component->getWidget_combo();
 	
@@ -123,7 +123,7 @@ void initAddLeague(StackedWidgets *App, QWidget* window, QString username = "use
     qualifiers_layout->setAlignment(Qt::AlignLeft);
 
 	LabelComboComponent *qualifiers_component = new LabelComboComponent();
-	qualifiers_component->init(window, "Qualifiers: ", {"1","2","4"}, default_font_size-10);
+	qualifiers_component->init(window, "Qualifiers: ", {"1","2","4"}, default_font_size*0.8);
     QLabel *qualifiers_label = qualifiers_component->getWidget_label();
     QComboBox *qualifiers_combobox = qualifiers_component->getWidget_combo();
 
@@ -137,7 +137,7 @@ void initAddLeague(StackedWidgets *App, QWidget* window, QString username = "use
     no_of_groups_layout->setAlignment(Qt::AlignLeft);
 
 	LabelComboComponent *no_of_groups_component = new LabelComboComponent();
-	no_of_groups_component->init(window, "No of groups: ", {"1","2","4","8"}, default_font_size-10);
+	no_of_groups_component->init(window, "No of groups: ", {"1","2","4","8"}, default_font_size*0.8);
     QLabel *no_of_groups_label = no_of_groups_component->getWidget_label();
     QComboBox *no_of_groups_combobox = no_of_groups_component->getWidget_combo();
 
