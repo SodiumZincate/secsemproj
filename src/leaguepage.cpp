@@ -96,7 +96,7 @@ void initShowLeague(StackedWidgets *App, QWidget* window, QString username = "us
 		// league_table->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 		// league_table->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 		league_table->setMinimumSize(app_width*3/2, app_height*5/4);
-		league_table->setColumnWidth(0, app_width/3);
+		league_table->setColumnWidth(0, app_width*0.4);
 
 		// QScrollBar *scroll_bar = new QScrollBar();
 		// league_table->setVerticalScrollBar(scroll_bar);
@@ -144,16 +144,26 @@ void initShowLeague(StackedWidgets *App, QWidget* window, QString username = "us
 		}
 
 		league_table->setHorizontalHeaderLabels(header_label_list);
-        league_table->setFont(QFont("Sans", default_font_size*2));
+        league_table->horizontalHeader()->setFont(QFont("Sans", default_font_size*0.6));
+        league_table->verticalHeader()->setFont(QFont("Sans", default_font_size*0.6));
 
 		for (int j = 0; j < league_table->rowCount(); j++) {
 			QPixmap pixmap(icons[j]);
 			QIcon icon(pixmap.scaled(800, 800, Qt::KeepAspectRatio, Qt::SmoothTransformation));
 			QTableWidgetItem *table_item = new QTableWidgetItem(icon, team_names[j], 0);
             table_item->setFont(QFont("Sans", default_font_size*0.8));
-			// QTableWidgetItem *table_item = new QTableWidgetItem(QIcon(icons[i]), team_names[i], 0);
 			table_item->setFlags(table_item->flags() & ~Qt::ItemIsEditable);
 			league_table->setItem(j, 0, table_item);
+		}
+
+		for (int j = 0; j < league_table->rowCount(); j++) {
+            for(int k = 1; k < league_table->columnCount(); k++){
+                QTableWidgetItem *table_item = new QTableWidgetItem("12", 0);
+                table_item->setFont(QFont("Sans", default_font_size*0.6));
+                table_item->setTextAlignment(Qt::AlignCenter);
+                table_item->setFlags(table_item->flags() & ~Qt::ItemIsEditable);
+                league_table->setItem(j, k, table_item);
+            }
 		}
 		
 		for (int j = 0; j < league_table->columnCount(); j++) {

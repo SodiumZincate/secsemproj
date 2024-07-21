@@ -65,7 +65,7 @@ void initAddLeague(StackedWidgets *App, QWidget* window, QString username = "use
     QLabel *league_name_label=league_name_component->getWidget_label();
     league_name_label->setFixedSize(QSize(app_width / 4, app_height / 10));
     QLineEdit *league_name_edit=league_name_component->getWidget_edit();
-	league_name_edit->setFixedSize(app_width*72/100, app_height/10);
+	league_name_edit->setFixedSize(app_width*71/100, app_height/10);
 
     league_name_layout->addWidget(league_name_label);
     league_name_layout->addWidget(league_name_edit);
@@ -82,7 +82,7 @@ void initAddLeague(StackedWidgets *App, QWidget* window, QString username = "use
     QLabel *no_of_teams_label  = no_of_teams_component->getWidget_label();
     no_of_teams_label->setFixedSize(QSize(app_width / 4, app_height / 10));
     QLineEdit *no_of_teams_edit = no_of_teams_component->getWidget_edit();
-	no_of_teams_edit->setFixedSize(app_width*72/100, app_height/10);
+	no_of_teams_edit->setFixedSize(app_width*71/100, app_height/10);
 
     no_of_teams_layout->addWidget(no_of_teams_label);
     no_of_teams_layout->addWidget(no_of_teams_edit);
