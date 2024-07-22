@@ -2,7 +2,7 @@
 #include "db.h"
 #include "logic.h"
 
-void initDashboard(StackedWidgets *App, QWidget* window, QString username = "username", int user_id = 0){
+void initDashboard(StackedWidgets *App, QWidget* window, QString username = "username", int user_id = 16){
 	window->setWindowTitle("Dashboard");
 
 	QWidget *main_widget = new QWidget(window);
@@ -124,28 +124,30 @@ void initDashboard(StackedWidgets *App, QWidget* window, QString username = "use
 		QObject::connect(league_name, &appClickableText::clicked,
 		[=](){
 		qDebug() << "Clicked league_name:" << text;
-		std::string clientReq = leagueIdList[i];
-		std::stringstream clientRes;
+		std::stringstream clientResLeague;
+		std::stringstream clientResTeam;
 		std::string streamLine;
 		std::vector<std::string> streamList;
 
-		std::string team_array[50];
-
-		int errorDatabase = updateDatabase(clientReq, "query_league", clientRes);
-		if(errorDatabase!=0){
-			std::cout << "\nError initializing database" << std::endl;
+		std::string clientReq = leagueIdList[i];
+		int errorDatabase = updateDatabase(clientReq, "query_league", clientResLeague);
+		getline(clientResLeague, streamLine, '\n');
+		if(errorDatabase != 0 || strcmp(streamLine.c_str(), "") == 0){
+			std::cout << "\nError initializing league database" << std::endl;
 		}
 		else{
-			std::string league_string = clientRes.str();
+			std::string league_string = clientResLeague.str();
 
 			clientReq = std::to_string(user_id) + "\n" + leagueIdList[i];
-
-			int errorDatabase = updateDatabase(clientReq, "query_team", clientRes);
-			if(errorDatabase!=0){
-				std::cout << "\nError initializing database" << std::endl;
+			int errorDatabase = updateDatabase(clientReq, "query_team", clientResTeam);
+			getline(clientResTeam, streamLine, '\n');
+			if(errorDatabase !=0 || strcmp(streamLine.c_str(), "") == 0){
+				std::cout << "\nError initializing team database" << std::endl;
 			}
 			else{
-				std::string team_string = clientRes.str();
+				std::string team_string = clientResTeam.str();
+				cout << "League String: " << league_string << endl;
+				cout << "Team String: " << team_string << endl;
 				clickLeague(league_string, team_string);
 			}
 		}

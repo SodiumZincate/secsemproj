@@ -395,7 +395,7 @@ void queryDatabaseTeam(string cli_req, string file, Response &res)
 		}
 		if(teamExists){
 			std::cout << "The user_id: " << user_id << " has teams\n" << std::endl;
-			
+			res.set_content(content.str(), "text/plain");
 		}
 		else{
 			std::cout << "The user id: " + user_id + " doesn't have teams\n" << std::endl;
