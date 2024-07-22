@@ -58,6 +58,7 @@ int main(int argc, char *argv[])
         << "UID INTEGER NOT NULL, "
         << "LID INTEGER NOT NULL, "
 		<< "TNAME TEXT NOT NULL,"
+		<< "TGROUP CHAR(1) NOT NULL,"
 		<< "POSITION INTEGER NOT NULL,"
 		<< "MP INTEGER NOT NULL,"
 		<< "WIN INTEGER NOT NULL,"

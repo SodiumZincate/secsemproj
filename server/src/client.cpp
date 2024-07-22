@@ -37,7 +37,7 @@ int main(int argc, char *argv[]) {
 		}
 	}
 	else if(strcmp(argv[1], "team") == 0){
-		if (auto res = cli.Post("/team/insert", "16\n15\nArgentina\n1\n1\n1\n1\n0\n0\n0\n0\n0", "text/plain")) {
+		if (auto res = cli.Post("/team/insert", "15\n16\nArgentina\nA\n1\n1\n1\n1\n0\n0\n0\n0\n0", "text/plain")) {
 			cout << res->status << endl;
 			cout << res->get_header_value("Content-Type") << endl;
 		}

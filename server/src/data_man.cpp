@@ -57,22 +57,24 @@ void insertDatabaseTeam(string cli_req, string file){
 	string uid = string_list[0];
 	string lid = string_list[1];
 	string team_name = string_list[2];
-	string position = string_list[3];
-	string mp = string_list[4];
-	string win = string_list[5];
-	string loss = string_list[6];
-	string draw = string_list[7];
-	string gf = string_list[8];
-	string ga = string_list[9];
-	string gd = string_list[10];
-	string point = string_list[11];
+	string group = string_list[3];
+	string position = string_list[4];
+	string mp = string_list[5];
+	string win = string_list[6];
+	string loss = string_list[7];
+	string draw = string_list[8];
+	string gf = string_list[9];
+	string ga = string_list[10];
+	string gd = string_list[11];
+	string point = string_list[12];
 
 	stringstream ss;
-	ss << "INSERT INTO TEAM(UID,LID,TNAME,POSITION,MP,WIN,LOSS,DRAW,GF,GA,GD,POINTS) VALUES"
+	ss << "INSERT INTO TEAM(UID,LID,TNAME,TGROUP,POSITION,MP,WIN,LOSS,DRAW,GF,GA,GD,POINTS) VALUES"
 	<< "("
 	<< "'" << uid << "',"
 	<< "'" << lid << "',"
 	<< "'" << team_name << "',"
+	<< "'" << group << "',"
 	<< "'" << position << "',"
 	<< "'" << mp << "',"
 	<< "'" << win << "',"
@@ -311,9 +313,7 @@ void deleteDatabase(string cli_req, string file)
 	}
 
 	stringstream ss;
-	ss << "DELETE FROM DATA WHERE USERNAME"
-	<< "="
-	<< "'" << username << "'";
+	ss << "DROP TABLE TEAM";
 
 	string sqlDelete = ss.str();
 	exit = sqlite3_exec(db, sqlDelete.c_str(), NULL, 0, &errMsg);
@@ -334,13 +334,21 @@ void deleteDatabase(string cli_req, string file)
 	
 }
 
-void queryDatabaseTeamList(string cli_req, string file, Response &res)
+void queryDatabaseTeam(string cli_req, string file, Response &res)
 {
 	sqlite3 *db;
 	int exit = 0;
 	char *errMsg;
 
-	string user_id = cli_req;
+	stringstream stream;
+	stream << cli_req;
+
+	string token;
+
+	getline(stream, token, '\n');
+	string user_id = token;
+	getline(stream, token, '\n');
+	string league_id = token;
 
 	exit = sqlite3_open(file.c_str(), &db);
 	std::cout << file.c_str() << std::endl;
@@ -353,9 +361,12 @@ void queryDatabaseTeamList(string cli_req, string file, Response &res)
 	}
 
 	stringstream ss;
-	ss << "SELECT LID FROM TEAM WHERE UID"
+	ss << "SELECT TID,UID,LID,TNAME,TGROUP,POSITION,MP,WIN,LOSS,DRAW,GF,GA,GD,POINTS FROM TEAM WHERE UID"
 	<< "="
-	<< "'" + user_id + "'";
+	<< "'" + user_id + "'"
+	<< " AND LID"
+	<< '='
+	<< "'" + league_id + "'";
 
 	QR1.result.clear();
 	
@@ -377,17 +388,17 @@ void queryDatabaseTeamList(string cli_req, string file, Response &res)
 		}
 		
 		string line;
-		bool leagueExists = false;
+		bool teamExists = false;
 		getline(content, line, '\n');
 		if(strcmp(line.c_str(), "") != 0){
-			leagueExists = true;
+			teamExists = true;
 		}
-		if(leagueExists){
-			std::cout << "The user_id: " << user_id << " has leagues\n" << std::endl;
+		if(teamExists){
+			std::cout << "The user_id: " << user_id << " has teams\n" << std::endl;
 			
 		}
 		else{
-			std::cout << "The user id: " + user_id + " doesn't have leagues\n" << std::endl;
+			std::cout << "The user id: " + user_id + " doesn't have teams\n" << std::endl;
 			res.set_content("\n\n\n", "text/plain");
 		}
 	}

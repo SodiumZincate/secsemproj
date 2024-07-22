@@ -71,5 +71,3 @@ class League
     //function that assigns a group to each team in a league (in the pattern: team 1: A, team 2: B, team 3:C, team 4: A ...)
     void init_group(Team T[]);
 };
-
-void clickLeague(string input_string_1);

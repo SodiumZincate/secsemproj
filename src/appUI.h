@@ -94,9 +94,10 @@ public:
     QPushButton* getWidget_button();
 };
 
-class appClickableText : public QLabel , public appText{
+class appClickableText : public QLabel{
 	Q_OBJECT
 public:
+	void init(QWidget*, QString, int font_size = default_font_size);
 	void mousePressEvent(QMouseEvent* event) override;
 
 signals:

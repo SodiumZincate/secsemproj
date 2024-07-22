@@ -33,8 +33,10 @@ void deleteDatabase(string, string);
 
 void queryDatabase(string, string, Response&);
 
-void queryDatabaseTeamList(string, string, Response&);
+void queryDatabaseTeam(string, string, Response&);
 
-void queryDatabaseLeagueID(string cli_req, string file, Response &res);
+// void queryDatabaseLeagueID(string cli_req, string file, Response &res);
+
+void queryDatabaseLeague(string, string, Response&);
 
 void queryDatabaseLeagueList(string, string, Response&);

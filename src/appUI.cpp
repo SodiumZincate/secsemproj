@@ -142,8 +142,19 @@ QPushButton* appButton::getWidget_button() {
     return button_widget;
 }
 
-void appClickableText::mousePressEvent(QMouseEvent* event) {
+void appClickableText::init(QWidget* parent, QString text, int font_size) {
+	setParent(parent);
+    setFont(QFont("Sans", font_size));
+    setText(text);
+    setMargin(app_width/42);
+	setAlignment(Qt::AlignLeft);
+	setCursor(Qt::PointingHandCursor);
+	setFixedHeight(app_height/7);
+}
+
+void appClickableText::mousePressEvent(QMouseEvent* event){
 	if(event->button() == Qt::LeftButton){
+		qDebug() << "appClickableText clicked"; // Debug statement
 		emit clicked();
 	}
 }

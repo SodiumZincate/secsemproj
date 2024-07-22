@@ -2,7 +2,7 @@
 #include "db.h"
 #include "logic.h"
 
-void initDashboard(StackedWidgets *App, QWidget* window, QString username = "username", int user_id = 15){
+void initDashboard(StackedWidgets *App, QWidget* window, QString username = "username", int user_id = 0){
 	window->setWindowTitle("Dashboard");
 
 	QWidget *main_widget = new QWidget(window);
@@ -120,18 +120,16 @@ void initDashboard(StackedWidgets *App, QWidget* window, QString username = "use
 		appClickableText *league_name = new appClickableText();
 		QString text = (std::to_string(i+1) + ") <u>" + leagueNameList[i] + "</u>").c_str();
 		league_name->init(window, text, default_font_size*0.8);
-		QLabel *league_name_widget = league_name->getWidget_label();
-		league_name_widget->setAlignment(Qt::AlignLeft);
-		// league_name_widget->setMargin(app_height/20);
-		league_name_widget->setCursor(Qt::PointingHandCursor);
-		league_name_widget->setFixedHeight(app_height/7);
 
 		QObject::connect(league_name, &appClickableText::clicked,
-		[i, leagueIdList, App](){
+		[=](){
+		qDebug() << "Clicked league_name:" << text;
 		std::string clientReq = leagueIdList[i];
 		std::stringstream clientRes;
 		std::string streamLine;
 		std::vector<std::string> streamList;
+
+		std::string team_array[50];
 
 		int errorDatabase = updateDatabase(clientReq, "query_league", clientRes);
 		if(errorDatabase!=0){
@@ -139,27 +137,22 @@ void initDashboard(StackedWidgets *App, QWidget* window, QString username = "use
 		}
 		else{
 			std::string league_string = clientRes.str();
-			clickLeague(league_string);	
-			App->setCurrentIndex(4);
+
+			clientReq = std::to_string(user_id) + "\n" + leagueIdList[i];
+
+			int errorDatabase = updateDatabase(clientReq, "query_team", clientRes);
+			if(errorDatabase!=0){
+				std::cout << "\nError initializing database" << std::endl;
+			}
+			else{
+				std::string team_string = clientRes.str();
+				clickLeague(league_string, team_string);
+			}
 		}
 		});
 
-		button_container_layout->addWidget(league_name_widget, Qt::AlignTop);
+		button_container_layout->addWidget(league_name, Qt::AlignTop);
 	}
-
-    // //League button 1
-    // appButton *button1 =new appButton();
-    // button1->init(window,"League 1",default_font_size*1.1);
-    // QPushButton *button1_widget=button1->getWidget_button();
-    // button1_widget->setCursor(Qt::PointingHandCursor);
-	// button1_widget->setStyleSheet("QPushButton{text-decoration:underline;border:none;}");
-  
-    // //League button 2
-    // appButton *button2= new appButton();
-    // button2->init(window,"League 2",default_font_size*1.1);
-    // QPushButton *button2_widget=button2->getWidget_button();
-	// button2_widget->setCursor(Qt::PointingHandCursor);
-	// button2_widget->setStyleSheet("QPushButton{text-decoration:underline;border:none;}");
 
     appButton *leagueButton =new appButton();
     leagueButton->init(window,"Add league",default_font_size*1.2);

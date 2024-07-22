@@ -2,7 +2,7 @@
 
 //this file is used to create a league using database input when the "Add league" button is clicked
 
-void clickLeague(string input_string_1 )
+void clickLeague(string input_string_1, string input_string_2)
 {
     League L;
     //string that is received from database, contains league's fixed properties 
@@ -19,7 +19,7 @@ void clickLeague(string input_string_1 )
     for (i = 0; i < L.league_team_number; i++)
     {
         //'i'th member of array of teams of league L is initialized using string input_string_2[i]
-        L.T[i].init_team(input_string_2[i]);
+        L.T[i].init_team(input_string_2);
     }
 
     //alphabetically arrange teams in the team array of a league
