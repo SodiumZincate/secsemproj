@@ -97,7 +97,7 @@ public:
 class appClickableText : public QLabel , public appText{
 	Q_OBJECT
 public:
-	void mousePressEvent(QMouseEvent* event);
+	void mousePressEvent(QMouseEvent* event) override;
 
 signals:
 	void clicked();

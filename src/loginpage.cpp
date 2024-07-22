@@ -1,5 +1,6 @@
 #include "appUI.h"
 #include "db.h"
+#include "logic.h"
 
 void initRegister(StackedWidgets *App, QWidget* window) {
 

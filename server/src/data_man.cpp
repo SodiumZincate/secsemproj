@@ -459,66 +459,66 @@ void queryDatabaseLeague(string cli_req, string file, Response &res)
 	sqlite3_close(db);
 }
 
-void queryDatabaseLeagueID(string cli_req, string file, Response &res)
-{
-	sqlite3 *db;
-	int exit = 0;
-	char *errMsg;
+// void queryDatabaseLeagueID(string cli_req, string file, Response &res)
+// {
+// 	sqlite3 *db;
+// 	int exit = 0;
+// 	char *errMsg;
 
-	string user_id = cli_req;
+// 	string user_id = cli_req;
 
-	exit = sqlite3_open(file.c_str(), &db);
-	std::cout << file.c_str() << std::endl;
-	if(exit){
-		cerr << "Failed to open database: " << sqlite3_errmsg(db) << std::endl;
-		std::exit(1);
-	}
-	else{
-		std::cout << "Database opened successfully" << std::endl;
-	}
+// 	exit = sqlite3_open(file.c_str(), &db);
+// 	std::cout << file.c_str() << std::endl;
+// 	if(exit){
+// 		cerr << "Failed to open database: " << sqlite3_errmsg(db) << std::endl;
+// 		std::exit(1);
+// 	}
+// 	else{
+// 		std::cout << "Database opened successfully" << std::endl;
+// 	}
 
-	stringstream ss;
-	ss << "SELECT LID FROM LEAGUE WHERE UID"
-	<< "="
-	<< "'" + user_id + "'";
+// 	stringstream ss;
+// 	ss << "SELECT LID FROM LEAGUE WHERE UID"
+// 	<< "="
+// 	<< "'" + user_id + "'";
 
-	QR1.result.clear();
+// 	QR1.result.clear();
 	
-	string sqlQuery = ss.str();
-	exit = sqlite3_exec(db, sqlQuery.c_str(), callback, 0, &errMsg);
-	if(exit!=SQLITE_OK){
-		cerr << "Error Querying Data" << std::endl;
-		cerr << errMsg << std::endl;
-		sqlite3_free(errMsg);
-	}
-	else{
-		std::cout << "Data Queried successfully" << std::endl;
-		// std::cout << QR1.result[1] << std::endl;
-		stringstream content;
-		for(string &c : QR1.result){
-			cout << c << endl;
-			content << c;
-			content << "\n";
-		}
+// 	string sqlQuery = ss.str();
+// 	exit = sqlite3_exec(db, sqlQuery.c_str(), callback, 0, &errMsg);
+// 	if(exit!=SQLITE_OK){
+// 		cerr << "Error Querying Data" << std::endl;
+// 		cerr << errMsg << std::endl;
+// 		sqlite3_free(errMsg);
+// 	}
+// 	else{
+// 		std::cout << "Data Queried successfully" << std::endl;
+// 		// std::cout << QR1.result[1] << std::endl;
+// 		stringstream content;
+// 		for(string &c : QR1.result){
+// 			cout << c << endl;
+// 			content << c;
+// 			content << "\n";
+// 		}
 		
-		string line;
-		bool leagueExists = false;
-		getline(content, line, '\n');
-		if(strcmp(line.c_str(), "") != 0){
-			leagueExists = true;
-		}
-		if(leagueExists){
-			std::cout << "The user_id: " << user_id << " has leagues\n" << std::endl;
-			res.set_content(content.str(), "text/plain");
-		}
-		else{
-			std::cout << "The user id: " + user_id + " doesn't have leagues\n" << std::endl;
-			res.set_content("\n\n\n", "text/plain");
-		}
-	}
+// 		string line;
+// 		bool leagueExists = false;
+// 		getline(content, line, '\n');
+// 		if(strcmp(line.c_str(), "") != 0){
+// 			leagueExists = true;
+// 		}
+// 		if(leagueExists){
+// 			std::cout << "The user_id: " << user_id << " has leagues\n" << std::endl;
+// 			res.set_content(content.str(), "text/plain");
+// 		}
+// 		else{
+// 			std::cout << "The user id: " + user_id + " doesn't have leagues\n" << std::endl;
+// 			res.set_content("\n\n\n", "text/plain");
+// 		}
+// 	}
 
-	sqlite3_close(db);
-}
+// 	sqlite3_close(db);
+// }
 
 void queryDatabaseLeagueList(string cli_req, string file, Response &res)
 {
@@ -539,7 +539,7 @@ void queryDatabaseLeagueList(string cli_req, string file, Response &res)
 	}
 
 	stringstream ss;
-	ss << "SELECT LNAME FROM LEAGUE WHERE UID"
+	ss << "SELECT LID,LNAME FROM LEAGUE WHERE UID"
 	<< "="
 	<< "'" + user_id + "'";
 

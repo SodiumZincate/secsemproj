@@ -1,5 +1,6 @@
 #include "appUI.h"
 #include "db.h"
+#include "logic.h"
 
 void initShowLeague(StackedWidgets *App, QWidget* window, QString username = "username", QString leaguename = "leaguename"){
     window->setWindowTitle("League Name");

@@ -2,13 +2,15 @@
 
 //this file is used to create a league using database input when the "Add league" button is clicked
 
-int clickLeague(string input_string_1 )
+void clickLeague(string input_string_1 )
 {
     League L;
     //string that is received from database, contains league's fixed properties 
     ;
     //array of string that is received from database, containing teams' fixed properties for a league
     string input_string_2[MAX_TEAMS];
+
+	cout << input_string_1 << endl;
     
     //initialize with string 1 (league's fixed properties)
     L.init_league(input_string_1);

@@ -9,6 +9,9 @@
 #include "formpage.cpp"
 #include "leaguepage.cpp"
 #include "db.cpp"
+#include "logic.cpp"
+#include "clickLeague.cpp"
+#include "logic.h"
 
 int app_height = 0;
 int app_width = 0;
@@ -60,7 +63,7 @@ int main(int argc, char *argv[]) {
 	stack1.addWidget(&showLeagueApp);
 
 	// Set initial page to login page
-	stack1.setCurrentIndex(4);
+	stack1.setCurrentIndex(2);
 
 	// stack1.addtoLayout();
 	stack1.mainWidget.setLayout(stack1.appLayout);

@@ -1,4 +1,5 @@
 #include "db.h"
+#include "logic.h"
 
 using namespace std;
 

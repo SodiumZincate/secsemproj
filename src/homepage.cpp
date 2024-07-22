@@ -1,5 +1,6 @@
 #include "appUI.h"
 #include "db.h"
+#include "logic.h"
 
 void initDashboard(StackedWidgets *App, QWidget* window, QString username = "username", int user_id = 15){
 	window->setWindowTitle("Dashboard");
@@ -126,27 +127,22 @@ void initDashboard(StackedWidgets *App, QWidget* window, QString username = "use
 		league_name_widget->setFixedHeight(app_height/7);
 
 		QObject::connect(league_name, &appClickableText::clicked,
-		[=](){
+		[i, leagueIdList, App](){
 		std::string clientReq = leagueIdList[i];
 		std::stringstream clientRes;
 		std::string streamLine;
 		std::vector<std::string> streamList;
-
-		while(getline(clientRes, streamLine, '\n')){
-			streamList.push_back(streamLine);
-		}
 
 		int errorDatabase = updateDatabase(clientReq, "query_league", clientRes);
 		if(errorDatabase!=0){
 			std::cout << "\nError initializing database" << std::endl;
 		}
 		else{
-			// clickLeague(clientRes);	
+			std::string league_string = clientRes.str();
+			clickLeague(league_string);	
 			App->setCurrentIndex(4);
 		}
 		});
-
-		std::cout << "Iterated" << std::endl;
 
 		button_container_layout->addWidget(league_name_widget, Qt::AlignTop);
 	}
