@@ -123,19 +123,24 @@ void League::sort_teams_array()
 
 string League::ret_league()
 {
-    string token;
-    stringstream tokenStream(input_string);
-    vector<string> list;
-    while(getline(tokenStream, token, '\n'))
+    string ret;
+    ret = to_string(league_id) + "\n" + to_string(league_user_id) + "\n" + league_name + "\n" + 
+    to_string(league_group_stages) + "\n" + to_string(league_round_robin) + "\n" +
+    to_string(league_qualifiers) + "\n" + to_string(league_groups) + "\n" + to_string(league_team_number);
+    return ret;
+}
+
+string League::ret_teams()
+{
+    string ret;
+    int i;
+    for (i = 0; i < league_team_number; i++)
     {
-        list.push_back(token);
-    }   
-     =  = stoi(list[0]) = league_id
-     = stoi(list[1]) = league_user_id
-     = list[2] = league_name
-     = stoi(list[3]) = league_group_stages
-     = stoi(list[4]) = league_round_robin
-     = stoi(list[5]) = league_qualifiers
-     = stoi(list[6]) = league_groups
-     = stoi(list[7]) = league_team_number
+        ret = ret + to_string(T[i].team_id) + "\n" + to_string(T[i].team_user_id) + "\n" + 
+        to_string(T[i].team_league_id) + "\n" + T[i].team_name + "\n" + T[i].team_group + "\n" +
+        to_string(T[i].team_position) + "\n" + to_string(T[i].team_mp) + "\n" + to_string(T[i].team_w) + "\n" +
+        to_string(T[i].team_l) + "\n" + to_string(T[i].team_d) + "\n" + to_string(T[i].team_gf) + "\n" +
+        to_string(T[i].team_ga) + "\n" + to_string(T[i].team_gd) + "\n" + to_string(T[i].team_points) + "\n";
+    }
+    return ret;
 }

@@ -75,4 +75,4 @@ class League
     string ret_teams();
 };
 
-void clickLeague(string input_string_1);
+void clickLeague(string input_string_1, string input_string_2);
