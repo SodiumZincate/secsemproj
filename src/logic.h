@@ -34,13 +34,14 @@ class Team
     int team_ga = 0;
     int team_gd = 0;
     int team_points = 0;
+    int team_position = 0;
 
     //methods
     Team() {}
     //function to initialize a team's fixed properties in a league, based on the input string from database
     void init_team(string input_string);
     //function that updates a team data
-    void update_team_data(int goals_for, int goals_against); 
+    void update_team_data(int goals_for, int goals_against);
 };
 
 //class for a league
@@ -63,13 +64,15 @@ class League
 
     League() {}
     //function to update position of teams in a group of a league based on points 
-    void update_group_positions(); 
+    void update_group_positions();
     //function to initialize league's fixed properties, based on the input string from database
-    void init_league(string input_string); 
+    void init_league(string input_string);
     //function that sorts team array of a league alphabetically
     void sort_teams_array();
-    //function that assigns a group to each team in a league (in the pattern: team 1: A, team 2: B, team 3:C, team 4: A ...)
-    void init_group(Team T[]);
+    //function to return properties of a league
+    string ret_league();
+    //function to return teams of a league
+    string ret_teams();
 };
 
 void clickLeague(string input_string_1);

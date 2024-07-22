@@ -2,7 +2,7 @@
 
 //this file is used to create a league using database input when the "Add league" button is clicked
 
-void clickLeague(string input_string_1)
+void clickLeague(string input_string_1, string input_string_2)
 {
     League L;
     //input_string_1 -> string that is received from database, contains league's fixed properties 
@@ -22,8 +22,8 @@ void clickLeague(string input_string_1)
     }
 
     //sort according to points in a group
-    for (i = 0; i < L.league_groups; i++)
-    {
-        
-    }
+    L.update_group_positions();
+
+    //return league
+
 }
