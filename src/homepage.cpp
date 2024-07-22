@@ -85,7 +85,8 @@ void initDashboard(StackedWidgets *App, QWidget* window, QString username = "use
 	std::string clientReq = std::to_string(user_id);
 	std::stringstream clientRes;
 	std::string streamLine;
-	std::vector<std::string> streamList;
+	std::vector<std::string> leagueNameList;
+	std::vector<std::string> leagueIdList;
 	
 	int no_of_leagues = 0;
 	int errorDatabase = updateDatabase(clientReq, "query_league_list", clientRes);
@@ -94,7 +95,9 @@ void initDashboard(StackedWidgets *App, QWidget* window, QString username = "use
 	}
 	else{
 		while(getline(clientRes, streamLine, '\n')){
-			streamList.push_back(streamLine);
+			leagueIdList.push_back(streamLine);
+			getline(clientRes, streamLine, '\n');
+			leagueNameList.push_back(streamLine);
 			std::cout << "League name: " << streamLine << std::endl;
 			if(strcmp(streamLine.c_str(), "") != 0){
 				no_of_leagues++;
@@ -114,13 +117,34 @@ void initDashboard(StackedWidgets *App, QWidget* window, QString username = "use
 
 	for(int i = 0; i < no_of_leagues; i++){
 		appClickableText *league_name = new appClickableText();
-		QString text = (std::to_string(i+1) + ") <u>" + streamList[i] + "</u>").c_str();
+		QString text = (std::to_string(i+1) + ") <u>" + leagueNameList[i] + "</u>").c_str();
 		league_name->init(window, text, default_font_size*0.8);
 		QLabel *league_name_widget = league_name->getWidget_label();
 		league_name_widget->setAlignment(Qt::AlignLeft);
 		// league_name_widget->setMargin(app_height/20);
 		league_name_widget->setCursor(Qt::PointingHandCursor);
 		league_name_widget->setFixedHeight(app_height/7);
+
+		QObject::connect(league_name, &appClickableText::clicked,
+		[=](){
+		std::string clientReq = leagueIdList[i];
+		std::stringstream clientRes;
+		std::string streamLine;
+		std::vector<std::string> streamList;
+
+		while(getline(clientRes, streamLine, '\n')){
+			streamList.push_back(streamLine);
+		}
+
+		int errorDatabase = updateDatabase(clientReq, "query_league", clientRes);
+		if(errorDatabase!=0){
+			std::cout << "\nError initializing database" << std::endl;
+		}
+		else{
+			// clickLeague(clientRes);	
+			App->setCurrentIndex(4);
+		}
+		});
 
 		std::cout << "Iterated" << std::endl;
 

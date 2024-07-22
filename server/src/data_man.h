@@ -33,4 +33,8 @@ void deleteDatabase(string, string);
 
 void queryDatabase(string, string, Response&);
 
-void queryDatabaseLeahueList(string, string, Response&);
+void queryDatabaseTeamList(string, string, Response&);
+
+void queryDatabaseLeagueID(string cli_req, string file, Response &res);
+
+void queryDatabaseLeagueList(string, string, Response&);

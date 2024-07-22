@@ -181,6 +181,23 @@ void initAddLeague(StackedWidgets *App, QWidget* window, QString username = "use
 		number_qualifiers = (qualifiers_component->getComboNumber());
 		number_no_of_groups = (no_of_groups_component->getComboNumber());
 
+		// char group[20];
+		// int i, j, k;
+		// for (i = 0; i < number_no_of_groups; i++)
+		// {
+		// 	group[i] = (char) (65 + i);
+		// }
+
+		// k = 0;
+		// for(int j = 0; j < number_no_of_groups; j++)
+		// {
+		// 	for (i = j; i < number_no_of_groups; i += number_no_of_groups)
+		// 	{
+		// 		T[i].team_group = group[j];
+		// 	}
+		// 	k++;
+		// }
+		
 		std::string number_no_of_teams;
 		number_no_of_teams = (no_of_teams_component->getFieldText()).toStdString();
 
