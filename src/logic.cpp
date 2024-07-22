@@ -39,18 +39,32 @@ void Team::init_team(string input_string)
     team_user_id = stoi(list[1]);
     team_league_id = stoi(list[2]);
     team_name = list[3];
-    team_group = list[4];
+    team_group = (list[4].c_str())[0];
 }
 
-void League::update_league_positions()
+void League::update_group_positions()
 { 
-    int i, j; 
-    for (i = 0; i < league_team_number - 1; i++) 
+    int teams_in_group = ceil(league_groups / league_team_number);
+    int &t = teams_in_group;
+    Team Ta[MAX_TEAMS];
+    int i, j, k;
+    for (i = 0; i < league_groups; i++)
     {
-        for (j = 0; j < league_team_number - i - 1; j++) 
+        for (j = 0; j < league_team_number; j++)
         {
-            if (T[j].team_points > T[j + 1].team_points) 
-            swap(T[j], T[j + 1]); 
+            if (T[j].team_group == (char) (i + 65))
+            {
+                Ta[i] = T[j];
+            }
+        }
+
+        for (k = 0; k < league_team_number - 1; k++) 
+        {
+            for (j = 0; j < league_team_number - i - 1; j++) 
+            {
+                if (Ta[j].team_points > Ta[j + 1].team_points) 
+                swap(Ta[j], Ta[j + 1]); 
+            }
         }
     }
 }

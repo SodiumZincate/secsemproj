@@ -23,7 +23,7 @@ class Team
     int team_league_id;
 
     //properties of a team that are fixed, initialized by program
-    string team_group;
+    char team_group;
 
     //properties of a team that are not fixed
     int team_mp = 0;
@@ -62,8 +62,8 @@ class League
     Team T[MAX_TEAMS];
 
     League() {}
-    //function to update position of teams in name league based on points 
-    void update_league_positions(); 
+    //function to update position of teams in a group of a league based on points 
+    void update_group_positions(); 
     //function to initialize league's fixed properties, based on the input string from database
     void init_league(string input_string); 
     //function that sorts team array of a league alphabetically
