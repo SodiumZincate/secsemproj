@@ -172,3 +172,19 @@ string League::ret_teams()
 	cout << "Return Team: " << ret << endl;
     return ret;
 }
+
+string League::ret_group(Group G[])
+{
+    string ret;
+    int i, j;
+    for (i = 0; i < league_groups; i++)
+    {
+        ret = ret + to_string(G[i].group_name) + "\n";
+        for (j = 0; j < sizeof(G[i].T); j++)
+        {
+            ret = ret + to_string(G[i].T[j].team_id) + "\n";
+        }
+    }
+    cout << "Return Groups: " << ret << endl;
+    return ret;
+}

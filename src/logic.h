@@ -11,6 +11,7 @@
 using namespace std;
 
 #define MAX_TEAMS 50
+#define MAX_GROUPS 16
 
 //class for a team
 class Team
@@ -45,6 +46,16 @@ class Team
     void update_team_data(int goals_for, int goals_against);
 };
 
+//class for a group
+class Group
+{
+    public:
+
+    char group_name;
+
+    Team T[MAX_TEAMS];
+};
+
 //class for a league
 class League
 {
@@ -74,6 +85,12 @@ class League
     string ret_league();
     //function to return teams of a league
     string ret_teams();
+    //function to return a string of teams as per groups
+    string ret_group(Group G[]);
 };
 
-void clickLeague(string input_string_1, string input_string_2);
+//function to update league data and return the updated league data
+void updateLeague(string input_string_1, string input_string_2);
+
+//function to change league data into a easy-to-display form and return the data
+void displayLeague(string input_string_1, string input_string_2);
