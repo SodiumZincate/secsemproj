@@ -30,14 +30,14 @@ int main(int argc, char *argv[]) {
 		if (auto res = cli.Post("/login/query", "Prasiddha\nprasiddhapokh@gmail.com\n12345678", "text/plain")) {
 			cout << res->status << endl;
 			cout << res->get_header_value("Content-Type") << endl;
-			cout << res->body << endl;
+			// cout << res->body << endl;
 		}
 		else {
 			cout << "error code: " << res.error() << std::endl;
 		}
 	}
 	else if(strcmp(argv[1], "team") == 0){
-		if (auto res = cli.Post("/team/insert", "15\n16\nArgentina\nA\n1\n1\n1\n1\n0\n0\n0\n0\n0", "text/plain")) {
+		if (auto res = cli.Post("/team/insert", "16\n16\nBelgium\nA\n1\n1\n1\n1\n0\n0\n0\n0\n0", "text/plain")) {
 			cout << res->status << endl;
 			cout << res->get_header_value("Content-Type") << endl;
 		}
@@ -57,7 +57,7 @@ int main(int argc, char *argv[]) {
 	else if(strcmp(argv[1], "query_team_list") == 0){
 		if (auto res = cli.Post("/team/query_list", "16\n1", "text/plain")) {
 			cout << res->status << endl;
-			cout << res->body << endl;
+			// cout << res->body << endl;
 			cout << res->get_header_value("Content-Type") << endl;
 		}
 		else {
@@ -67,7 +67,7 @@ int main(int argc, char *argv[]) {
 	else if(strcmp(argv[1], "query_league_id") == 0){
 		if (auto res = cli.Post("/league/query_id", "16", "text/plain")) {
 			cout << res->status << endl;
-			cout << res->body << endl;
+			// cout << res->body << endl;
 			cout << res->get_header_value("Content-Type") << endl;
 		}
 		else {
@@ -77,7 +77,7 @@ int main(int argc, char *argv[]) {
 	else if(strcmp(argv[1], "query_league_list") == 0){
 		if (auto res = cli.Post("/league/query_list", "16", "text/plain")) {
 			cout << res->status << endl;
-			cout << res->body << endl;
+			// cout << res->body << endl;
 			cout << res->get_header_value("Content-Type") << endl;
 		}
 		else {

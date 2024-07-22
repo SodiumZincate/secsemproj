@@ -17,22 +17,8 @@ void clickLeague(string input_string_1, string input_string_2)
     string token;
     tokenStream << input_string_2;
 
-    for (i = 0; i < L.league_team_number; i++)
-	stringstream tokenStream;
-	string token;
-	tokenStream << input_string_2;
-
     for (i = 0; i < 2; i++)
     {
-        string team_string;
-
-        int j;
-        for(j=0; j<14; j++)
-        {
-            getline(tokenStream, token, '\n');
-            team_string += token + "\n";
-        }
-
         string team_string;
         team_string.clear();
 
@@ -44,9 +30,6 @@ void clickLeague(string input_string_1, string input_string_2)
 		cout << "Team: " << team_string << endl;
 
         //'i'th member of array of teams of league L is initialized using string input_string_2[i]
-        L.T[i].init_team(team_string);
-
-        team_string.clear();
         L.T[i].init_team(team_string);
     }
 

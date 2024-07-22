@@ -30,7 +30,7 @@ int updateDatabase(string clientReq, string mode, stringstream &clientRes) {
 		if (auto res = cli.Post("/login/query?=login.db", clientReq, "text/plain")) {
 			cout << res->status << endl;
 			cout << res->get_header_value("Content-Type") << endl;
-			cout << res->body << endl;
+			// cout << res->body << endl;
 			clientRes.clear();
 			clientRes << res->body;
 		}
@@ -43,7 +43,7 @@ int updateDatabase(string clientReq, string mode, stringstream &clientRes) {
 		if (auto res = cli.Post("/team/query?=leaguedata.db", clientReq, "text/plain")) {
 			cout << res->status << endl;
 			cout << res->get_header_value("Content-Type") << endl;
-			cout << res->body << endl;
+			// cout << res->body << endl;
 			clientRes.clear();
 			clientRes << res->body;
 		}
@@ -56,7 +56,7 @@ int updateDatabase(string clientReq, string mode, stringstream &clientRes) {
 		if (auto res = cli.Post("/league/query?=leaguedata.db", clientReq, "text/plain")) {
 			cout << res->status << endl;
 			cout << res->get_header_value("Content-Type") << endl;
-			cout << res->body << endl;
+			// cout << res->body << endl;
 			clientRes.clear();
 			clientRes << res->body;
 		}
@@ -69,7 +69,7 @@ int updateDatabase(string clientReq, string mode, stringstream &clientRes) {
 		if (auto res = cli.Post("/league/insert?=login.db", clientReq, "text/plain")) {
 			cout << res->status << endl;
 			cout << res->get_header_value("Content-Type") << endl;
-			cout << res->body << endl;
+			// cout << res->body << endl;
 			clientRes.clear();
 			clientRes << res->body;
 		}
@@ -82,7 +82,7 @@ int updateDatabase(string clientReq, string mode, stringstream &clientRes) {
 		if (auto res = cli.Post("/league/query_list?=leaguedata.db", clientReq, "text/plain")) {
 			cout << res->status << endl;
 			cout << res->get_header_value("Content-Type") << endl;
-			cout << res->body << endl;
+			// cout << res->body << endl;
 			clientRes.clear();
 			clientRes << res->body;
 		}

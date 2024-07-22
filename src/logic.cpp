@@ -54,7 +54,7 @@ void Team::init_team(string input_string)
     cout << "team_user_id :: " << team_user_id << endl;
     cout << "team_league_id :: " << team_league_id << endl;
     cout << "team_name :: " << team_name<< endl;
-	cout << "team_group :: " << team_name << endl;
+	cout << "team_group :: " << team_group << endl;
     cout << "team_position :: " << team_position << endl;
     cout << "team_mp :: " << team_mp << endl;
     cout << "team_w :: " << team_w << endl;
@@ -153,6 +153,7 @@ string League::ret_league()
     ret = to_string(league_id) + "\n" + to_string(league_user_id) + "\n" + league_name + "\n" + 
     to_string(league_group_stages) + "\n" + to_string(league_round_robin) + "\n" +
     to_string(league_qualifiers) + "\n" + to_string(league_groups) + "\n" + to_string(league_team_number);
+	cout << "Return league: " << ret << endl;
     return ret;
 }
 
@@ -168,5 +169,6 @@ string League::ret_teams()
         to_string(T[i].team_l) + "\n" + to_string(T[i].team_d) + "\n" + to_string(T[i].team_gf) + "\n" +
         to_string(T[i].team_ga) + "\n" + to_string(T[i].team_gd) + "\n" + to_string(T[i].team_points) + "\n";
     }
+	cout << "Return Team: " << ret << endl;
     return ret;
 }

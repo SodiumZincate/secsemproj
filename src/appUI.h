@@ -15,6 +15,9 @@
 #include <QtWidgets/QScrollBar>
 #include <QtWidgets/QScrollArea>
 #include <QtGui/QMouseEvent>
+#include <QtGui/QPainter>
+#include <QtGui/QLinearGradient>
+#include <QtGui/QRadialGradient>
 #include <iostream>
 
 extern int default_font_size;
