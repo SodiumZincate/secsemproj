@@ -142,6 +142,13 @@ void run_server() {
 		queryDatabaseTeam(cli_req, filepath, res);
     });
 
+	svr.Post("/team/query_id", [upload_dir](const Request &req, Response &res) {
+		string cli_req = req.body;
+
+        std::string filepath = upload_dir + "/" + "leaguedata.db";
+		queryDatabaseTeamID(cli_req, filepath, res);
+    });
+
 	// svr.Post("/upload", [&](const httplib::Request &req, httplib::Response &res) {
 	// 	if(req.is_multipart_form_data()){
 	// 		for(const auto &file : req.files){

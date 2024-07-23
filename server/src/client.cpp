@@ -64,6 +64,16 @@ int main(int argc, char *argv[]) {
 			cout << "error code: " << res.error() << std::endl;
 		}
 	}
+	else if(strcmp(argv[1], "query_team_id") == 0){
+		if (auto res = cli.Post("/team/query_id", "", "text/plain")) {
+			cout << res->status << endl;
+			// cout << res->body << endl;
+			cout << res->get_header_value("Content-Type") << endl;
+		}
+		else {
+			cout << "error code: " << res.error() << std::endl;
+		}
+	}
 	else if(strcmp(argv[1], "query_league_id") == 0){
 		if (auto res = cli.Post("/league/query_id", "16", "text/plain")) {
 			cout << res->status << endl;

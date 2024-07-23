@@ -1,6 +1,8 @@
 #include "logic.h"
 
 //this file is used to update league data and return the updated league data
+string LeagueList;
+string TeamList;
 
 void updateLeague(string input_string_1, string input_string_2)
 {
@@ -38,8 +40,16 @@ void updateLeague(string input_string_1, string input_string_2)
     L.update_group_positions();
 
     //return league
-    L.ret_league();
+    LeagueList = L.ret_league();
 
     //return teams
-    L.ret_teams();
+    TeamList = L.ret_teams();
+}
+
+string returnLeague(){
+	return LeagueList;
+}
+
+string returnLeague(){
+	return TeamList;
 }

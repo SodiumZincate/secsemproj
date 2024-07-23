@@ -1,3 +1,5 @@
+#pragma once
+
 #include "httplib.h"
 #include <iostream>
 #include "sqlite3.h"

@@ -14,7 +14,7 @@ static int callback(void* data, int argc, char **argv, char** azcolName){
 	return 0;
 }
 
-static int maxLIDCallback(void* data, int argc, char** argv, char** azColName) {
+static int maxIDCallback(void* data, int argc, char** argv, char** azColName) {
     if (argc > 0 && argv[0]) {
         QR1.result.push_back(argv[0]);
     }
@@ -238,7 +238,7 @@ void insertDatabaseLeague(string cli_req, string file, Response &res){
 		QR1.result.clear();
 		
 		string sqlQuery = ss1.str();
-		exit = sqlite3_exec(db, sqlQuery.c_str(), maxLIDCallback, 0, &errMsg);
+		exit = sqlite3_exec(db, sqlQuery.c_str(), maxIDCallback, 0, &errMsg);
 		if(exit!=SQLITE_OK){
 			cerr << "Error retrieving max league data" << std::endl;
 			cerr << errMsg << std::endl;
@@ -432,6 +432,53 @@ void queryDatabaseTeam(string cli_req, string file, Response &res)
 		}
 	}
 
+	// std::cout << "Table Contents: " << std::endl;
+	// query(db);
+	
+	sqlite3_close(db);
+}
+
+void queryDatabaseTeamID(string cli_req, string file, Response &res)
+{
+	sqlite3 *db;
+	int exit = 0;
+	char *errMsg;
+
+	exit = sqlite3_open(file.c_str(), &db);
+	std::cout << file.c_str() << std::endl;
+	if(exit){
+		cerr << "Failed to open database: " << sqlite3_errmsg(db) << std::endl;
+		std::exit(1);
+	}
+	else{
+		std::cout << "Database opened successfully" << std::endl;
+	}
+
+	//
+	stringstream ss1;
+		ss1 << "SELECT MAX(TID) FROM TEAM";
+
+		QR1.result.clear();
+		
+		string sqlQuery = ss1.str();
+		exit = sqlite3_exec(db, sqlQuery.c_str(), maxIDCallback, 0, &errMsg);
+		if(exit!=SQLITE_OK){
+			cerr << "Error retrieving max league data" << std::endl;
+			cerr << errMsg << std::endl;
+			sqlite3_free(errMsg);
+		}
+		else{
+			if(QR1.result.empty()){
+				std::cout << "wtf" << endl;
+			}
+			stringstream content;
+			for(string &c : QR1.result){
+				std::cout << "MAX TID: " << c << std::endl;
+				content << c;
+				content << "\n";
+			}
+			res.set_content(content.str(), "text/plain");
+		}
 	// std::cout << "Table Contents: " << std::endl;
 	// query(db);
 	

@@ -35,7 +35,7 @@ void queryDatabase(string, string, Response&);
 
 void queryDatabaseTeam(string, string, Response&);
 
-// void queryDatabaseLeagueID(string cli_req, string file, Response &res);
+void queryDatabaseTeamID(string cli_req, string file, Response &res);
 
 void queryDatabaseLeague(string, string, Response&);
 

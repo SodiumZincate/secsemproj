@@ -2,7 +2,7 @@
 #include "db.h"
 #include "logic.h"
 
-void initShowLeague(StackedWidgets *App, QWidget* window, QString username = "username", QString leaguename = "leaguename"){
+void initShowLeague(StackedWidgets *App, QWidget* window, QString username = "username", QString leaguename = "leaguename", int no_of_teams = 0){
     window->setWindowTitle("League Name");
 
     QWidget *main_widget = new QWidget(window);
@@ -60,22 +60,6 @@ void initShowLeague(StackedWidgets *App, QWidget* window, QString username = "us
 	NavBar_layout->addWidget(leaguenameText_widget);
 	NavBar_layout->addWidget(usernameText_widget);
 
-	// // Table
-	// QTableWidget *league_table = new QTableWidget(8, 9, window);
-	// // league_table->setWindowTitle("QTableWidget Example");
-    // // league_table->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-    // // league_table->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-    // // league_table->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Maximum);
-	// league_table->setMinimumSize(app_width*5/4, app_height*5/4);
-	// league_table->setColumnWidth(0, app_width/3);
-
-	// QScrollBar *scroll_bar = new QScrollBar();
-	// league_table->setVerticalScrollBar(scroll_bar);
-
-	// // QSize icon_size(app_width/league_table->rowCount()/2, app_width/league_table->rowCount()/2);
-	// QSize icon_size(app_width/16, app_height/16);
-	// league_table->setIconSize(icon_size);
-
 	// Scroll Area
 	QScrollArea *scroll_area = new QScrollArea(window);
 
@@ -83,6 +67,36 @@ void initShowLeague(StackedWidgets *App, QWidget* window, QString username = "us
 	scroll_area->setFixedWidth(app_width*3/2);
 	scroll_area->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 	scroll_area->setWidgetResizable(true);
+
+	string leagueString = returnLeague();
+	string teamString = returnTeam();
+
+	vector<string> leagueList;
+	vector<string> teamList;
+
+	stringstream leagueStream;
+	leagueStream << leagueString;
+	stringstream teamStream;
+	teamStream << teamString;
+	string token;
+
+	while(getline(leagueStream, token, '\n')){
+		leagueList.push_back(token);
+	}
+
+	for (int i = 0; i < no_of_teams; i++)
+    {
+        string team_string;
+        team_string.clear();
+
+        int j;
+        for(j = 0; j < 14; j++)
+        {
+			while(getline(teamStream, token, '\n')){
+				teamList.push_back(token);
+			}
+        }
+    }
 
 	for(int i=0; i<4; i++){
 		// Label

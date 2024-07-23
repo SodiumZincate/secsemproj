@@ -148,7 +148,15 @@ void initDashboard(StackedWidgets *App, QWidget* window, QString username = "use
 				std::string team_string = clientResTeam.str();
 				cout << "League String: " << league_string << endl;
 				cout << "Team String: " << team_string << endl;
-				clickLeague(league_string, team_string);
+				updateLeague(league_string, team_string);
+				initShowLeague(
+					App,
+					App->stacked_windows.widget(5),
+					username,
+					QString(leagueNameList[i].c_str()),
+					0
+				);
+				App->changeWindow_showLeague();
 			}
 		}
 		});

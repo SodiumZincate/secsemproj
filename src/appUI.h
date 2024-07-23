@@ -97,7 +97,7 @@ void initAddTeam(
 	int user_id = 0, 
 	int no_of_teams = 2);
 
-void initShowLeague(StackedWidgets *App, QWidget* window, QString username, QString leaguename);
+void initShowLeague(StackedWidgets *App, QWidget* window, QString username, QString leaguename, int no_of_teams);
 
 void resetPage(QWidget* window);
 

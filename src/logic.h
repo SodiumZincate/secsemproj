@@ -92,5 +92,6 @@ class League
 //function to update league data and return the updated league data
 void updateLeague(string input_string_1, string input_string_2);
 
-//function to change league data into a easy-to-display form and return the data
-void displayLeague(string input_string_1, string input_string_2);
+string returnLeague();
+
+string returnTeam();

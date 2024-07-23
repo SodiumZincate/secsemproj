@@ -94,6 +94,20 @@ int no_of_teams)
 		App->changeWindow_backward();
 	});
 
+	std::stringstream clientRes;
+	std::string token;
+	std::vector<std::string> tokenList;
+
+	std::string clientReq = to_string(league_id);
+	int errorDatabase = updateDatabase(clientReq, "query_team_id", clientRes);
+	getline(clientRes, token, '\n');
+	static int max_team_id = stoi(token) + 1;
+
+	if(errorDatabase != 0){
+		std::cout << "\nError initializing league database" << std::endl;
+	}
+	else
+	{
 	TeamDialogBox *team_input = new TeamDialogBox(window);
 
 	static vector<string> teamList = {};
@@ -101,10 +115,10 @@ int no_of_teams)
 
 	QObject::connect(continue_button_widget, &QPushButton::clicked, team_input, &TeamDialogBox::updateEditText);
 
-	static int i=0;
+	static int count=0;
 	QObject::connect(continue_button_widget, &QPushButton::clicked, 
     [=]() {
-		if(i >= no_of_teams){
+		if(count >= no_of_teams){
 			std::stringstream clientResLeague;
 			std::stringstream clientResTeam;
 			std::string streamLine;
@@ -148,41 +162,14 @@ int no_of_teams)
 				}
 
 				k = 0;
-				for(int i=0; i < league_team_number%league_number_of_groups; i++){
-				
-					clientReq = to_string(user_id) + "\n"
-					+ to_string(league_id) + "\n"
-					+ teamList[i] + "\n"
-					+ group[i] + "\n"
-					+ to_string(position) + "\n"
-					+ "0\n"
-					+ "0\n"
-					+ "0\n"
-					+ "0\n"
-					+ "0\n"
-					+ "0\n"
-					+ "0\n"
-					+ "0";
-
-					cout << clientReq << endl;
-
-					int errorDatabase = updateDatabase(clientReq, "insert_team", clientResTeam);
-					if(errorDatabase != 0){
-						std::cout << "\nError initializing league database" << std::endl;
-					}
-					else{
-						std::cout << "Position inserted correctly: " << position << std::endl;
-						position++;
-					}
-				}
 				for(int j = 0; j < league_number_of_groups; j++)
 				{
-					for (i = j; i < league_number_of_groups; i += league_number_of_groups)
+					for (i = j; i < no_of_teams; i += league_number_of_groups)
 					{
 						clientReq = to_string(user_id) + "\n"
 						+ to_string(league_id) + "\n"
 						+ teamList[i] + "\n"
-						+ group[i] + "\n"
+						+ group[j] + "\n"
 						+ to_string(position) + "\n"
 						+ "0\n"
 						+ "0\n"
@@ -198,13 +185,21 @@ int no_of_teams)
 							std::cout << "\nError initializing league database" << std::endl;
 						}
 						else{
-							std::cout << "Position inserted correctly: " << position << std::endl;
+							std::cout << "qPosition inserted correctly: " << position << std::endl;
 							position++;
 						}
 					}
 					k++;
 				}
 			}
+			initShowLeague(
+				App,
+				App->stacked_windows.widget(5),
+				username,
+				leaguename,
+				no_of_teams
+			);
+			App->changeWindow_showLeague();
 		}
 		else{
 			// Check if team_input is valid
@@ -214,7 +209,7 @@ int no_of_teams)
 			}
 
 			QString sourceFilePath = QFileInfo(team_input->file_name).filePath();
-			QString newFilePath = QDir::currentPath() + "/requisite/assets/images/" + QFileInfo(team_input->file_name).fileName();
+			QString newFilePath = QDir::currentPath() + "/requisite/assets/images/" + QString(to_string(max_team_id).c_str()) + ".png";
 
 			// Ensure destination directory exists
 			QDir dir(QFileInfo(newFilePath).path());
@@ -231,7 +226,7 @@ int no_of_teams)
 				return;
 			}
 
-			if ( !QFile::exists(newFilePath) && sourceFile.copy(newFilePath)) {
+			if (!QFile::exists(newFilePath) && sourceFile.copy(newFilePath)) {
 				team_input->iconAdded = true;
 				qDebug() << "File copied successfully.";
 			} else {
@@ -241,15 +236,16 @@ int no_of_teams)
 			}
 
 			if (!team_input->team_name.isEmpty() && team_input->iconAdded) {
-				if (i < no_of_teams) {
+				if (count < no_of_teams) {
 					qDebug() << team_input->getTeamName().toStdString();
 					teamList.push_back(team_input->getTeamName().toStdString());
 					qDebug() << newFilePath.toStdString();
 					teamIconPathList.push_back(newFilePath.toStdString());
 					team_input->iconAdded = false;
-					i++;
+					count++;
+					max_team_id++;
 				}
-				if (i == no_of_teams) {
+				if (count == no_of_teams) {
 					continue_button_widget->setText("Continue to League");
 					continue_button_widget->setStyleSheet("QPushButton{background-color: #48FF4D}");
 				}
@@ -272,4 +268,5 @@ int no_of_teams)
     main_layout->addWidget(main_widget);
     main_layout->setAlignment(Qt::AlignCenter);
     window->setLayout(main_layout);
+	}
 }
