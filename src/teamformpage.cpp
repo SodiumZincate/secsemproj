@@ -222,6 +222,9 @@ int no_of_teams)
 			QFile sourceFile(sourceFilePath);
 			if (!sourceFile.exists()) {
 				qDebug() << "Source file does not exist:" << sourceFilePath;
+				team_input->teamEdit->setText("");
+				team_input->teamEdit->setPlaceholderText("Source file does not exist");
+				team_input->teamEdit->setStyleSheet("QLineEdit{placeholder-text-color: #FB3B3B}");
 				return;
 			}
 
@@ -229,6 +232,9 @@ int no_of_teams)
 				team_input->iconAdded = true;
 				qDebug() << "File copied successfully.";
 			} else {
+				team_input->teamEdit->setText("");
+				team_input->teamEdit->setPlaceholderText("Failed to add team");
+				team_input->teamEdit->setStyleSheet("QLineEdit{placeholder-text-color: #FB3B3B}");
 				qDebug() << "File copy failed.";
 				qDebug() << "Error:" << sourceFile.errorString();
 				return;
@@ -243,6 +249,9 @@ int no_of_teams)
 					team_input->iconAdded = false;
 					count++;
 					max_team_id++;
+					// team_input->teamEdit->setText("");
+					team_input->teamEdit->setPlaceholderText("Team Added Successfully");
+					team_input->teamEdit->setStyleSheet("QLineEdit{placeholder-text-color: #48FF4D}");
 				}
 				if (count == no_of_teams) {
 					continue_button_widget->setText("Continue to League");
