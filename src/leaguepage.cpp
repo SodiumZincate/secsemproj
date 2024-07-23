@@ -68,13 +68,13 @@ void initShowLeague(StackedWidgets *App, QWidget* window, QString username = "us
 	scroll_area->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 	scroll_area->setWidgetResizable(true);
 
-	League L;
-	ret_league(L, L.T);
+	// League L;
+	// ret_league(L, L.T);
 
-	vector<string> leagueList;
-	vector<string> teamList;
+	// vector<string> leagueList;
+	// vector<string> teamList;
 
-	for(int i=0; i<L.league_groups; i++){
+	for(int i=0; i<4; i++){
 		// Label
 		appText *group_name = new appText();
 		group_name->init(window, QString((std::string("GROUP: ") + std::to_string(i+1)).c_str()), default_font_size*0.8);
