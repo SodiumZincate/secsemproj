@@ -2,7 +2,7 @@
 
 //this file is used to update league data and return the updated league data
 
-void updateLeague(string input_string_1, string input_string_2)
+void update(string input_string_1, string input_string_2)
 {
     League L;
     //input_string_1 -> string that is received from database, contains league's fixed properties 
@@ -38,5 +38,8 @@ void updateLeague(string input_string_1, string input_string_2)
     L.update_group_positions();
 
     //return league
-    L.ret_league();
+    L.update_league_data();
+
+    //return team
+    L.update_teams_data();
 }

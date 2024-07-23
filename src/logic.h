@@ -43,7 +43,7 @@ class Team
     Team() {}
     //function to initialize a team's fixed properties in a league, based on the input string from database
     void init_team(string input_string);
-    //function that updates a team data
+    //function that updates a team data for every match
     void update_team_data(int goals_for, int goals_against);
 };
 
@@ -82,16 +82,17 @@ class League
     void init_league(string input_string);
     //function that sorts team array of a league alphabetically
     void sort_teams_array();
-    //function to return properties of a league
-    string ret_league();
-    //function to return teams of a league
-    string ret_teams();
-    //function to return a string of teams as per groups
-    string ret_group(Group G[]);
+    //function to update league data in the database
+    void update_league_data();
+    //function to update teams data in the database
+    void update_teams_data();
 };
 
-//function to update league data and return the updated league data
-void updateLeague(string input_string_1, string input_string_2);
+//function to update league data
+void update(string input_string_1, string input_string_2);
 
-//function to change league data into a easy-to-display form and return the data
-void displayLeague(string input_string_1, string input_string_2);
+//function to return a league
+League displayLeague(string input_string_1, string input_string_2);
+
+//function to return groups 
+vector<Group> displayGroups(string input_string_1, string input_string_2);
