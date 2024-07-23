@@ -8,8 +8,6 @@
 #include <cmath>
 #include <vector>
 
-#include "db.h"
-
 using namespace std;
 
 #define MAX_TEAMS 50
@@ -84,16 +82,15 @@ class League
     //function that sorts team array of a league alphabetically
     void sort_teams_array();
     //function to return properties of a league
-    friend void ret_league(League &L, Team T[]);
-    //function to update and return teams of a league
-    friend string ret_teams(League L);
-    //function to update and return a string of teams as per groups
+    string ret_league();
+    //function to return teams of a league
+    string ret_teams();
+    //function to return a string of teams as per groups
     string ret_group(Group G[]);
 };
 
 //function to update league data and return the updated league data
 void updateLeague(string input_string_1, string input_string_2);
 
-string returnLeague();
-
-string returnTeam();
+//function to change league data into a easy-to-display form and return the data
+void displayLeague(string input_string_1, string input_string_2);
