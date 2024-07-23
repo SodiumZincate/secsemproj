@@ -21,6 +21,7 @@
 #include <QtWidgets/QDialog>
 #include <QtWidgets/QFileDialog>
 #include <iostream>
+#include "logic.h"
 
 extern int default_font_size;
 extern int app_width, app_height, screenWidth, screenHeight;
@@ -96,9 +97,9 @@ void initAddTeam(
 	QString leaguename = "leaguename", 
 	int league_id = 0, 
 	int user_id = 0, 
-	int no_of_teams = 2);
+	int no_of_teams = 0);
 
-void initShowLeague(StackedWidgets *App, QWidget* window, QString username, QString leaguename);
+void initShowLeague(StackedWidgets *App, QWidget* window, QString username, QString leaguename, League L, vector<Group> groupList);
 
 void resetPage(QWidget* window);
 

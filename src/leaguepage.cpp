@@ -2,7 +2,7 @@
 #include "db.h"
 #include "logic.h"
 
-void initShowLeague(StackedWidgets *App, QWidget* window, QString username = "username", QString leaguename = "leaguename"){
+void initShowLeague(StackedWidgets *App, QWidget* window, QString username = "username", QString leaguename = "leaguename", League L = League(), vector<Group> groupList = {}){
     window->setWindowTitle("League Name");
 
     QWidget *main_widget = new QWidget(window);

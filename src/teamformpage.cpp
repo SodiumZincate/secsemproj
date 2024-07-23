@@ -127,6 +127,8 @@ int no_of_teams)
 
 			static int position = 1;
 
+			int league_user_id;
+
 			std::string clientReq = to_string(league_id);
 			int errorDatabase = updateDatabase(clientReq, "query_league", clientResLeague);
 			while(getline(clientResLeague, streamLine, '\n')){
@@ -137,7 +139,7 @@ int no_of_teams)
 			}
 			else{
 				int league_id = stoi(list[0]);
-				int league_user_id = stoi(list[1]);
+				league_user_id = stoi(list[1]);
 				string league_name = list[2];
 				int league_group_stages = stoi(list[3]);
 				int league_round_robin = stoi(list[4]);
@@ -192,13 +194,13 @@ int no_of_teams)
 					k++;
 				}
 			}
-			initShowLeague(
+			initDashboard(
 				App,
 				App->stacked_windows.widget(5),
 				username,
-				leaguename
+				league_user_id
 			);
-			App->changeWindow_showLeague();
+			App->changeWindow_dashboard();
 		}
 		else{
 			// Check if team_input is valid

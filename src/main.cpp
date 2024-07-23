@@ -11,7 +11,9 @@
 #include "leaguepage.cpp"
 #include "db.cpp"
 #include "logic.cpp"
-#include "updateLeague.cpp"
+#include "update.cpp"
+#include "displayLeague.cpp"
+#include "displayGroups.cpp"
 #include "logic.h"
 
 int app_height = 0;

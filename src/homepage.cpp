@@ -148,12 +148,16 @@ void initDashboard(StackedWidgets *App, QWidget* window, QString username = "use
 				std::string team_string = clientResTeam.str();
 				// cout << "League String: " << league_string << endl;
 				// cout << "Team String: " << team_string << endl;
-				updateLeague(league_string, team_string);
+				update(league_string, team_string);
+				League L = displayLeague(league_string, team_string);
+				vector<Group> groupList = displayGroups(league_string, team_string);
 				initShowLeague(
 					App,
 					App->stacked_windows.widget(5),
 					username,
-					QString(leagueNameList[i].c_str())
+					QString(leagueNameList[i].c_str()),
+					L,
+					groupList
 				);
 				App->changeWindow_showLeague();
 			}
