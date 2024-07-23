@@ -17,7 +17,7 @@ void clickLeague(string input_string_1, string input_string_2)
     string token;
     tokenStream << input_string_2;
 
-    for (i = 0; i < 2; i++)
+    for (i = 0; i < L.league_team_number; i++)
     {
         string team_string;
         team_string.clear();

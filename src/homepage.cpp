@@ -2,7 +2,7 @@
 #include "db.h"
 #include "logic.h"
 
-void initDashboard(StackedWidgets *App, QWidget* window, QString username = "username", int user_id = 16){
+void initDashboard(StackedWidgets *App, QWidget* window, QString username = "username", int user_id = 0){
 	window->setWindowTitle("Dashboard");
 
 	QWidget *main_widget = new QWidget(window);

@@ -14,6 +14,13 @@ static int callback(void* data, int argc, char **argv, char** azcolName){
 	return 0;
 }
 
+static int maxLIDCallback(void* data, int argc, char** argv, char** azColName) {
+    if (argc > 0 && argv[0]) {
+        QR1.result.push_back(argv[0]);
+    }
+    return 0;
+}
+
 void queryTeam(sqlite3 *db){
 	char *errMsg;
 	string sqlQuery = "SELECT * FROM TEAM";
@@ -173,7 +180,7 @@ void queryDatabase(string cli_req, string file, Response &res){
 	sqlite3_close(db);	
 }
 
-void insertDatabaseLeague(string cli_req, string file){
+void insertDatabaseLeague(string cli_req, string file, Response &res){
 	sqlite3 *db;
 	int exit = 0;
 	char *errMsg;
@@ -224,11 +231,34 @@ void insertDatabaseLeague(string cli_req, string file){
 	}
 	else{
 		std::cout << "League Data inserted successfully" << std::endl;
+
+		stringstream ss1;
+		ss1 << "SELECT MAX(LID) FROM LEAGUE";
+
+		QR1.result.clear();
+		
+		string sqlQuery = ss1.str();
+		exit = sqlite3_exec(db, sqlQuery.c_str(), maxLIDCallback, 0, &errMsg);
+		if(exit!=SQLITE_OK){
+			cerr << "Error retrieving max league data" << std::endl;
+			cerr << errMsg << std::endl;
+			sqlite3_free(errMsg);
+		}
+		else{
+			if(QR1.result.empty()){
+				std::cout << "wtf" << endl;
+			}
+			stringstream content;
+			for(string &c : QR1.result){
+				std::cout << "MAX ID: " << c << std::endl;
+				content << c;
+				content << "\n";
+			}
+			res.set_content(content.str(), "text/plain");
+		}
 	}
 
 	std::cout << "Table Contents: " << std::endl;
-	queryLeague(db);
-
 	sqlite3_close(db);
 }
 
@@ -269,7 +299,7 @@ void insertDatabase(string cli_req, string file)
 	<< ")";
 
 	string sqlInsert = ss.str();
-	exit = sqlite3_exec(db, sqlInsert.c_str(), NULL, 0, &errMsg);
+	exit = sqlite3_exec(db, sqlInsert.c_str(), callback, 0, &errMsg);
 	if(exit!=SQLITE_OK){
 		cerr << "Error inserting data" << std::endl;
 		cerr << errMsg << std::endl;
@@ -331,7 +361,6 @@ void deleteDatabase(string cli_req, string file)
 	queryLeague(db);
 	
 	sqlite3_close(db);
-	
 }
 
 void queryDatabaseTeam(string cli_req, string file, Response &res)
@@ -476,7 +505,13 @@ void queryDatabaseLeague(string cli_req, string file, Response &res)
 // 	int exit = 0;
 // 	char *errMsg;
 
+// 	stringstream stream;
+// 	string token;
+
+// 	getline(stream, token, '\n');
 // 	string user_id = cli_req;
+// 	getline(stream, token, '\n');
+// 	string league_name = cli_req;
 
 // 	exit = sqlite3_open(file.c_str(), &db);
 // 	std::cout << file.c_str() << std::endl;
@@ -491,7 +526,10 @@ void queryDatabaseLeague(string cli_req, string file, Response &res)
 // 	stringstream ss;
 // 	ss << "SELECT LID FROM LEAGUE WHERE UID"
 // 	<< "="
-// 	<< "'" + user_id + "'";
+// 	<< "'" + user_id + "'"
+// 	<< " AND LNAME"
+// 	<< "="
+// 	<< "'" + league_name + "'";
 
 // 	QR1.result.clear();
 	

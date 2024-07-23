@@ -341,6 +341,7 @@ void initLogin(StackedWidgets *App, QWidget* window) {
 						QString(username_text.c_str()),
 						user_id
 					);
+					cout << user_id << endl;
 					username_component->deleteEditText();
 					password_component->deleteEditText();
 					App->changeWindow_forward();

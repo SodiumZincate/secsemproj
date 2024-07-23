@@ -7,6 +7,7 @@
 #include "appUI.cpp"
 #include "homepage.cpp"
 #include "formpage.cpp"
+#include "teamformpage.cpp"
 #include "leaguepage.cpp"
 #include "db.cpp"
 #include "logic.cpp"
@@ -47,6 +48,7 @@ int main(int argc, char *argv[]) {
 	QWidget loginApp;
 	QWidget dashboardApp;
 	QWidget addleagueApp;
+	QWidget addteamApp;
 	QWidget showLeagueApp;
 
 	// Initializa login and register pages
@@ -54,16 +56,18 @@ int main(int argc, char *argv[]) {
 	initLogin(&stack1, &loginApp);
 	initDashboard(&stack1, &dashboardApp);
 	initAddLeague(&stack1, &addleagueApp);
+	initAddTeam(&stack1, &addteamApp);
 	initShowLeague(&stack1, &showLeagueApp);
 
 	stack1.addWidget(&registerApp);
 	stack1.addWidget(&loginApp);
 	stack1.addWidget(&dashboardApp);
 	stack1.addWidget(&addleagueApp);
+	stack1.addWidget(&addteamApp);
 	stack1.addWidget(&showLeagueApp);
 
 	// Set initial page to login page
-	stack1.setCurrentIndex(2);
+	stack1.setCurrentIndex(4);
 
 	// stack1.addtoLayout();
 	stack1.mainWidget.setLayout(stack1.appLayout);

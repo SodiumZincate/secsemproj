@@ -23,7 +23,7 @@ void queryTeam(sqlite3 *db);
 
 void queryLeague(sqlite3 *db);
 
-void insertDatabaseLeague(string, string);
+void insertDatabaseLeague(string, string, Response&);
 
 void insertDatabaseTeam(string, string);
 

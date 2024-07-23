@@ -214,6 +214,7 @@ void initAddLeague(StackedWidgets *App, QWidget* window, QString username = "use
 		+ "\n" + number_no_of_teams;
 
 		std::stringstream clientRes;
+
 		std::string streamLine;
 		std::vector<std::string> streamList;
 
@@ -223,12 +224,18 @@ void initAddLeague(StackedWidgets *App, QWidget* window, QString username = "use
 				std::cout << "\nError initializing database" << std::endl;
 			}
 			else{
+				getline(clientRes, streamLine, '\n');
+				QString league_id(streamLine.c_str());
+				cout << "League ID: " << league_id.toStdString() << endl;
 				std::cout << App->stacked_windows.currentIndex() << std::endl;
-				initShowLeague(
+				initAddTeam(
 					App,
 					App->stacked_windows.widget(App->stacked_windows.currentIndex()+1),
 					username,
-					QString(league_text.c_str())
+					QString(league_text.c_str()),
+					stoi(league_id.toStdString()),
+					user_id,
+					stoi(number_no_of_teams)
 				);
 				App->changeWindow_forward();
 			}
