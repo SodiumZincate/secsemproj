@@ -135,6 +135,13 @@ void run_server() {
 		queryDatabaseLeagueList(cli_req, filepath, res);
     });
 
+	svr.Post("/team/update", [upload_dir](const Request &req, Response &res) {
+		string cli_req = req.body;
+
+        std::string filepath = upload_dir + "/" + "leaguedata.db";
+		updateDatabaseTeam(cli_req, filepath, res);
+    });
+
 	svr.Post("/team/query", [upload_dir](const Request &req, Response &res) {
 		string cli_req = req.body;
 

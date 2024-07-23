@@ -99,7 +99,7 @@ void initDashboard(StackedWidgets *App, QWidget* window, QString username = "use
 			leagueIdList.push_back(streamLine);
 			getline(clientRes, streamLine, '\n');
 			leagueNameList.push_back(streamLine);
-			std::cout << "League name: " << streamLine << std::endl;
+			// std::cout << "League name: " << streamLine << std::endl;
 			if(strcmp(streamLine.c_str(), "") != 0){
 				no_of_leagues++;
 			}
@@ -146,8 +146,8 @@ void initDashboard(StackedWidgets *App, QWidget* window, QString username = "use
 			}
 			else{
 				std::string team_string = clientResTeam.str();
-				cout << "League String: " << league_string << endl;
-				cout << "Team String: " << team_string << endl;
+				// cout << "League String: " << league_string << endl;
+				// cout << "Team String: " << team_string << endl;
 				updateLeague(league_string, team_string);
 				initShowLeague(
 					App,

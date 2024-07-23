@@ -39,17 +39,6 @@ void updateLeague(string input_string_1, string input_string_2)
     //sort according to points in a group
     L.update_group_positions();
 
-    //return league
-    LeagueList = L.ret_league();
-
-    //return teams
-    TeamList = L.ret_teams();
-}
-
-string returnLeague(){
-	return LeagueList;
-}
-
-string returnLeague(){
-	return TeamList;
+    //update teams
+	stringstream clientRes;
 }

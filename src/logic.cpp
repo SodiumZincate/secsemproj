@@ -147,31 +147,46 @@ void League::sort_teams_array()
     }
 }
 
-string League::ret_league()
+void ret_league(League &L, Team T[])
 {
-    string ret;
-    ret = to_string(league_id) + "\n" + to_string(league_user_id) + "\n" + league_name + "\n" + 
-    to_string(league_group_stages) + "\n" + to_string(league_round_robin) + "\n" +
-    to_string(league_qualifiers) + "\n" + to_string(league_groups) + "\n" + to_string(league_team_number);
-	cout << "Return league: " << ret << endl;
-    return ret;
-}
+	stringstream clientRes; // Irrelevant
 
-string League::ret_teams()
-{
-    string ret;
+    string retLeague;
+    retLeague = to_string(L.league_id) + "\n" + to_string(L.league_user_id) + "\n" + L.league_name + "\n" + 
+    to_string(L.league_group_stages) + "\n" + to_string(L.league_round_robin) + "\n" +
+    to_string(L.league_qualifiers) + "\n" + to_string(L.league_groups) + "\n" + to_string(L.league_team_number);
+	cout << "Return league: " << retLeague << endl;
+
+	string retTeam;
     int i;
-    for (i = 0; i < league_team_number; i++)
+    for (i = 0; i < L.league_team_number; i++)
     {
-        ret = ret + to_string(T[i].team_id) + "\n" + to_string(T[i].team_user_id) + "\n" + 
+        retTeam = retTeam + to_string(T[i].team_id) + "\n" + to_string(T[i].team_user_id) + "\n" + 
         to_string(T[i].team_league_id) + "\n" + T[i].team_name + "\n" + T[i].team_group + "\n" +
         to_string(T[i].team_position) + "\n" + to_string(T[i].team_mp) + "\n" + to_string(T[i].team_w) + "\n" +
         to_string(T[i].team_l) + "\n" + to_string(T[i].team_d) + "\n" + to_string(T[i].team_gf) + "\n" +
         to_string(T[i].team_ga) + "\n" + to_string(T[i].team_gd) + "\n" + to_string(T[i].team_points) + "\n";
+
+		updateDatabase(retTeam, "update_team", clientRes);
     }
-	cout << "Return Team: " << ret << endl;
-    return ret;
+	cout << "Return Team: " << retTeam << endl;
 }
+
+// string League::ret_teams(League L)
+// {
+//     string ret;
+//     int i;
+//     for (i = 0; i < L.league_team_number; i++)
+//     {
+//         ret = ret + to_string(T[i].team_id) + "\n" + to_string(T[i].team_user_id) + "\n" + 
+//         to_string(T[i].team_league_id) + "\n" + T[i].team_name + "\n" + T[i].team_group + "\n" +
+//         to_string(T[i].team_position) + "\n" + to_string(T[i].team_mp) + "\n" + to_string(T[i].team_w) + "\n" +
+//         to_string(T[i].team_l) + "\n" + to_string(T[i].team_d) + "\n" + to_string(T[i].team_gf) + "\n" +
+//         to_string(T[i].team_ga) + "\n" + to_string(T[i].team_gd) + "\n" + to_string(T[i].team_points) + "\n";
+//     }
+// 	cout << "Return Team: " << ret << endl;
+//     return ret;
+// }
 
 string League::ret_group(Group G[])
 {

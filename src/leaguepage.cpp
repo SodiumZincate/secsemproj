@@ -68,44 +68,20 @@ void initShowLeague(StackedWidgets *App, QWidget* window, QString username = "us
 	scroll_area->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 	scroll_area->setWidgetResizable(true);
 
-	string leagueString = returnLeague();
-	string teamString = returnTeam();
+	League L;
+	ret_league(L, L.T);
 
 	vector<string> leagueList;
 	vector<string> teamList;
 
-	stringstream leagueStream;
-	leagueStream << leagueString;
-	stringstream teamStream;
-	teamStream << teamString;
-	string token;
-
-	while(getline(leagueStream, token, '\n')){
-		leagueList.push_back(token);
-	}
-
-	for (int i = 0; i < no_of_teams; i++)
-    {
-        string team_string;
-        team_string.clear();
-
-        int j;
-        for(j = 0; j < 14; j++)
-        {
-			while(getline(teamStream, token, '\n')){
-				teamList.push_back(token);
-			}
-        }
-    }
-
-	for(int i=0; i<4; i++){
+	for(int i=0; i<L.league_groups; i++){
 		// Label
 		appText *group_name = new appText();
 		group_name->init(window, QString((std::string("GROUP: ") + std::to_string(i+1)).c_str()), default_font_size*0.8);
 		QLabel *group_label = group_name->getWidget_label();
 
 		// Table
-		QTableWidget *league_table = new QTableWidget(8, 9, window);
+		QTableWidget *league_table = new QTableWidget(no_of_teams, 9, window);
 		// league_table->setWindowTitle("QTableWidget Example");
 		// league_table->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 		// league_table->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);

@@ -363,6 +363,78 @@ void deleteDatabase(string cli_req, string file)
 	sqlite3_close(db);
 }
 
+void updateDatabaseTeam(string cli_req, string file, Response &res)
+{
+	sqlite3 *db;
+	int exit = 0;
+	char *errMsg;
+
+	std::vector<string> string_list;
+	std::string token;
+	istringstream tokenStream(cli_req);
+	while(getline(tokenStream, token, '\n')){
+		string_list.push_back(token);
+	}
+
+	exit = sqlite3_open(file.c_str(), &db);
+	std::cout << file.c_str() << std::endl;
+	if(exit){
+		cerr << "Failed to open database: " << sqlite3_errmsg(db) << std::endl;
+		
+	}
+	else{
+		std::cout << "Database opened successfully" << std::endl;
+	}
+
+	string tid = string_list[0];
+	string uid = string_list[1];
+	string lid = string_list[2];
+	string team_name = string_list[3];
+	string group = string_list[4];
+	string position = string_list[5];
+	string mp = string_list[6];
+	string win = string_list[7];
+	string loss = string_list[8];
+	string draw = string_list[9];
+	string gf = string_list[10];
+	string ga = string_list[11];
+	string gd = string_list[12];
+	string point = string_list[13];
+
+	stringstream ss;
+	ss << "UPDATE TEAM SET "
+	<< "UID = '" << uid << "', "
+	<< "LID = '" << lid << "', "
+	<< "TNAME = '" << team_name << "', "
+	<< "TGROUP = '" << group << "', "
+	<< "POSITION = '" << position << "', "
+	<< "MP = '" << mp << "', "
+	<< "WIN = '" << win << "', "
+	<< "LOSS = '" << loss << "', "
+	<< "DRAW = '" << draw << "', "
+	<< "GF = '" << gf << "', "
+	<< "GA = '" << ga << "', "
+	<< "GD = '" << gd << "', "
+	<< "POINTS = '" << point << "' "
+	<< "WHERE TID = '" << tid << "';";
+
+	string sqlUpdate = ss.str();
+	exit = sqlite3_exec(db, sqlUpdate.c_str(), NULL, 0, &errMsg);
+	if(exit!=SQLITE_OK){
+		cerr << "Error updating data" << std::endl;
+		cerr << errMsg << std::endl;
+		sqlite3_free(errMsg);
+	}
+	else{
+		std::cout << "Data updated successfully" << std::endl;
+	}
+
+	std::cout << "Table Contents: " << std::endl;
+	queryTeam(db);
+
+	sqlite3_close(db);
+}
+
 void queryDatabaseTeam(string cli_req, string file, Response &res)
 {
 	sqlite3 *db;
