@@ -147,17 +147,15 @@ void League::sort_teams_array()
     }
 }
 
-string League::ret_league()
+void League::update_league_data()
 {
     string ret;
     ret = to_string(league_id) + "\n" + to_string(league_user_id) + "\n" + league_name + "\n" + 
     to_string(league_group_stages) + "\n" + to_string(league_round_robin) + "\n" +
     to_string(league_qualifiers) + "\n" + to_string(league_groups) + "\n" + to_string(league_team_number);
-	cout << "Return league: " << ret << endl;
-    return ret;
 }
 
-string League::ret_teams()
+void League::update_teams_data()
 {
     stringstream clientRes; // irrevelant
 
@@ -175,23 +173,5 @@ string League::ret_teams()
     int errorDatabase = updateDatabase(ret, "team_update", clientRes);
     if(errorDatabase!=0){
         std::cout << "\nError initializing database" << std::endl;
-    }
-    cout << "Return Team: " << ret << endl;
-    return ret;
-    return ret;
-}
-
-string League::ret_group(Group G[])
-{
-    string ret;
-    int i, j;
-    for (i = 0; i < league_groups; i++)
-    {
-        ret = ret + to_string(G[i].group_name) + "\n";
-        for (j = 0; j < sizeof(G[i].T); j++)
-        {
-            ret = ret + to_string(G[i].T[j].team_id) + "\n";
-        }
-    }
-    return ret;
+    }    
 }
