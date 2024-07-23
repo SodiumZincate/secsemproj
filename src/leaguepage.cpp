@@ -71,7 +71,9 @@ void initShowLeague(StackedWidgets *App, QWidget* window, QString username = "us
 	for(int i=0; i<L.league_groups; i++){
 		// Label
 		appText *group_name = new appText();
-		group_name->init(window, QString((std::string("GROUP: ") + std::to_string(i+1)).c_str()), default_font_size*0.8);
+		std::string group_name_text = "GROUP: " + std::string(1, (char)(i + 65));
+		group_name->init(window, QString::fromStdString(group_name_text), default_font_size * 0.8);
+		cout << group_name->getWidget_label()->text().toStdString() << endl;
 		QLabel *group_label = group_name->getWidget_label();
 
 		QStringList teamNameList = {};
