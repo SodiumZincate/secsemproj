@@ -111,7 +111,7 @@ void run_server() {
 		// 	string_list.push_back(token);
 		// }
         std::string filepath = upload_dir + "/" + "leaguedata.db";
-		insertDatabaseLeague(cli_req, filepath);
+		insertDatabaseLeague(cli_req, filepath, res);
     });
 
 	svr.Post("/league/query", [upload_dir](const Request &req, Response &res) {

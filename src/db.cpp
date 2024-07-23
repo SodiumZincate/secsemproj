@@ -65,8 +65,21 @@ int updateDatabase(string clientReq, string mode, stringstream &clientRes) {
 			return 1;
 		}
 	}
+	else if(strcmp(mode.c_str(), "insert_team") == 0){
+		if (auto res = cli.Post("/team/insert?=leaguedata.db", clientReq, "text/plain")) {
+			cout << res->status << endl;
+			cout << res->get_header_value("Content-Type") << endl;
+			cout << res->body << endl;
+			clientRes.clear();
+			clientRes << res->body;
+		}
+		else {
+			cout << "error code: " << res.error() << std::endl;
+			return 1;
+		}
+	}
 	else if(strcmp(mode.c_str(), "insert_league") == 0){
-		if (auto res = cli.Post("/league/insert?=login.db", clientReq, "text/plain")) {
+		if (auto res = cli.Post("/league/insert?=leaguedata.db", clientReq, "text/plain")) {
 			cout << res->status << endl;
 			cout << res->get_header_value("Content-Type") << endl;
 			// cout << res->body << endl;

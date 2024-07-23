@@ -18,6 +18,8 @@
 #include <QtGui/QPainter>
 #include <QtGui/QLinearGradient>
 #include <QtGui/QRadialGradient>
+#include <QtWidgets/QDialog>
+#include <QtWidgets/QFileDialog>
 #include <iostream>
 
 extern int default_font_size;
@@ -53,6 +55,28 @@ public:
 	public slots:
 		void changeWindow_forward();
 		void changeWindow_backward();
+		void changeWindow_showLeague();
+};
+
+class TeamDialogBox : public QDialog{
+	Q_OBJECT
+public:
+    QLineEdit *teamEdit;
+    QPushButton *teamButton_widget;
+    QPixmap icon;
+    QString iconPath;
+	QString team_name;
+	QString file_name;
+	bool iconAdded = false;
+
+	TeamDialogBox(QWidget *parent);
+	QString getTeamName();
+	QIcon getTeamIcon();
+	QString getTeamIconPath();
+	
+public slots:
+	void addIcon();
+	void updateEditText();
 };
 
 // Functions to initialize Register page
@@ -63,6 +87,15 @@ void initLogin(StackedWidgets *App, QWidget* window);
 void initDashboard(StackedWidgets *App, QWidget* window, QString username, int user_id);
 
 void initAddLeague(StackedWidgets *App, QWidget* window, QString username, int user_id);
+
+void initAddTeam(
+	StackedWidgets *App, 
+	QWidget* window, 
+	QString username = "username", 
+	QString leaguename = "leaguename", 
+	int league_id = 0, 
+	int user_id = 0, 
+	int no_of_teams = 2);
 
 void initShowLeague(StackedWidgets *App, QWidget* window, QString username, QString leaguename);
 

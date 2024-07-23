@@ -100,6 +100,67 @@ void StackedWidgets::changeWindow_backward() {
 	std::cout << stacked_windows.currentIndex() << std::endl;
 }
 
+void StackedWidgets::changeWindow_showLeague() {
+    setCurrentIndex(5);
+	std::cout << stacked_windows.currentIndex() << std::endl;
+}
+
+TeamDialogBox::TeamDialogBox(QWidget *parent){
+	setParent(parent);
+
+	QVBoxLayout *team_layout = new QVBoxLayout(this);
+
+	LabelEditComponent *team_component = new LabelEditComponent();
+	team_component->init(this, "Team name");
+	teamEdit = team_component->getWidget_edit();
+
+	delete team_component->getWidget_label();
+
+	QWidget *teamButtonContainer = new QWidget(this);
+	QHBoxLayout *teamButtonContainerLayout = new QHBoxLayout(teamButtonContainer); 
+
+	appButton *teamButton = new appButton();
+	teamButton->init(this, "Add Icon");
+	teamButton_widget = teamButton->getWidget_button();
+
+	teamButtonContainerLayout->addWidget(teamButton_widget, 0, Qt::AlignCenter);
+
+	team_layout->addWidget(teamEdit);
+	team_layout->addWidget(teamButtonContainer);
+
+	QObject::connect(teamButton_widget, &QPushButton::clicked, this, &TeamDialogBox::addIcon);
+}
+
+void TeamDialogBox::addIcon(){
+	file_name = QFileDialog::getOpenFileName(this, "Select Icon", "", "Images (*.png)");
+	if(!file_name.isEmpty()){
+		icon.load(file_name);
+	}
+}
+
+void TeamDialogBox::updateEditText() {
+	if(QString(teamEdit->text()) == ""){
+		team_name = "";
+		teamEdit->setText("");
+		teamEdit->setPlaceholderText("Field can't be empty");
+		teamEdit->setStyleSheet("QLineEdit { placeholder-text-color: #FB3B3B }");
+	}
+	else{
+		team_name = teamEdit->text();
+	}
+}
+
+QString TeamDialogBox::getTeamName(){
+	return team_name;
+}
+
+QIcon TeamDialogBox::getTeamIcon(){
+	return icon;
+}
+
+QString TeamDialogBox::getTeamIconPath(){
+	return iconPath;
+}
 
 void appUI::init(QWidget* parent) {
     QSize widget_size(app_width, app_height / 10);

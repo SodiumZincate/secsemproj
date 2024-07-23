@@ -1,38 +1,25 @@
 #include <iostream>
-#include <string>
 #include <vector>
-#include <sstream>
+// #include requisite/qt/include/QtWidgets/QWidget> // For QString in case you are using Qt
 
-using namespace std;
+int main() {
+    // Initialize an empty vector
+    std::vector<std::string> myList;
 
-void init_league(string input_string)
-    {
-    string token;
-    int i = 0;
-    stringstream tokenStream(input_string);
-    vector<string> list;
-    while(getline(tokenStream, token, '\n'))
-    {
-        list.push_back(token);
-    }   
-    string league_name = list[0];
-    int league_id = stoi(list[1]);
-    int league_group_stages = stoi(list[2]);
-    int league_round_robin = stoi(list[3]);
-    int league_qualifiers = stoi(list[4]);
-    int league_groups = stoi(list[5]);
-    int league_team_number = stoi(list[6]);
+    // Define a lambda function that captures the vector by reference
+    auto addToList = [&myList]() {
+        // Add some items to the vector
+        myList.push_back("Item 1");
+        myList.push_back("Item 2");
+    };
 
-    cout << league_name << endl;
-    cout << league_id << endl;
-    cout << league_group_stages << endl;
-    cout << league_round_robin << endl;
-    cout << league_qualifiers << endl;
-    cout << league_groups << endl;
-    cout << league_team_number << endl;
-}
-int main()
-{
-    string s = "Ligue 1\n5\n2\n9\n4\n6\n7\n8";
-    init_league(s);
+    // Call the lambda function
+    addToList();
+
+    // Print the contents of the vector to verify the changes
+    for (const auto& item : myList) {
+        std::cout << item << std::endl;
+    }
+
+    return 0;
 }
