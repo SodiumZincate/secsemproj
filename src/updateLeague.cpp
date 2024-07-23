@@ -2,8 +2,6 @@
 
 //this file is used to update league data and return the updated league data
 
-string LeagueList, TeamList;
-
 void updateLeague(string input_string_1, string input_string_2)
 {
     League L;
@@ -41,15 +39,4 @@ void updateLeague(string input_string_1, string input_string_2)
 
     //return league
     L.ret_league();
-
-    //return teams
-    TeamList = L.ret_teams();
-}
-
-string returnLeague(){
-	return LeagueList;
-}
-
-string returnTeam(){
-	return TeamList;
 }

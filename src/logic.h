@@ -7,6 +7,7 @@
 #include <string>
 #include <cmath>
 #include <vector>
+#include "db.h"
 
 using namespace std;
 
