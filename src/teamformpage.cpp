@@ -101,7 +101,8 @@ int no_of_teams)
 	std::string clientReq = to_string(league_id);
 	int errorDatabase = updateDatabase(clientReq, "query_team_id", clientRes);
 	getline(clientRes, token, '\n');
-	static int max_team_id = stoi(token) + 1;
+	static int max_team_id;
+	max_team_id = stoi(token) + 1;
 
 	if(errorDatabase != 0){
 		std::cout << "\nError initializing league database" << std::endl;
@@ -115,7 +116,8 @@ int no_of_teams)
 
 	QObject::connect(continue_button_widget, &QPushButton::clicked, team_input, &TeamDialogBox::updateEditText);
 
-	static int count=0;
+	static int count;
+	count = 0;
 	QObject::connect(continue_button_widget, &QPushButton::clicked, 
     [=]() {
 		if(count >= no_of_teams){
@@ -124,8 +126,6 @@ int no_of_teams)
 			std::string streamLine;
 			std::vector<std::string> streamList;
 			vector<string> list;
-
-			static int position = 1;
 
 			int league_user_id;
 
@@ -166,11 +166,12 @@ int no_of_teams)
 				k = 0;
 				for(int j = 0; j < league_number_of_groups; j++)
 				{
+					int position = 1;
 					for (i = j; i < no_of_teams; i += league_number_of_groups)
 					{
 						clientReq = to_string(user_id) + "\n"
 						+ to_string(league_id) + "\n"
-						+ teamList[i] + "\n"
+						+ teamList[k] + "\n"
 						+ group[j] + "\n"
 						+ to_string(position) + "\n"
 						+ "0\n"
@@ -190,13 +191,13 @@ int no_of_teams)
 							std::cout << "qPosition inserted correctly: " << position << std::endl;
 							position++;
 						}
+						k++;
 					}
-					k++;
 				}
 			}
 			initDashboard(
 				App,
-				App->stacked_windows.widget(5),
+				App->stacked_windows.widget(2),
 				username,
 				league_user_id
 			);

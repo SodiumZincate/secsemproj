@@ -140,6 +140,7 @@ void TeamDialogBox::addIcon(){
 	file_name = QFileDialog::getOpenFileName(this, "Select Icon", "", "Images (*.png)");
 	if(!file_name.isEmpty()){
 		icon.load(file_name);
+		teamEdit->setText(QFileInfo(file_name).baseName());
 	}
 }
 
