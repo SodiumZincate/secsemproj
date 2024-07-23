@@ -2,7 +2,7 @@
 #include "db.h"
 #include "logic.h"
 
-void initShowLeague(StackedWidgets *App, QWidget* window, QString username = "username", QString leaguename = "leaguename", int no_of_teams = 0){
+void initShowLeague(StackedWidgets *App, QWidget* window, QString username = "username", QString leaguename = "leaguename"){
     window->setWindowTitle("League Name");
 
     QWidget *main_widget = new QWidget(window);
@@ -68,12 +68,6 @@ void initShowLeague(StackedWidgets *App, QWidget* window, QString username = "us
 	scroll_area->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 	scroll_area->setWidgetResizable(true);
 
-	// League L;
-	// ret_league(L, L.T);
-
-	// vector<string> leagueList;
-	// vector<string> teamList;
-
 	for(int i=0; i<4; i++){
 		// Label
 		appText *group_name = new appText();
@@ -81,7 +75,7 @@ void initShowLeague(StackedWidgets *App, QWidget* window, QString username = "us
 		QLabel *group_label = group_name->getWidget_label();
 
 		// Table
-		QTableWidget *league_table = new QTableWidget(no_of_teams, 9, window);
+		QTableWidget *league_table = new QTableWidget(8, 9, window);
 		// league_table->setWindowTitle("QTableWidget Example");
 		// league_table->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 		// league_table->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
@@ -185,8 +179,7 @@ void initShowLeague(StackedWidgets *App, QWidget* window, QString username = "us
 		sub_widget_layout->addWidget(league_table);
 	}
 
-	QObject::connect(backButton_widget, &QPushButton::clicked, App, &StackedWidgets::changeWindow_backward);
-
+	QObject::connect(backButton_widget, &QPushButton::clicked, App, &StackedWidgets::changeWindow_dashboard);
 
     scroll_area->setWidget(sub_widget);
 

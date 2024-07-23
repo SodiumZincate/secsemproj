@@ -105,6 +105,11 @@ void StackedWidgets::changeWindow_showLeague() {
 	std::cout << stacked_windows.currentIndex() << std::endl;
 }
 
+void StackedWidgets::changeWindow_dashboard() {
+    setCurrentIndex(2);
+	std::cout << stacked_windows.currentIndex() << std::endl;
+}
+
 TeamDialogBox::TeamDialogBox(QWidget *parent){
 	setParent(parent);
 

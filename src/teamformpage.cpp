@@ -196,8 +196,7 @@ int no_of_teams)
 				App,
 				App->stacked_windows.widget(5),
 				username,
-				leaguename,
-				no_of_teams
+				leaguename
 			);
 			App->changeWindow_showLeague();
 		}

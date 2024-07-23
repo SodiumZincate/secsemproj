@@ -56,6 +56,7 @@ public:
 		void changeWindow_forward();
 		void changeWindow_backward();
 		void changeWindow_showLeague();
+		void changeWindow_dashboard();
 };
 
 class TeamDialogBox : public QDialog{
@@ -97,7 +98,7 @@ void initAddTeam(
 	int user_id = 0, 
 	int no_of_teams = 2);
 
-void initShowLeague(StackedWidgets *App, QWidget* window, QString username, QString leaguename, int no_of_teams);
+void initShowLeague(StackedWidgets *App, QWidget* window, QString username, QString leaguename);
 
 void resetPage(QWidget* window);
 

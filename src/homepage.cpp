@@ -153,8 +153,7 @@ void initDashboard(StackedWidgets *App, QWidget* window, QString username = "use
 					App,
 					App->stacked_windows.widget(5),
 					username,
-					QString(leagueNameList[i].c_str()),
-					0
+					QString(leagueNameList[i].c_str())
 				);
 				App->changeWindow_showLeague();
 			}
