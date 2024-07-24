@@ -14,7 +14,6 @@
 #include "update.cpp"
 #include "displayLeague.cpp"
 #include "displayGroups.cpp"
-#include "logic.h"
 
 int app_height = 0;
 int app_width = 0;

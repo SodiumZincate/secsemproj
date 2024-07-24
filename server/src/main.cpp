@@ -62,12 +62,36 @@ void run_server() {
             if (entry.is_regular_file()) {
                 content += entry.path().filename().string();
 				content += "\n";
-            } else {
-                std::cout << "Not a regular file" << std::endl;
-                exit(1);
+            }
+        
+		}
+		for (const auto &entry : filesystem::directory_iterator(upload_dir + "/logos")) {
+            if (entry.is_regular_file()) {
+                content += entry.path().filename().string();
+				content += "\n";
             }
         }
         res.set_content(content, "text/plain");
+    });
+
+    svr.Get("/icons/query", [upload_dir](const Request &req, Response &res) {
+        std::string filename = req.get_param_value("file");
+        std::filesystem::path file_path = upload_dir + "/logos/" + filename;
+        
+        if (std::filesystem::exists(file_path) && std::filesystem::is_regular_file(file_path)) {
+            // Read file content
+            std::ifstream file(file_path, std::ios::binary);
+            if (file) {
+                std::string content((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
+                res.set_content(content, "image/png"); // Set appropriate MIME type if known
+            } else {
+                res.status = 404;
+                res.set_content("File not found", "text/plain");
+            }
+        } else {
+            res.status = 404;
+            res.set_content("File not found", "text/plain");
+        }
     });
 
 	svr.Post("/login/register", [upload_dir](const Request &req, Response &res) {
@@ -156,36 +180,36 @@ void run_server() {
 		queryDatabaseTeamID(cli_req, filepath, res);
     });
 
-	// svr.Post("/upload", [&](const httplib::Request &req, httplib::Response &res) {
-	// 	if(req.is_multipart_form_data()){
-	// 		for(const auto &file : req.files){
+	svr.Post("/upload", [&](const httplib::Request &req, httplib::Response &res) {
+		if(req.is_multipart_form_data()){
+			for(const auto &file : req.files){
 
-	// 	std::cout << "Received a file upload request" << std::endl;
-	// 	std::cout << "File name: " << file.second.filename << std::endl;
-	// 	std::cout << "File size: " << file.second.content.size() << " bytes" << std::endl;
+		std::cout << "Received a file upload request" << std::endl;
+		std::cout << "File name: " << file.second.filename << std::endl;
+		std::cout << "File size: " << file.second.content.size() << " bytes" << std::endl;
 
-    //     if (file.second.content.empty()) {
-    //         res.status = 400;
-    //         res.set_content("No file uploaded or file is empty", "text/plain");
-    //         return;
-    //     }
+        if (file.second.content.empty()) {
+            res.status = 400;
+            res.set_content("No file uploaded or file is empty", "text/plain");
+            return;
+        }
 
-    //     // Save the uploaded file
-    //     std::string file_path = upload_dir + "/" + file.second.filename;
-    //     std::ofstream ofs(file_path, std::ios::binary);
-    //     ofs.write(file.second.content.c_str(), file.second.content.size());
+        // Save the uploaded file
+        std::string file_path = upload_dir + "/logos/" + file.second.filename;
+        std::ofstream ofs(file_path, std::ios::binary);
+        ofs.write(file.second.content.c_str(), file.second.content.size());
 		
-    //     if (ofs.good()) {
-    //         std::cout << "File uploaded successfully to " << file_path << std::endl;
-    //         res.set_content("File uploaded successfully: " + file_path, "text/plain");
-    //     } else {
-    //         std::cout << "File upload failed" << std::endl;
-    //         res.status = 404;
-    //         res.set_content("<html><body><h1>File upload failed</h1></body></html>", "text/html");
-    //     }
-	// 		}
-    // }
-	// });
+        if (ofs.good()) {
+            std::cout << "File uploaded successfully to " << file_path << std::endl;
+            res.set_content("File uploaded successfully: " + file_path, "text/plain");
+        } else {
+            std::cout << "File upload failed" << std::endl;
+            res.status = 404;
+            res.set_content("<html><body><h1>File upload failed</h1></body></html>", "text/html");
+        }
+			}
+    }
+	});
 
     std::cout << "Server is listening on http://localhost:8080\n";
     svr.listen("0.0.0.0", 8080);

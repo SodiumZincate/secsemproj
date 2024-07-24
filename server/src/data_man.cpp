@@ -430,7 +430,7 @@ void updateDatabaseTeam(string cli_req, string file, Response &res)
 	}
 
 	std::cout << "Table Contents: " << std::endl;
-	queryTeam(db);
+	// queryTeam(db);
 
 	sqlite3_close(db);
 }
@@ -483,7 +483,7 @@ void queryDatabaseTeam(string cli_req, string file, Response &res)
 		// std::cout << QR1.result[1] << std::endl;
 		stringstream content;
 		for(string &c : QR1.result){
-			cout << c << endl;
+			// cout << c << endl;
 			content << c;
 			content << "\n";
 		}
@@ -594,7 +594,7 @@ void queryDatabaseLeague(string cli_req, string file, Response &res)
 		// std::cout << QR1.result[1] << std::endl;
 		stringstream content;
 		for(string &c : QR1.result){
-			cout << c << endl;
+			// cout << c << endl;
 			content << c;
 			content << "\n";
 		}
@@ -725,7 +725,7 @@ void queryDatabaseLeagueList(string cli_req, string file, Response &res)
 		// std::cout << QR1.result[1] << std::endl;
 		stringstream content;
 		for(string &c : QR1.result){
-			cout << c << endl;
+			// cout << c << endl;
 			content << c;
 			content << "\n";
 		}

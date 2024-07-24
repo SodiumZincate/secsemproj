@@ -2,10 +2,78 @@
 #include "logic.h"
 
 using namespace std;
+namespace fs = std::filesystem;
+
+void uploadFile(httplib::Client& cli, const std::string& filePath) {
+    std::ifstream file(filePath, std::ios::binary);
+    
+    if (!file.is_open()) {
+        std::cerr << "Error: Could not open file " << filePath << std::endl;
+        return;
+    }
+
+    std::vector<char> fileContent((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
+    httplib::MultipartFormDataItems items = {
+        {"files", std::string(fileContent.begin(), fileContent.end()), fs::path(filePath).filename().string(), "application/octet-stream"}
+    };
+
+    auto res = cli.Post("/upload", items);
+
+    if (res && res->status == 200) {
+        std::cout << "File " << filePath << " uploaded successfully." << std::endl;
+    } else {
+        std::cerr << "Error: File upload failed for " << filePath << std::endl;
+    }
+}
+
+void downloadIcon(std::string filename, QIcon& icon) {
+    // Initialize the HTTP client
+    httplib::Client cli("localhost", 8080);
+
+    // Create the full URL for the request
+    std::string url = "/icons/query?file=" + filename;
+	cout << url << "::" << filename;
+
+    // Send a GET request to the server to download the icon
+    auto res = cli.Get(url.c_str());
+
+    // Check if the request was successful
+    if (res && res->status == 200) {
+        QByteArray imageData(res->body.c_str(), res->body.size());
+        
+        // Load the image data into a QPixmap
+        QPixmap pixmap;
+        if (pixmap.loadFromData(imageData)) {
+            // Set the QIcon with the QPixmap
+            icon = QIcon(pixmap);
+            qDebug() << "Icon downloaded and stored successfully!";
+        } else {
+            qDebug() << "Failed to load the image from data.";
+            icon = QIcon(); // Set to null if loading failed
+        }
+    } else {
+        qDebug() << "Failed to download the image. Status code:" << res->status;
+        icon = QIcon(); // Set to null if the request failed
+    }
+}
 
 int updateDatabase(string clientReq, string mode, stringstream &clientRes) {
 	httplib::Client cli("localhost", 8080);
+
+	stringstream stream;
+	stream << clientReq;
 	
+	if (strcmp(mode.c_str(), "upload_icon") == 0){
+		std::string item = clientReq.c_str();
+
+		if (fs::is_regular_file(item)) {
+			uploadFile(cli, item);
+		}
+		else {
+			std::cerr << "Error: Invalid path " << item << std::endl;
+			return 1;
+		}
+	}
 	if (strcmp(mode.c_str(), "register") == 0){
 		if (auto res = cli.Post("/login/register?=login.db", clientReq, "text/plain")) {
 			cout << res->status << endl;

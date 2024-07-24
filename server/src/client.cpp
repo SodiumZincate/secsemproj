@@ -4,10 +4,45 @@
 #include <filesystem>
 
 using namespace std;
+namespace fs = std::filesystem;
+
+void uploadFile(httplib::Client& cli, const std::string& url, const std::string& filePath) {
+    std::ifstream file(filePath, std::ios::binary);
+    
+    if (!file.is_open()) {
+        std::cerr << "Error: Could not open file " << filePath << std::endl;
+        return;
+    }
+
+    std::vector<char> fileContent((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
+    httplib::MultipartFormDataItems items = {
+        {"files", std::string(fileContent.begin(), fileContent.end()), fs::path(filePath).filename().string(), "application/octet-stream"}
+    };
+
+    auto res = cli.Post("/upload", items);
+
+    if (res && res->status == 200) {
+        std::cout << "File " << filePath << " uploaded successfully." << std::endl;
+    } else {
+        std::cerr << "Error: File upload failed for " << filePath << std::endl;
+    }
+}
+
 
 int main(int argc, char *argv[]) {
 	httplib::Client cli("0.0.0.0", 8080);
 	
+	if (strcmp(argv[1], "upload") == 0){
+		std::string item = argv[2];
+
+		if (fs::is_regular_file(item)) {
+			uploadFile(cli, "http://localhost:8080/upload", item);
+		}
+		else {
+			std::cerr << "Error: Invalid path " << item << std::endl;
+			return 1;
+		}
+	}
 	if (strcmp(argv[1], "insert") == 0){
 		if (auto res = cli.Post("/login/register?=login.db", "Prasiddha\nprasiddhapokh@gmail.com\n12345678", "text/plain")) {
 			cout << res->status << endl;

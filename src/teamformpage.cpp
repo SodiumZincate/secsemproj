@@ -111,8 +111,10 @@ int no_of_teams)
 	{
 	TeamDialogBox *team_input = new TeamDialogBox(window);
 
-	static vector<string> teamList = {};
-	static vector<string> teamIconPathList = {};
+	static vector<string> teamList;
+	teamList = {};
+	static vector<string> teamIconPathList;
+	teamIconPathList = {};
 
 	QObject::connect(continue_button_widget, &QPushButton::clicked, team_input, &TeamDialogBox::updateEditText);
 
@@ -211,7 +213,7 @@ int no_of_teams)
 			}
 
 			QString sourceFilePath = QFileInfo(team_input->file_name).filePath();
-			QString newFilePath = QDir::currentPath() + "/requisite/assets/images/" + QString(to_string(max_team_id).c_str()) + ".png";
+			QString newFilePath = QDir::currentPath() + "/requisite/assets/images/logos/" + QString(to_string(max_team_id).c_str()) + ".png";
 
 			// Ensure destination directory exists
 			QDir dir(QFileInfo(newFilePath).path());
@@ -234,6 +236,26 @@ int no_of_teams)
 			if (!QFile::exists(newFilePath) && sourceFile.copy(newFilePath)) {
 				team_input->iconAdded = true;
 				qDebug() << "File copied successfully.";
+				
+				stringstream temp;
+				int errorDatabase = updateDatabase(newFilePath.toStdString(), "upload_icon", temp);
+
+				if(errorDatabase!=0){
+					cout << "Failed to initialize database" << endl;
+				}
+				else{
+					cout << "File uploaded successfully" << endl;
+					if (QFile::exists(newFilePath)) {
+						// Try to remove the file
+						if (QFile::remove(newFilePath)) {
+							qDebug() << "File deleted successfully!";
+						} else {
+							qDebug() << "Failed to delete the file.";
+						}
+					} else {
+						qDebug() << "File does not exist.";
+					}
+				}
 			} else {
 				team_input->teamEdit->setText("");
 				team_input->teamEdit->setPlaceholderText("Failed to add team");

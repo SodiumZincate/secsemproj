@@ -20,8 +20,10 @@
 #include <QtGui/QRadialGradient>
 #include <QtWidgets/QDialog>
 #include <QtWidgets/QFileDialog>
+#include <QtCore/QBuffer>
 #include <iostream>
 #include "logic.h"
+#include "db.h"
 
 extern int default_font_size;
 extern int app_width, app_height, screenWidth, screenHeight;
