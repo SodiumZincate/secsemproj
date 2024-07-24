@@ -21,6 +21,7 @@
 #include <QtWidgets/QDialog>
 #include <QtWidgets/QFileDialog>
 #include <QtCore/QBuffer>
+#include <QtWidgets/QMessageBox>
 #include <iostream>
 #include "logic.h"
 #include "db.h"
@@ -149,10 +150,10 @@ signals:
 class LabelEditComponent : public QObject {
     Q_OBJECT // A QT macro that allows the use of slots
 private:
-	QString field_text;
     QLabel *widget_label;
     QLineEdit *widget_edit;
 public:
+	QString field_text;
     void init(QWidget*, QString, int font_size = default_font_size);
     QLabel* getWidget_label();
     QLineEdit* getWidget_edit();

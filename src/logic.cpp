@@ -124,14 +124,14 @@ void League::init_league(string input_string)
     league_groups = stoi(list[6]);
     league_team_number = stoi(list[7]);
 
-	// cout << "league_id :: " << league_id << endl;
-    // cout << "league_user_id :: " << league_user_id << endl;
-    // cout << "league_name :: " << league_name << endl;
-    // cout << "league_group_stages :: " << league_group_stages<< endl;
-	// cout << "league_round_robin :: " << league_round_robin << endl;
-    // cout << "league_qualifiers :: " << league_qualifiers << endl;
-    // cout << "league_groups :: " << league_groups << endl;
-    // cout << "league_team_number :: " << league_team_number << endl;
+	cout << "league_id :: " << league_id << endl;
+    cout << "league_user_id :: " << league_user_id << endl;
+    cout << "league_name :: " << league_name << endl;
+    cout << "league_group_stages :: " << league_group_stages<< endl;
+	cout << "league_round_robin :: " << league_round_robin << endl;
+    cout << "league_qualifiers :: " << league_qualifiers << endl;
+    cout << "league_groups :: " << league_groups << endl;
+    cout << "league_team_number :: " << league_team_number << endl;
 }
 
 void League::sort_teams_array()

@@ -96,7 +96,7 @@ void run_server() {
 
 	svr.Post("/login/register", [upload_dir](const Request &req, Response &res) {
 		string cli_req = req.body;
-        std::string filepath = upload_dir + "/" + "login.db";
+        std::string filepath = upload_dir + "/" + "leaguedata.db";
 		// queryDatabase(cli_req, filepath, res);
 
 		insertDatabase(cli_req, filepath);
@@ -109,10 +109,17 @@ void run_server() {
 		deleteDatabase(cli_req, filepath);
     });
 
+	svr.Post("/league/delete", [upload_dir](const Request &req, Response &res) {
+		string cli_req = req.body;
+
+        std::string filepath = upload_dir + "/" + "leaguedata.db";
+		deleteDatabaseLeague(cli_req, filepath);
+    });
+
 	svr.Post("/login/query", [upload_dir](const Request &req, Response &res) {
 		string cli_req = req.body;
 
-        std::string filepath = upload_dir + "/" + "login.db";
+        std::string filepath = upload_dir + "/" + "leaguedata.db";
 		queryDatabase(cli_req, filepath, res);
     });
 

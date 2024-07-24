@@ -55,10 +55,10 @@ int main(int argc, char *argv[]) {
 	// Initializa login and register pages
 	initRegister(&stack1, &registerApp);
 	initLogin(&stack1, &loginApp);
-	initDashboard(&stack1, &dashboardApp);
-	initAddLeague(&stack1, &addleagueApp);
-	initAddTeam(&stack1, &addteamApp);
-	initShowLeague(&stack1, &showLeagueApp);
+	// initDashboard(&stack1, &dashboardApp);
+	// initAddLeague(&stack1, &addleagueApp);
+	// initAddTeam(&stack1, &addteamApp);
+	// initShowLeague(&stack1, &showLeagueApp);
 
 	stack1.addWidget(&registerApp);
 	stack1.addWidget(&loginApp);

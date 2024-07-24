@@ -56,6 +56,22 @@ void initShowLeague(StackedWidgets *App, QWidget* window, QString username = "us
 
     backButton_container_layout->addWidget(backButton_widget);
 
+	//Delete Button
+    appButton *deleteButton= new appButton();
+    deleteButton->init(window,"DELETE LEAGUE",default_font_size*0.9);
+    QPushButton *deleteButton_widget = deleteButton->getWidget_button();
+    deleteButton_widget->setFixedSize(app_width/4,app_height/12);
+	deleteButton_widget->setStyleSheet("QPushButton{background-color: #FB3B3B}");
+
+	//Delete Container
+    QWidget *deleteButton_container = new QWidget(window);
+    QHBoxLayout *deleteButton_container_layout = new QHBoxLayout(deleteButton_container);
+    deleteButton_container->setFixedHeight(app_height/6);
+    deleteButton_container_layout->setAlignment(Qt::AlignLeft);
+    deleteButton_container_layout->setContentsMargins(0, 0, 0, 0);
+
+    deleteButton_container_layout->addWidget(deleteButton_widget);
+
 	NavBar_layout->addWidget(backButton_container);
 	NavBar_layout->addWidget(leaguenameText_widget);
 	NavBar_layout->addWidget(usernameText_widget);
@@ -197,11 +213,42 @@ void initShowLeague(StackedWidgets *App, QWidget* window, QString username = "us
 	}
 
 	QObject::connect(backButton_widget, &QPushButton::clicked, App, &StackedWidgets::changeWindow_dashboard);
+	QObject::connect(deleteButton_widget, &QPushButton::clicked,
+	[=](){
+		QMessageBox::StandardButton reply;
+        reply = QMessageBox::question(window, "Confirm Deletion",
+                                      "Are you sure you want to delete?",
+                                      QMessageBox::Yes | QMessageBox::No);
+        
+        if (reply == QMessageBox::Yes) {
+			stringstream temp;
+				cout << "del League ID: " << L.league_id << endl;
+				int errorDatabase = updateDatabase(to_string(L.league_id), "delete_league", temp);
+
+				if(errorDatabase!=0){
+					cout << "Failed to delete league" << endl;
+				}
+				else{
+					cout << "league deleted successfully" << endl;
+					initDashboard(
+						App,
+						App->stacked_windows.widget(2),
+						username,
+						L.league_user_id
+					);
+					App->changeWindow_dashboard();
+				}
+            qDebug() << "User chose to delete.";
+        } else {
+            qDebug() << "User canceled the deletion.";
+        }
+	});
 
     scroll_area->setWidget(sub_widget);
 
     main_widget_layout->addWidget(NavBar, 0, Qt::AlignTop);
     main_widget_layout->addWidget(scroll_area);
+    main_widget_layout->addWidget(deleteButton_widget, 0, Qt::AlignRight | Qt::AlignBottom);
 
 	resetPage(window);
 	

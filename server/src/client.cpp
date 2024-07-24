@@ -44,7 +44,7 @@ int main(int argc, char *argv[]) {
 		}
 	}
 	if (strcmp(argv[1], "insert") == 0){
-		if (auto res = cli.Post("/login/register?=login.db", "Prasiddha\nprasiddhapokh@gmail.com\n12345678", "text/plain")) {
+		if (auto res = cli.Post("/login/register?=leaguedata.db", "Prasiddha\nprasiddhapokh@gmail.com\n12345678", "text/plain")) {
 			cout << res->status << endl;
 			cout << res->get_header_value("Content-Type") << endl;
 		}
@@ -52,8 +52,8 @@ int main(int argc, char *argv[]) {
 			cout << "error code: " << res.error() << std::endl;
 		}
 	}
-	else if(strcmp(argv[1], "delete") == 0){
-		if (auto res = cli.Post("/login/delete", "admin\nprasiddhapokh@gmail.com\n12345678", "text/plain")) {
+	else if(strcmp(argv[1], "delete_league") == 0){
+		if (auto res = cli.Post("/league/delete", "1", "text/plain")) {
 			cout << res->status << endl;
 			cout << res->get_header_value("Content-Type") << endl;
 		}

@@ -142,7 +142,23 @@ void initDashboard(StackedWidgets *App, QWidget* window, QString username = "use
 			int errorDatabase = updateDatabase(clientReq, "query_team", clientResTeam);
 			getline(clientResTeam, streamLine, '\n');
 			if(errorDatabase !=0 || strcmp(streamLine.c_str(), "") == 0){
+				stringstream temp;
 				std::cout << "\nError initializing team database" << std::endl;
+				int errorDatabase = updateDatabase(leagueIdList[i], "delete_league", temp);
+
+				if(errorDatabase!=0){
+					cout << "Failed to delete league" << endl;
+				}
+				else{
+					cout << "league deleted successfully" << endl;
+					initDashboard(
+						App,
+						App->stacked_windows.widget(2),
+						username,
+						user_id
+					);
+					App->changeWindow_dashboard();
+				}
 			}
 			else{
 				std::string team_string = clientResTeam.str();

@@ -135,7 +135,7 @@ void queryDatabase(string cli_req, string file, Response &res){
 	}
 
 	stringstream ss;
-	ss << "SELECT LID, USERNAME, EMAIL, PASSWORD FROM DATA WHERE USERNAME"
+	ss << "SELECT UID, USERNAME, EMAIL, PASSWORD FROM USER WHERE USERNAME"
 	<< "="
 	<< "'" + username + "'";
 
@@ -291,7 +291,7 @@ void insertDatabase(string cli_req, string file)
 
 	stringstream ss;
 	int LID = 1;
-	ss << "INSERT INTO DATA(USERNAME,EMAIL,PASSWORD) VALUES"
+	ss << "INSERT INTO USER(USERNAME,EMAIL,PASSWORD) VALUES"
 	<< "("
 	<< "'" << username << "',"
 	<< "'" << email << "',"
@@ -313,6 +313,52 @@ void insertDatabase(string cli_req, string file)
 
 	sqlite3_close(db);
 	
+}
+
+void deleteDatabaseLeague(string cli_req, string file)
+{
+	sqlite3 *db;
+	int exit = 0;
+	char *errMsg;
+
+	std::vector<string> string_list;
+	std::string token;
+	istringstream tokenStream(cli_req);
+	while(getline(tokenStream, token, '\n')){
+		string_list.push_back(token);
+	}
+
+	string league_id = string_list[0];
+
+	exit = sqlite3_open(file.c_str(), &db);
+	std::cout << file.c_str() << std::endl;
+	if(exit){
+		cerr << "Failed to open database: " << sqlite3_errmsg(db) << std::endl;
+		std::exit(1);
+	}
+	else{
+		std::cout << "deleting Database opened successfully" << std::endl;
+	}
+
+	stringstream ss;
+	cout << "del League ID: " << league_id << endl;
+	ss << "DELETE FROM LEAGUE WHERE LID = " << league_id;
+
+	string sqlDelete = ss.str();
+	exit = sqlite3_exec(db, sqlDelete.c_str(), NULL, 0, &errMsg);
+	if(exit!=SQLITE_OK){
+		cerr << "Error deleting data" << std::endl;
+		cerr << errMsg << std::endl;
+		sqlite3_free(errMsg);
+	}
+	else{
+		std::cout << "Data deleted successfully" << std::endl;
+	}
+
+	std::cout << "Table Contents: " << std::endl;
+	queryLeague(db);
+	
+	sqlite3_close(db);
 }
 
 void deleteDatabase(string cli_req, string file)

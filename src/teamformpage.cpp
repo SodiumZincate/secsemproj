@@ -85,6 +85,23 @@ int no_of_teams)
 
 	QObject::connect(backButton_widget, &QPushButton::clicked,
 	[=](){
+		stringstream temp;
+		std::cout << "\nError initializing team database" << std::endl;
+		int errorDatabase = updateDatabase(to_string(league_id), "delete_league", temp);
+
+		if(errorDatabase!=0){
+			cout << "Failed to delete league" << endl;
+		}
+		else{
+			cout << "league deleted successfully" << endl;
+			initDashboard(
+				App,
+				App->stacked_windows.widget(2),
+				username,
+				user_id
+			);
+			App->changeWindow_dashboard();
+		}
 		initAddLeague(
 			App,
 			App->stacked_windows.widget(App->stacked_windows.currentIndex()-1),
@@ -101,6 +118,9 @@ int no_of_teams)
 	std::string clientReq = to_string(league_id);
 	int errorDatabase = updateDatabase(clientReq, "query_team_id", clientRes);
 	getline(clientRes, token, '\n');
+	if(strcmp(token.c_str(), "") == 0){
+		token = "0";
+	}
 	static int max_team_id;
 	max_team_id = stoi(token) + 1;
 
@@ -274,7 +294,7 @@ int no_of_teams)
 					team_input->iconAdded = false;
 					count++;
 					max_team_id++;
-					// team_input->teamEdit->setText("");
+					team_input->teamEdit->setText("");
 					team_input->teamEdit->setPlaceholderText("Team Added Successfully");
 					team_input->teamEdit->setStyleSheet("QLineEdit{placeholder-text-color: #48FF4D}");
 				}

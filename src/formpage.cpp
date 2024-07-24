@@ -85,6 +85,9 @@ void initAddLeague(StackedWidgets *App, QWidget* window, QString username = "use
     QLineEdit *no_of_teams_edit = no_of_teams_component->getWidget_edit();
 	no_of_teams_edit->setFixedSize(app_width*71/100, app_height/10);
 
+	QIntValidator* validator = new QIntValidator(0, 200, window); // Example range
+	no_of_teams_edit->setValidator(validator);
+
     no_of_teams_layout->addWidget(no_of_teams_label);
     no_of_teams_layout->addWidget(no_of_teams_edit);
     
@@ -170,6 +173,7 @@ void initAddLeague(StackedWidgets *App, QWidget* window, QString username = "use
 
 	QObject::connect(continue_button_widget, &QPushButton::clicked, league_name_component, &LabelEditComponent::updateEditText);
 	QObject::connect(continue_button_widget, &QPushButton::clicked, no_of_teams_component, &LabelEditComponent::updateEditText);
+	
 	QObject::connect(continue_button_widget, &QPushButton::clicked, 
 	[=]() {
 		std::string league_text;
