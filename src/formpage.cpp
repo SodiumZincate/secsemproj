@@ -99,7 +99,7 @@ void initAddLeague(StackedWidgets *App, QWidget* window, QString username = "use
     group_stage_layout->setAlignment(Qt::AlignLeft);
 
 	LabelComboComponent *group_stage_component = new LabelComboComponent();
-	group_stage_component->init(window, "No. of Group Stages: ", {"0","1","2"}, default_font_size*0.8);
+	group_stage_component->init(window, "No. of Group Stages: ", {"0","1"}, default_font_size*0.8);
     QLabel *group_stage_label = group_stage_component->getWidget_label();
     QComboBox *group_stage_combobox = group_stage_component->getWidget_combo();
 	
