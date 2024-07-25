@@ -6,11 +6,11 @@ void createMatchesGS(League L)
 {
     Match Mgs[MAX_MATCHES_GT];
 
-    //for group stage matches 
+    //for group stage matches
     int i, j, k;
     if (L.league_groups != 0)
     {
-        if (L.league_round_robin = 2)
+        if (L.league_round_robin == 2)
         {
             for (i = 0; i < L.league_team_number; i++)
             {
@@ -27,7 +27,7 @@ void createMatchesGS(League L)
                 }
             }
         }
-        if (L.league_round_robin = 1)
+        if (L.league_round_robin == 1)
         {
             for (i = 0; i < L.league_team_number; i++)
             {
@@ -46,28 +46,28 @@ void createMatchesGS(League L)
         }
     }
 
-    int s = sizeof(Mgs) / sizeof(Match);
-    shuffleArray(Mgs, s);
+    // int s = sizeof(Mgs) / sizeof(Match);
+    // shuffleArray(Mgs, k);
 
-    string str;
+    // string str;
 
-    for (i = 0; i < s; i++)
-    {
-        str = to_string(L.league_user_id) + "\n" + to_string(L.league_id) + "\n" +
-        to_string(Mgs[i].T1.team_id) + "\n" + to_string(Mgs[i].T2.team_id) + "\n" + "0" + "\n" + "0" + "\n" + "0";
-        stringstream temp;
-        // int errorDatabase = updateDatabase(str, "insert_match", temp);
+    // for (i = 0; i < k; i++)
+    // {
+    //     str = to_string(L.league_user_id) + "\n" + to_string(L.league_id) + "\n" +
+    //     to_string(Mgs[i].T1.team_id) + "\n" + to_string(Mgs[i].T2.team_id) + "\n" + "0" + "\n" + "0" + "\n" + "0";
+    //     stringstream temp;
+    //     // int errorDatabase = updateDatabase(str, "insert_match", temp);
 
-        // if (errorDatabase!=0)
-        // {
-        //     std::cout << "\nError initializing database" << std::endl;
-        // }
-        // else
-        // {
-        //     std::cout << "\nData inserted successfully" << std::endl;
-        // }
-        // str.clear();
-    }
+    //     // if (errorDatabase!=0)
+    //     // {
+    //     //     std::cout << "\nError initializing database" << std::endl;
+    //     // }
+    //     // else
+    //     // {
+    //     //     std::cout << "\nData inserted successfully" << std::endl;
+    //     // }
+    //     // str.clear();
+    // }
 }
 
 void shuffleArray(Match arr[], int size)
