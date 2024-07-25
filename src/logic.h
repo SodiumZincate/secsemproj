@@ -9,7 +9,6 @@
 #include <string>
 #include <time.h>
 #include <vector>
-#include "db.h"
 
 using namespace std;
 
@@ -44,9 +43,6 @@ class Team
     int team_gd = 0;
     int team_points = 0;
     int team_position = 0;
-
-    //properties for matches
-    Match* M[MAX_MATCHES_PT];
 
     //methods
     Team() {}
@@ -102,8 +98,8 @@ class Match
 {
     public:
 
-    //properties of a league, all fixed, initialized
-    bool occur = 0;
+    int match_id;
+    bool match_occur = 0;
     Team T1;
     Team T2;
     int T1_score;
