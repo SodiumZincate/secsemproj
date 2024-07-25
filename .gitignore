@@ -5,3 +5,6 @@ cbuild
 .qmake.stash
 *.moc.cpp
 .vscode/
+*.db
+requisite/assets/images/logos/*.png
+server/src/uploads/logos/*.png
