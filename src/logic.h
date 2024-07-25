@@ -1,11 +1,13 @@
 #pragma once
 
 #include <algorithm>
+#include <cmath>
+#include <cstdlib>
 #include <cstring>
 #include <iostream>
 #include <sstream>
 #include <string>
-#include <cmath>
+#include <time.h>
 #include <vector>
 #include "db.h"
 
@@ -13,6 +15,8 @@ using namespace std;
 
 #define MAX_TEAMS 50
 #define MAX_GROUPS 16
+#define MAX_MATCHES_PT 16
+#define MAX_MATCHES_GT 100
 
 //class for a team
 class Team
@@ -38,6 +42,9 @@ class Team
     int team_gd = 0;
     int team_points = 0;
     int team_position = 0;
+
+    //properties for matches
+    Match M[MAX_MATCHES_PT];
 
     //methods
     Team() {}
@@ -88,6 +95,19 @@ class League
     void update_teams_data();
 };
 
+//class for a match
+class Match
+{
+    public:
+
+    //properties of a league, all fixed, initialized
+    bool occur = 0;
+    Team T1;
+    Team T2;
+    int T1_score;
+    int T2_score;
+};
+
 //function to update league data
 void update(string input_string_1, string input_string_2);
 
@@ -96,3 +116,6 @@ League displayLeague(string input_string_1, string input_string_2);
 
 //function to return groups 
 vector<Group> displayGroups(string input_string_1, string input_string_2);
+
+//this file is used to create matches 
+League createMatchesGS(string input_string_1, string input_string_2);
