@@ -9,11 +9,13 @@
 #include "formpage.cpp"
 #include "teamformpage.cpp"
 #include "leaguepage.cpp"
+#include "matchpage.cpp"
 #include "db.cpp"
 #include "logic.cpp"
 #include "update.cpp"
 #include "displayLeague.cpp"
 #include "displayGroups.cpp"
+#include "createMatchesGS.cpp"
 
 int app_height = 0;
 int app_width = 0;
@@ -51,6 +53,7 @@ int main(int argc, char *argv[]) {
 	QWidget addleagueApp;
 	QWidget addteamApp;
 	QWidget showLeagueApp;
+	QWidget nextMatchApp;
 
 	// Initializa login and register pages
 	initRegister(&stack1, &registerApp);
@@ -66,6 +69,7 @@ int main(int argc, char *argv[]) {
 	stack1.addWidget(&addleagueApp);
 	stack1.addWidget(&addteamApp);
 	stack1.addWidget(&showLeagueApp);
+	stack1.addWidget(&nextMatchApp);
 
 	// Set initial page to login page
 	stack1.setCurrentIndex(1);

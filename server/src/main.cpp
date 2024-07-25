@@ -134,6 +134,17 @@ void run_server() {
 		insertDatabaseTeam(cli_req, filepath);
     });
 
+	svr.Post("/match/insert", [upload_dir](const Request &req, Response &res) {
+		string cli_req = req.body;
+		// std::vector<string> string_list;
+		// std::string token;
+		// while(getline(tokenStream, token, '\n')){
+		// 	string_list.push_back(token);
+		// }
+        std::string filepath = upload_dir + "/" + "leaguedata.db";
+		insertDatabaseTeam(cli_req, filepath);
+    });
+
 	svr.Post("/league/insert", [upload_dir](const Request &req, Response &res) {
 		string cli_req = req.body;
 		// std::vector<string> string_list;

@@ -39,6 +39,65 @@ void queryLeague(sqlite3 *db){
 	}
 }
 
+void insertDatabaseMatch(string cli_req, string file){
+	sqlite3 *db;
+	int exit = 0;
+	char *errMsg;
+
+	std::vector<string> string_list;
+	std::string token;
+	istringstream tokenStream(cli_req);
+	while(getline(tokenStream, token, '\n')){
+		string_list.push_back(token);
+	}
+
+	exit = sqlite3_open(file.c_str(), &db);
+	std::cout << file.c_str() << std::endl;
+	if(exit){
+		cerr << "Failed to open database: " << sqlite3_errmsg(db) << std::endl;
+		
+	}
+	else{
+		std::cout << "Database opened successfully" << std::endl;
+	}
+
+	string uid = string_list[0];
+	string lid = string_list[1];
+	string tid1 = string_list[2];
+	string tid2 = string_list[3];
+	string team1_goal = string_list[4];
+	string team2_goal = string_list[5];
+	string played = string_list[5];
+
+	stringstream ss;
+	ss << "INSERT INTO MATCH(UID,LID,TID1,TID2,TEAM1GOAL,TEAM2GOAL,PLAYED) VALUES"
+	<< "("
+	<< "'" << uid << "',"
+	<< "'" << lid << "',"
+	<< "'" << tid1 << "',"
+	<< "'" << tid2 << "',"
+	<< "'" << team1_goal << "',"
+	<< "'" << team2_goal << "',"
+	<< "'" << played << "'"
+	<< ")";
+
+	string sqlInsert = ss.str();
+	exit = sqlite3_exec(db, sqlInsert.c_str(), NULL, 0, &errMsg);
+	if(exit!=SQLITE_OK){
+		cerr << "Error inserting data" << std::endl;
+		cerr << errMsg << std::endl;
+		sqlite3_free(errMsg);
+	}
+	else{
+		std::cout << "Data inserted successfully" << std::endl;
+	}
+
+	std::cout << "Table Contents: " << std::endl;
+	queryTeam(db);
+
+	sqlite3_close(db);
+}
+
 void insertDatabaseTeam(string cli_req, string file){
 	sqlite3 *db;
 	int exit = 0;
@@ -477,6 +536,64 @@ void updateDatabaseTeam(string cli_req, string file, Response &res)
 
 	std::cout << "Table Contents: " << std::endl;
 	// queryTeam(db);
+
+	sqlite3_close(db);
+}
+
+void updateDatabaseMatch(string cli_req, string file){
+	sqlite3 *db;
+	int exit = 0;
+	char *errMsg;
+
+	std::vector<string> string_list;
+	std::string token;
+	istringstream tokenStream(cli_req);
+	while(getline(tokenStream, token, '\n')){
+		string_list.push_back(token);
+	}
+
+	exit = sqlite3_open(file.c_str(), &db);
+	std::cout << file.c_str() << std::endl;
+	if(exit){
+		cerr << "Failed to open database: " << sqlite3_errmsg(db) << std::endl;
+		
+	}
+	else{
+		std::cout << "Database opened successfully" << std::endl;
+	}
+
+	string uid = string_list[0];
+	string lid = string_list[1];
+	string tid1 = string_list[2];
+	string tid2 = string_list[3];
+	string team1_goal = string_list[4];
+	string team2_goal = string_list[5];
+	string played = string_list[5];
+
+	stringstream ss;
+	// ss << "UPDATE MATCH SET "
+	// << "UID = '" << uid << "', "
+	// << "LID = '" << lid << "', "
+	// << "TID1 = '" << tid1 << "', "
+	// << "TID2 = '" << tid2 << "', "
+	// << "TEAM1GOAL = '" << team1_goal << "', "
+	// << "TEAM2GOAL = '" << team2_goal << "', "
+	// << "PLAYED = '" << played << "' "
+	// << "WHERE MID = '" << mid << "';";
+
+	string sqlInsert = ss.str();
+	exit = sqlite3_exec(db, sqlInsert.c_str(), NULL, 0, &errMsg);
+	if(exit!=SQLITE_OK){
+		cerr << "Error updating data" << std::endl;
+		cerr << errMsg << std::endl;
+		sqlite3_free(errMsg);
+	}
+	else{
+		std::cout << "Data updated successfully" << std::endl;
+	}
+
+	std::cout << "Table Contents: " << std::endl;
+	queryTeam(db);
 
 	sqlite3_close(db);
 }

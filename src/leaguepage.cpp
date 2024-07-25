@@ -75,6 +75,26 @@ void initShowLeague(StackedWidgets *App, QWidget* window, QString username = "us
 	NavBar_layout->addWidget(backButton_container);
 	NavBar_layout->addWidget(leaguenameText_widget);
 	NavBar_layout->addWidget(usernameText_widget);
+	
+	//Next Button
+    appButton *nextButton= new appButton();
+    nextButton->init(window,"NEXT MATCH",default_font_size*0.9);
+    QPushButton *nextButton_widget = nextButton->getWidget_button();
+    nextButton_widget->setFixedSize(app_width/4,app_height/12);
+	nextButton_widget->setStyleSheet("QPushButton{background-color: #48FF4D}");
+
+	//Next Container
+    QWidget *nextButton_container = new QWidget(window);
+    QHBoxLayout *nextButton_container_layout = new QHBoxLayout(nextButton_container);
+    nextButton_container->setFixedHeight(app_height/6);
+    nextButton_container_layout->setAlignment(Qt::AlignLeft);
+    nextButton_container_layout->setContentsMargins(0, 0, 0, 0);
+
+    deleteButton_container_layout->addWidget(deleteButton_widget);
+
+	NavBar_layout->addWidget(backButton_container);
+	NavBar_layout->addWidget(leaguenameText_widget);
+	NavBar_layout->addWidget(usernameText_widget);
 
 	// Scroll Area
 	QScrollArea *scroll_area = new QScrollArea(window);
@@ -213,6 +233,18 @@ void initShowLeague(StackedWidgets *App, QWidget* window, QString username = "us
 	}
 
 	QObject::connect(backButton_widget, &QPushButton::clicked, App, &StackedWidgets::changeWindow_dashboard);
+	QObject::connect(nextButton_widget, &QPushButton::clicked,
+	[=](){
+		createMatchesGS(L);
+		initNextMatch(
+			App,
+			App->stacked_windows.widget(App->stacked_windows.currentIndex()+1),
+			username,
+			QString(L.league_name.c_str()),
+			L
+		);
+		App->changeWindow_forward();
+	});
 	QObject::connect(deleteButton_widget, &QPushButton::clicked,
 	[=](){
 		QMessageBox::StandardButton reply;
@@ -249,6 +281,7 @@ void initShowLeague(StackedWidgets *App, QWidget* window, QString username = "us
     main_widget_layout->addWidget(NavBar, 0, Qt::AlignTop);
     main_widget_layout->addWidget(scroll_area);
     main_widget_layout->addWidget(deleteButton_widget, 0, Qt::AlignRight | Qt::AlignBottom);
+    main_widget_layout->addWidget(nextButton_widget, 0, Qt::AlignCenter | Qt::AlignBottom);
 
 	resetPage(window);
 	

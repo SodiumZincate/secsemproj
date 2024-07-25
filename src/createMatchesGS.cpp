@@ -2,9 +2,8 @@
 
 //this file is used to create matches 
 
-League createMatchesGS(string input_string_1, string input_string_2)
+void createMatchesGS(League L)
 {
-    League L;
     Match Mgs[MAX_MATCHES_GT];
 
     //for group stage matches 
@@ -20,7 +19,7 @@ League createMatchesGS(string input_string_1, string input_string_2)
                 {
                     if ((i != j) && (L.T[i].team_group == L.T[j].team_group))
                     {
-                        L.T[i].M[k].T2 = L.T[j];
+                        L.T[i].M[k]->T2 = L.T[j];
                         Mgs[k].T1 = L.T[i];
                         Mgs[k].T2 = L.T[j];
                         k++;
@@ -37,7 +36,7 @@ League createMatchesGS(string input_string_1, string input_string_2)
                 {
                     if ((i != j) && (L.T[i].team_group == L.T[j].team_group))
                     {
-                        L.T[i].M[k].T2 = L.T[j];
+                        L.T[i].M[k]->T2 = L.T[j];
                         Mgs[k].T1 = L.T[i];
                         Mgs[k].T2 = L.T[j];
                         k++;
@@ -55,19 +54,19 @@ League createMatchesGS(string input_string_1, string input_string_2)
     for (i = 0; i < s; i++)
     {
         str = to_string(L.league_user_id) + "\n" + to_string(L.league_id) + "\n" +
-        to_string(Mgs[i].T1.team_id) + "\n" + to_string(Mgs[i].T2.team_id) + "\n" + "0" + "\n" + "0" + "\n" + "0" + "\n";
+        to_string(Mgs[i].T1.team_id) + "\n" + to_string(Mgs[i].T2.team_id) + "\n" + "0" + "\n" + "0" + "\n" + "0";
         stringstream temp;
-        int errorDatabase = updateDatabase(str, "insert_match", temp);
+        // int errorDatabase = updateDatabase(str, "insert_match", temp);
 
-        if (errorDatabase!=0)
-        {
-            std::cout << "\nError initializing database" << std::endl;
-        }
-        else
-        {
-            std::cout << "\nData inserted successfully" << std::endl;
-        }
-        str.clear();
+        // if (errorDatabase!=0)
+        // {
+        //     std::cout << "\nError initializing database" << std::endl;
+        // }
+        // else
+        // {
+        //     std::cout << "\nData inserted successfully" << std::endl;
+        // }
+        // str.clear();
     }
 }
 

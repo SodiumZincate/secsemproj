@@ -69,6 +69,18 @@ int main(int argc, char *argv[])
 		<< "GD INTEGER NOT NULL,"
 		<< "POINTS INTEGER NOT NULL"
 		<< ")";
+	stringstream ss4;
+	ss4 << "CREATE TABLE MATCH"
+		<< "("
+        << "MID INTEGER PRIMARY KEY AUTOINCREMENT, "
+        << "UID INTEGER NOT NULL, "
+        << "LID INTEGER NOT NULL, "
+		<< "TID1 INTEGER NOT NULL,"
+		<< "TID2 INTEGER NOT NULL,"
+		<< "TEAM1GOAL INTEGER NOT NULL,"
+		<< "TEAM2GOAL INTEGER NOT NULL,"
+		<< "PLAYED INTEGER NOT NULL"
+		<< ")";
 
 	std::string sqlCreateUser;
 	sqlCreateUser = ss1.str();
@@ -76,6 +88,8 @@ int main(int argc, char *argv[])
 	sqlCreateLeague = ss2.str();
 	std::string sqlCreateTeam;
 	sqlCreateTeam = ss3.str();
+	std::string sqlCreateMatch;
+	sqlCreateMatch = ss4.str();
 
 	exit = sqlite3_open("uploads/leaguedata.db", &db);
 	if(exit){
@@ -112,6 +126,15 @@ int main(int argc, char *argv[])
 	}
 	else{
 		cout << "Team Table created successfully" << endl;
+	}
+	exit = sqlite3_exec(db, sqlCreateMatch.c_str(), NULL, 0, &errMsg);
+	if(exit!=SQLITE_OK){
+		cerr << "Error creating team table" << endl;
+		cerr << errMsg << endl;
+		sqlite3_free(errMsg);
+	}
+	else{
+		cout << "Match Table created successfully" << endl;
 	}
 	
 	sqlite3_close(db);

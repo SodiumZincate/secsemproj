@@ -18,6 +18,8 @@ using namespace std;
 #define MAX_MATCHES_PT 16
 #define MAX_MATCHES_GT 100
 
+class Match;
+
 //class for a team
 class Team
 {
@@ -44,7 +46,7 @@ class Team
     int team_position = 0;
 
     //properties for matches
-    Match M[MAX_MATCHES_PT];
+    Match* M[MAX_MATCHES_PT];
 
     //methods
     Team() {}
@@ -118,4 +120,6 @@ League displayLeague(string input_string_1, string input_string_2);
 vector<Group> displayGroups(string input_string_1, string input_string_2);
 
 //this file is used to create matches 
-League createMatchesGS(string input_string_1, string input_string_2);
+void createMatchesGS(League L);
+
+void shuffleArray(Match arr[], int size);

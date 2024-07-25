@@ -104,6 +104,8 @@ void initAddTeam(
 
 void initShowLeague(StackedWidgets *App, QWidget* window, QString username, QString leaguename, League L, vector<Group> groupList);
 
+void initNextMatch(StackedWidgets *App, QWidget* window, QString username, QString leaguename, League L);
+
 void resetPage(QWidget* window);
 
 // Main class for the widgets in the app
