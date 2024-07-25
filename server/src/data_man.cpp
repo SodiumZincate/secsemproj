@@ -61,6 +61,7 @@ void insertDatabaseMatch(string cli_req, string file){
 		std::cout << "Database opened successfully" << std::endl;
 	}
 
+	cout << "pussy" << endl;
 	string uid = string_list[0];
 	string lid = string_list[1];
 	string tid1 = string_list[2];
@@ -93,7 +94,7 @@ void insertDatabaseMatch(string cli_req, string file){
 	}
 
 	std::cout << "Table Contents: " << std::endl;
-	queryTeam(db);
+	// queryTeam(db);
 
 	sqlite3_close(db);
 }
