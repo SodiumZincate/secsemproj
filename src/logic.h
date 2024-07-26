@@ -63,6 +63,21 @@ class Group
     Team T[MAX_TEAMS];
 };
 
+//class for a match
+class Match
+{
+    public:
+
+    int match_id;
+	int match_user_id;
+	int match_league_lid;
+    Team T1;
+    Team T2;
+    int T1_score;
+    int T2_score;
+    bool match_occur = 0;
+};
+
 //class for a league
 class League
 {
@@ -80,6 +95,7 @@ class League
 
     //array of teams for a league
     Team T[MAX_TEAMS];
+	Match M[MAX_MATCHES_GT];
 
     League() {}
     //function to update position of teams in a group of a league based on points 
@@ -94,24 +110,14 @@ class League
     void update_teams_data();
 };
 
-//class for a match
-class Match
-{
-    public:
-
-    int match_id;
-    bool match_occur = 0;
-    Team T1;
-    Team T2;
-    int T1_score;
-    int T2_score;
-};
-
 //function to update league data
 void update(string input_string_1, string input_string_2);
 
-//function to return a league
+//function to return a league and team data
 League displayLeague(string input_string_1, string input_string_2);
+
+//function to return only league data
+League displayLeagueOnly(string input_string_1);
 
 //function to return groups 
 vector<Group> displayGroups(string input_string_1, string input_string_2);
@@ -120,3 +126,5 @@ vector<Group> displayGroups(string input_string_1, string input_string_2);
 void createMatchesGS(League L);
 
 void shuffleArray(Match arr[], int size);
+
+Match displayMatch(string input_string);

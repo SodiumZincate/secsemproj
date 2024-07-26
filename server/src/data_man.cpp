@@ -721,6 +721,49 @@ void queryDatabaseTeamID(string cli_req, string file, Response &res)
 	sqlite3_close(db);
 }
 
+void queryDatabaseMatchNumber(string cli_req, string file, Response &res){
+    sqlite3* db;
+    int exit = 0;
+    char* errMsg;
+
+	string league_id = cli_req;
+
+    exit = sqlite3_open(file.c_str(), &db);
+    std::cout << file.c_str() << std::endl;
+    if (exit) {
+        std::cerr << "Failed to open database: " << sqlite3_errmsg(db) << std::endl;
+        std::exit(1);
+    } else {
+        std::cout << "Database opened successfully" << std::endl;
+    }
+
+    std::stringstream ss1;
+    ss1 << "SELECT COUNT(*) FROM MATCH WHERE LID = " << league_id;
+
+    QR1.result.clear();
+
+    std::string sqlQuery = ss1.str();
+    exit = sqlite3_exec(db, sqlQuery.c_str(), callback, 0, &errMsg);
+    if (exit != SQLITE_OK) {
+        std::cerr << "Error retrieving count data" << std::endl;
+        std::cerr << errMsg << std::endl;
+        sqlite3_free(errMsg);
+    } else {
+        if (QR1.result.empty()) {
+            std::cout << "No rows found with LID: " << league_id << std::endl;
+        }
+        std::stringstream content;
+        for(string &c : QR1.result){
+			std::cout << "No of matches: " << c << std::endl;
+			content << c;
+			content << "\n";
+		}
+        res.set_content(content.str(), "text/plain");
+    }
+
+    sqlite3_close(db);
+}
+
 void queryDatabaseLeague(string cli_req, string file, Response &res)
 {
 	sqlite3 *db;
@@ -775,6 +818,78 @@ void queryDatabaseLeague(string cli_req, string file, Response &res)
 		}
 		else{
 			std::cout << "The user id: " + league_id + " exists\n" << std::endl;
+			res.set_content("\n\n\n", "text/plain");
+		}
+	}
+
+	sqlite3_close(db);
+}
+
+void queryDatabaseMatch(string cli_req, string file, Response &res)
+{
+	sqlite3 *db;
+	int exit = 0;
+	char *errMsg;
+
+	stringstream stream;
+	stream << cli_req;
+
+	string token;
+
+	getline(stream, token, '\n');
+	string user_id = token;
+	getline(stream, token, '\n');
+	string league_id = token;
+
+	exit = sqlite3_open(file.c_str(), &db);
+	std::cout << file.c_str() << std::endl;
+	if(exit){
+		cerr << "Failed to open database: " << sqlite3_errmsg(db) << std::endl;
+		std::exit(1);
+	}
+	else{
+		std::cout << "Database opened successfully" << std::endl;
+	}
+
+	stringstream ss;
+	ss << "SELECT MID,UID,LID,TID1,TID2,TEAM1GOAL,TEAM2GOAL,PLAYED FROM MATCH WHERE UID"
+	<< "="
+	<< "'" + user_id + "'"
+	<< " AND LID"
+	<< '='
+	<< "'" + league_id + "'";
+
+	QR1.result.clear();
+	
+	string sqlQuery = ss.str();
+	exit = sqlite3_exec(db, sqlQuery.c_str(), callback, 0, &errMsg);
+	if(exit!=SQLITE_OK){
+		cerr << "Error Querying Match Data" << std::endl;
+		cerr << errMsg << std::endl;
+		sqlite3_free(errMsg);
+	}
+	else{
+		std::cout << "Match Data Queried successfully" << std::endl;
+		// std::cout << QR1.result[1] << std::endl;
+		stringstream content;
+		for(string &c : QR1.result){
+			// cout << c << endl;
+			content << c;
+			content << "\n";
+		}
+		
+		string line;
+		bool leagueExists = false;
+		getline(content, line, '\n');
+		if(strcmp(line.c_str(), "") != 0){
+			leagueExists = true;
+		}
+		if(leagueExists){
+			std::cout << "The league: " << league_id << " exists\n" << std::endl;
+			res.set_content(content.str(), "text/plain");
+		}
+		else{
+			std::cout << "The league: " + league_id + " does not exist\n" << std::endl;
 			res.set_content("\n\n\n", "text/plain");
 		}
 	}

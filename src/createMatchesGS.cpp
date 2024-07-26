@@ -43,7 +43,6 @@ void createMatchesGS(League L)
     }
 
     shuffleArray(Mgs, k);
-	cout << "value of k: " << k << endl;
     string str;
     for (i = 0; i < k; i++)
     {
@@ -51,7 +50,6 @@ void createMatchesGS(League L)
         to_string(Mgs[i].T1.team_id) + "\n" + to_string(Mgs[i].T2.team_id) + "\n" + "0" + "\n" + "0" + "\n" + "0";
         stringstream temp;
         int errorDatabase = updateDatabase(str, "insert_match", temp);
-		cout << "sup" << endl;
         if (errorDatabase!=0)
         {
             std::cout << "\nError initializing database" << std::endl;

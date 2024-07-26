@@ -35,3 +35,9 @@ League displayLeague(string input_string_1, string input_string_2)
     }
     return L;
 }
+
+League displayLeagueOnly(string input_string_1){
+	League L;
+	L.init_league(input_string_1);
+	return L;
+}

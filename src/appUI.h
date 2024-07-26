@@ -21,6 +21,7 @@
 #include <QtWidgets/QDialog>
 #include <QtWidgets/QFileDialog>
 #include <QtCore/QBuffer>
+#include <QtCore/QPointer>
 #include <QtWidgets/QMessageBox>
 #include <iostream>
 #include "logic.h"
@@ -102,11 +103,18 @@ void initAddTeam(
 	int user_id = 0, 
 	int no_of_teams = 0);
 
-void initShowLeague(StackedWidgets *App, QWidget* window, QString username, QString leaguename, League L, vector<Group> groupList);
+void initShowLeague(StackedWidgets *App, QWidget* window, QString username, QString leaguename, League L);
 
-void initNextMatch(StackedWidgets *App, QWidget* window, QString username, QString leaguename, League L);
+void initNextMatch(
+	StackedWidgets *App, 
+	QWidget* window, 
+	QString username, 
+	QString leaguename, 
+	League L);
 
 void resetPage(QWidget* window);
+
+void clearWidgetAndLayout(QWidget* widget);
 
 // Main class for the widgets in the app
 // (Username, Email, Password) widgets
@@ -145,6 +153,24 @@ public:
 
 signals:
 	void clicked();
+};
+
+class MatchWidget : public QWidget {
+    Q_OBJECT
+
+public:
+    MatchWidget(QWidget* parent = nullptr);
+    void init(const QString& matchNumber, 
+			  const QString& team1Name, const QIcon& team1Icon, QString team1Score,
+              const QString& team2Name, const QIcon& team2Icon, QString team2Score);
+
+    QLabel* matchNumberLabel;
+    QLabel* team1NameLabel;
+    QLabel* team1IconLabel;
+    QLabel* team1ScoreLabel;
+    QLabel* team2NameLabel;
+    QLabel* team2IconLabel;
+    QLabel* team2ScoreLabel;
 };
 
 // Sub class for the individual input field widgets in the app

@@ -163,6 +163,20 @@ void run_server() {
 		queryDatabaseLeague(cli_req, filepath, res);
     });
 
+	svr.Post("/match/query", [upload_dir](const Request &req, Response &res) {
+		string cli_req = req.body;
+
+        std::string filepath = upload_dir + "/" + "leaguedata.db";
+		queryDatabaseMatch(cli_req, filepath, res);
+    });
+
+	svr.Post("/match/query_number", [upload_dir](const Request &req, Response &res) {
+		string cli_req = req.body;
+
+        std::string filepath = upload_dir + "/" + "leaguedata.db";
+		queryDatabaseMatchNumber(cli_req, filepath, res);
+    });
+
 	// svr.Post("/league/query_id", [upload_dir](const Request &req, Response &res) {
 	// 	string cli_req = req.body;
 

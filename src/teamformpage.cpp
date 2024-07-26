@@ -149,8 +149,6 @@ int no_of_teams)
 			std::vector<std::string> streamList;
 			vector<string> list;
 
-			int league_user_id;
-
 			std::string clientReq = to_string(league_id);
 			int errorDatabase = updateDatabase(clientReq, "query_league", clientResLeague);
 			while(getline(clientResLeague, streamLine, '\n')){
@@ -160,36 +158,23 @@ int no_of_teams)
 				std::cout << "\nError initializing league database" << std::endl;
 			}
 			else{
-				int league_id = stoi(list[0]);
-				league_user_id = stoi(list[1]);
-				string league_name = list[2];
-				int league_group_stages = stoi(list[3]);
-				int league_round_robin = stoi(list[4]);
-				int league_qualifiers = stoi(list[5]);
-				int league_number_of_groups = stoi(list[6]);
-				int league_team_number = stoi(list[7]);
-
-				cout << "league_id :: " << league_id << endl;
-				cout << "league_user_id :: " << league_user_id << endl;
-				cout << "league_name :: " << league_name << endl;
-				cout << "league_group_stages :: " << league_group_stages<< endl;
-				cout << "league_round_robin :: " << league_round_robin << endl;
-				cout << "league_qualifiers :: " << league_qualifiers << endl;
-				cout << "league_number_of_groups :: " << league_number_of_groups << endl;
-				cout << "league_team_number :: " << league_team_number << endl;
+				// while(getline(clientResLeague, streamLine, '\n')){
+				// 	list.push_back(streamLine);
+				// }
+				League L = displayLeagueOnly(clientResLeague.str());
 
 				char group[20];
 				int i, j, k;
-				for (i = 0; i < league_number_of_groups; i++)
+				for (i = 0; i < L.league_groups; i++)
 				{
 					group[i] = (char) (65 + i);
 				}
 
 				k = 0;
-				for(int j = 0; j < league_number_of_groups; j++)
+				for(int j = 0; j < L.league_groups; j++)
 				{
 					int position = 1;
-					for (i = j; i < no_of_teams; i += league_number_of_groups)
+					for (i = j; i < no_of_teams; i += L.league_groups)
 					{
 						clientReq = to_string(user_id) + "\n"
 						+ to_string(league_id) + "\n"
@@ -217,11 +202,24 @@ int no_of_teams)
 					}
 				}
 			}
+
+			clientReq.clear();
+			list.clear();
+			clientReq = to_string(user_id) + "\n" + to_string(league_id);
+			errorDatabase = updateDatabase(clientReq, "query_team", clientResTeam);
+			if(errorDatabase != 0){
+				std::cout << "\nError initializing league database" << std::endl;
+			}
+			else{
+				League L = displayLeague(clientResLeague.str(), clientResTeam.str());
+				createMatchesGS(L);
+			}
+
 			initDashboard(
 				App,
 				App->stacked_windows.widget(2),
 				username,
-				league_user_id
+				user_id
 			);
 			App->changeWindow_dashboard();
 		}

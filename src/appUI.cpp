@@ -2,17 +2,36 @@
 #include <QtCore/QDebug>
 
 // delete all contents of windows(dashboardApp) so new contents can be displayed
-void resetPage(QWidget* window){
-	if ( window->layout() != NULL )
-	{
-		QLayoutItem* item;
-		while ( ( item = window->layout()->takeAt( 0 ) ) != NULL )
-		{
-			delete item->widget();
-			delete item;
-		}
-		delete window->layout();
-	}
+void deleteAllWidgetsAndLayouts(QWidget* widget) {
+    if (!widget) return;
+
+    // Recursively delete child widgets and layouts
+    QLayout* layout = widget->layout();
+    if (layout) {
+        QLayoutItem* item;
+        while ((item = layout->takeAt(0)) != nullptr) {
+            if (item->widget()) {
+                deleteAllWidgetsAndLayouts(item->widget());
+            }
+            delete item;
+        }
+        delete layout;
+    }
+
+    // Delete the widget itself
+    // delete widget;
+}
+
+void resetPage(QWidget* window) {
+    if (!window) return;
+
+    // Use a QPointer to safely manage the deletion process
+    QPointer<QWidget> safeWidget(window);
+
+    deleteAllWidgetsAndLayouts(safeWidget);
+
+    // Ensure that the widget itself is not deleted if it is managed by its parent
+    // This avoids potential double-free issues
 }
 
 appDesign::appDesign(){
@@ -224,6 +243,91 @@ void appClickableText::mousePressEvent(QMouseEvent* event){
 		qDebug() << "appClickableText clicked"; // Debug statement
 		emit clicked();
 	}
+}
+
+MatchWidget::MatchWidget(QWidget* parent) {
+	setParent(parent);
+    QVBoxLayout* mainLayout = new QVBoxLayout(this);
+
+	// Create label for match number
+    matchNumberLabel = new QLabel(parent);
+    matchNumberLabel->setAlignment(Qt::AlignCenter);
+	matchNumberLabel->setFont(QFont("Sans", default_font_size));
+    matchNumberLabel->setStyleSheet("font-weight: bold;");
+
+	// Create horizontal layout for the match details
+    QWidget *matchDetailsWidget = new QWidget(parent);
+    QHBoxLayout* matchDetailsLayout = new QHBoxLayout(matchDetailsWidget);
+
+    // Create layouts for each team's information
+    QWidget *team1Widget = new QWidget(parent);
+    QVBoxLayout* team1Layout = new QVBoxLayout(team1Widget);
+    QWidget *team2Widget = new QWidget(parent);
+    QVBoxLayout* team2Layout = new QVBoxLayout(team2Widget);
+
+    // Initialize team 1 widgets
+    team1NameLabel = new QLabel(parent);
+	team1NameLabel->setFont(QFont("Sans", default_font_size*0.8));
+    team1IconLabel = new QLabel(parent);
+    team1ScoreLabel = new QLabel(parent);
+	team1ScoreLabel->setFont(QFont("Sans", default_font_size));
+	team1NameLabel->setAlignment(Qt::AlignCenter);
+    team1IconLabel->setAlignment(Qt::AlignCenter);
+    team1ScoreLabel->setAlignment(Qt::AlignCenter);
+
+    team1Layout->addWidget(team1IconLabel);
+    team1Layout->addWidget(team1NameLabel);
+    team1Layout->addWidget(team1ScoreLabel);
+	team1Layout->setAlignment(Qt::AlignCenter);
+
+    // Initialize team 2 widgets
+    team2NameLabel = new QLabel(parent);
+	team2NameLabel->setFont(QFont("Sans", default_font_size*0.8));
+    team2IconLabel = new QLabel(parent);
+    team2ScoreLabel = new QLabel(parent);
+	team2ScoreLabel->setFont(QFont("Sans", default_font_size));
+	team2NameLabel->setAlignment(Qt::AlignCenter);
+    team2IconLabel->setAlignment(Qt::AlignCenter);
+    team2ScoreLabel->setAlignment(Qt::AlignCenter);
+
+    team2Layout->addWidget(team2IconLabel);
+    team2Layout->addWidget(team2NameLabel);
+    team2Layout->addWidget(team2ScoreLabel);
+	team2Layout->setAlignment(Qt::AlignCenter);
+
+	//Seperator
+    QLabel *seperatorLabel = new QLabel(parent);
+	seperatorLabel->setText("VS");
+	seperatorLabel->setFont(QFont("Sans", default_font_size));
+
+	QSpacerItem* spacer = new QSpacerItem(app_width/8, app_width/8, QSizePolicy::Fixed, QSizePolicy::Minimum);
+	
+    // Add team layouts to the main layout
+    matchDetailsLayout->addWidget(team1Widget);
+    matchDetailsLayout->addItem(spacer);
+    matchDetailsLayout->addWidget(seperatorLabel);
+    matchDetailsLayout->addItem(spacer);
+    matchDetailsLayout->addWidget(team2Widget);
+
+	mainLayout->addWidget(matchNumberLabel, 0, Qt::AlignTop);
+	mainLayout->addWidget(matchDetailsWidget, 0, Qt::AlignTop);
+}
+
+void MatchWidget::init(const QString& matchNumber, 
+					   const QString& team1Name, const QIcon& team1Icon, QString team1Score,
+                       const QString& team2Name, const QIcon& team2Icon, QString team2Score) {
+	matchNumberLabel->setText("Match Number: " + matchNumber);
+
+    team1NameLabel->setText(team1Name);
+    team1IconLabel->setPixmap(team1Icon.pixmap(100, 100)); // Adjust icon size
+    team1ScoreLabel->setText(team1Score);
+
+    team2NameLabel->setText(team2Name);
+    team2IconLabel->setPixmap(team2Icon.pixmap(100, 100)); // Adjust icon size
+    team2ScoreLabel->setText(team2Score);
+
+	team1NameLabel->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+    team2NameLabel->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
 }
 
 void LabelEditComponent::init(QWidget* parent, QString widget_text, int font_size) {

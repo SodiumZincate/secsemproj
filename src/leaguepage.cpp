@@ -2,7 +2,7 @@
 #include "db.h"
 #include "logic.h"
 
-void initShowLeague(StackedWidgets *App, QWidget* window, QString username = "username", QString leaguename = "leaguename", League L = League(), vector<Group> groupList = {}){
+void initShowLeague(StackedWidgets *App, QWidget* window, QString username = "username", QString leaguename = "leaguename", League L = League()){
     window->setWindowTitle("League Name");
 
     QWidget *main_widget = new QWidget(window);
@@ -78,7 +78,7 @@ void initShowLeague(StackedWidgets *App, QWidget* window, QString username = "us
 	
 	//Next Button
     appButton *nextButton= new appButton();
-    nextButton->init(window,"NEXT MATCH",default_font_size*0.9);
+    nextButton->init(window,"SHOW MATCHES",default_font_size*0.9);
     QPushButton *nextButton_widget = nextButton->getWidget_button();
     nextButton_widget->setFixedSize(app_width/4,app_height/12);
 	nextButton_widget->setStyleSheet("QPushButton{background-color: #48FF4D}");
@@ -112,8 +112,8 @@ void initShowLeague(StackedWidgets *App, QWidget* window, QString username = "us
 		cout << group_name->getWidget_label()->text().toStdString() << endl;
 		QLabel *group_label = group_name->getWidget_label();
 
-		QStringList teamNameList = {};
 		QList<QIcon> iconList = {};
+		QStringList teamNameList = {};
 
 		int i1,j1,k1;
 		Group groupArray[L.league_groups];
@@ -235,12 +235,11 @@ void initShowLeague(StackedWidgets *App, QWidget* window, QString username = "us
 	QObject::connect(backButton_widget, &QPushButton::clicked, App, &StackedWidgets::changeWindow_dashboard);
 	QObject::connect(nextButton_widget, &QPushButton::clicked,
 	[=](){
-		createMatchesGS(L);
 		initNextMatch(
 			App,
 			App->stacked_windows.widget(App->stacked_windows.currentIndex()+1),
 			username,
-			QString(L.league_name.c_str()),
+			leaguename,
 			L
 		);
 		App->changeWindow_forward();

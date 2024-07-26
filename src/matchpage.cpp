@@ -2,7 +2,13 @@
 #include "db.h"
 #include "logic.h"
 
-void initNextMatch(StackedWidgets *App, QWidget* window, QString username = "username", QString leaguename = "leaguename", League L = League()){
+void initNextMatch(
+	StackedWidgets *App, 
+	QWidget* window, 
+	QString username,
+	QString leaguename,
+	League L = League()
+){
     window->setWindowTitle("League Name");
 
     QWidget *main_widget = new QWidget(window);
@@ -11,13 +17,13 @@ void initNextMatch(StackedWidgets *App, QWidget* window, QString username = "use
     QVBoxLayout *main_widget_layout = new QVBoxLayout(main_widget);
     main_widget_layout->setAlignment(Qt::AlignCenter); // Center align the contents
 
-    QWidget *sub_widget = new QWidget(window);
-    sub_widget->setFixedSize(app_width*3/2, app_height*3/2);
-    // sub_widget->setStyleSheet("QWidget{background-color:red}");
-	// sub_widget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Maximum);
-    QVBoxLayout *sub_widget_layout = new QVBoxLayout(sub_widget);
-    sub_widget_layout->setAlignment(Qt::AlignTop);
-	sub_widget_layout->setSpacing(80);
+    // QWidget *sub_widget = new QWidget(window);
+    // sub_widget->setFixedSize(app_width*3/2, app_height*3/2);
+    // // sub_widget->setStyleSheet("QWidget{background-color:red}");
+	// // sub_widget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Maximum);
+    // QVBoxLayout *sub_widget_layout = new QVBoxLayout(sub_widget);
+    // sub_widget_layout->setAlignment(Qt::AlignTop);
+	// sub_widget_layout->setSpacing(80);
 
 	//NavBar
     QWidget *NavBar = new QWidget(window);
@@ -60,92 +66,128 @@ void initNextMatch(StackedWidgets *App, QWidget* window, QString username = "use
 	NavBar_layout->addWidget(leaguenameText_widget);
 	NavBar_layout->addWidget(usernameText_widget);
 
-	// for(int i = 0; i < 8; i++){
-	// 	appText *team_name_1 = new appText();
-	// 	QString text = M[i].team;
-	// 	team_name_1->init(window, text, default_font_size*0.8);
+	// Match Array
+	string clientReq = to_string(L.league_id);
+	std::stringstream clientResMatchNumber;
+	std::string token;
+	int errorDatabase = updateDatabase(clientReq, "query_match_number", clientResMatchNumber);
+	if(errorDatabase != 0){
+		std::cout << "\nError initializing match database" << std::endl;
+		exit(1);
+	}
+	else{
+		getline(clientResMatchNumber, token, '\n');
+	}
 
-	// 	QObject::connect(league_name, &appClickableText::clicked,
-	// 	[=](){
-	// 	qDebug() << "Clicked league_name:" << text;
-	// 	std::stringstream clientResLeague;
-	// 	std::stringstream clientResTeam;
-	// 	std::string streamLine;
-	// 	std::vector<std::string> streamList;
+	int no_of_match = stoi(token);
+	Match M[no_of_match];
+	QList<QIcon> iconList_1 = {}, iconList_2 ={};
 
-	// 	std::string clientReq = leagueIdList[i];
-	// 	int errorDatabase = updateDatabase(clientReq, "query_league", clientResLeague);
-	// 	getline(clientResLeague, streamLine, '\n');
-	// 	if(errorDatabase != 0 || strcmp(streamLine.c_str(), "") == 0){
-	// 		std::cout << "\nError initializing league database" << std::endl;
-	// 	}
-	// 	else{
-	// 		std::string league_string = clientResLeague.str();
+	cout << "Number of match: " << no_of_match << endl;
+	clientReq.clear();
+	clientReq = to_string(L.league_user_id) + "\n" + to_string(L.league_id);
+	std::stringstream clientResMatch;
+	
+	errorDatabase = updateDatabase(clientReq, "query_match", clientResMatch);
+	if(errorDatabase != 0){
+		std::cout << "\nError initializing match database" << std::endl;
+		exit(1);
+	}
+	else{
+		int i;
+		stringstream tokenStream;
+		vector<string> list;
+		string match_string;
+		for(i = 0; i < no_of_match; i++)
+		{
+			match_string.clear();
+			for(int j = 0; j < 8; j++)
+			{
+				getline(clientResMatch, token, '\n');
+				match_string += token + "\n";
+			}
 
-	// 		clientReq = std::to_string(user_id) + "\n" + leagueIdList[i];
-	// 		int errorDatabase = updateDatabase(clientReq, "query_team", clientResTeam);
-	// 		getline(clientResTeam, streamLine, '\n');
-	// 		if(errorDatabase !=0 || strcmp(streamLine.c_str(), "") == 0){
-	// 			stringstream temp;
-	// 			std::cout << "\nError initializing team database" << std::endl;
-	// 			int errorDatabase = updateDatabase(leagueIdList[i], "delete_league", temp);
+			tokenStream.clear();
+			tokenStream << match_string;
+			list.clear();
+			while(getline(tokenStream, token, '\n'))
+			{
+				list.push_back(token);
+			}
 
-	// 			if(errorDatabase!=0){
-	// 				cout << "Failed to delete league" << endl;
-	// 			}
-	// 			else{
-	// 				cout << "league deleted successfully" << endl;
-	// 				initDashboard(
-	// 					App,
-	// 					App->stacked_windows.widget(2),
-	// 					username,
-	// 					user_id
-	// 				);
-	// 				App->changeWindow_dashboard();
-	// 			}
-	// 		}
-	// 		else{
-	// 			std::string team_string = clientResTeam.str();
-	// 			// cout << "League String: " << league_string << endl;
-	// 			// cout << "Team String: " << team_string << endl;
-	// 			update(league_string, team_string);
-	// 			League L = displayLeague(league_string, team_string);
-	// 			vector<Group> groupList = displayGroups(league_string, team_string);
-	// 			initShowLeague(
-	// 				App,
-	// 				App->stacked_windows.widget(5),
-	// 				username,
-	// 				QString(leagueNameList[i].c_str()),
-	// 				L,
-	// 				groupList
-	// 			);
-	// 			App->changeWindow_showLeague();
-	// 		}
-	// 	}
-	// 	});
+			M[i].T1 = Team();
+			M[i].T2 = Team();
+			M[i].match_id=stoi(list[0]);
+		    M[i].match_user_id = stoi(list[1]);
+		    M[i].match_league_lid = stoi(list[2]);
+			int tid_1 = stoi(list[3]);
+			int tid_2 = stoi(list[4]);
+			M[i].T1_score = stoi(list[5]);
+			M[i].T2_score = stoi(list[6]);
+			M[i].match_occur = stoi(list[7]);
 
-	// 	button_container_layout->addWidget(league_name, Qt::AlignTop);
-	// }
+			for(int j=0; j<L.league_team_number; j++){
+				if(L.T[j].team_id == tid_1){
+					M[i].T1 = L.T[j];
+					break;
+				}
+			}
+			for(int j=0; j<L.league_team_number; j++){
+				if(L.T[j].team_id == tid_2){
+					M[i].T2 = L.T[j];
+					break;
+				}
+			}
+			QIcon icon_1, icon_2;
+			downloadIcon(to_string(M[i].T1.team_id) + ".png", icon_1);
+			downloadIcon(to_string(M[i].T2.team_id) + ".png", icon_2);
 
-	// //Delete Button
-    // appButton *deleteButton= new appButton();
-    // deleteButton->init(window,"DELETE LEAGUE",default_font_size*0.9);
-    // QPushButton *deleteButton_widget = deleteButton->getWidget_button();
-    // deleteButton_widget->setFixedSize(app_width/4,app_height/12);
-	// deleteButton_widget->setStyleSheet("QPushButton{background-color: #FB3B3B}");
+			iconList_1.push_back(icon_1);
+			iconList_2.push_back(icon_2);
+			cout << "Pairing Match " << i << ": Team1 ID " << M[i].T1.team_id << " vs Team2 ID " << M[i].T2.team_id << endl;
+		}
+	}
 
-	// //Delete Container
-    // QWidget *deleteButton_container = new QWidget(window);
-    // QHBoxLayout *deleteButton_container_layout = new QHBoxLayout(deleteButton_container);
-    // deleteButton_container->setFixedHeight(app_height/6);
-    // deleteButton_container_layout->setAlignment(Qt::AlignLeft);
-    // deleteButton_container_layout->setContentsMargins(0, 0, 0, 0);
+	
+    //Container for league buttons
+    QWidget *button_container = new QWidget(window);
+    QVBoxLayout *button_container_layout = new QVBoxLayout(button_container);
+    button_container_layout->setSpacing(app_height/8);
+    button_container_layout->setAlignment(Qt::AlignTop | Qt::AlignHCenter);
+    button_container_layout->setContentsMargins(0, app_height / 10, 0, 0);
 
-    // deleteButton_container_layout->addWidget(deleteButton_widget);
+	// Scroll Area
+	QScrollArea *scroll_area = new QScrollArea(window);
 
-	// NavBar_layout->addWidget(backButton_container);
-	// NavBar_layout->addWidget(leaguenameText_widget);
-	// NavBar_layout->addWidget(usernameText_widget);
+	scroll_area->setStyleSheet("QScrollArea { border: none; }");
+	scroll_area->setFixedWidth(app_width*3/2);
+	scroll_area->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+	scroll_area->setWidgetResizable(true);
+
+	for(int i = 0; i < no_of_match; i++){
+		MatchWidget* matchWidget = new MatchWidget(window);
+        
+        // Assuming you have icon paths as strings
+        QString team1Name = QString::fromStdString(M[i].T1.team_name);
+        QIcon team1Icon(iconList_1[i]); // Replace with actual 
+
+        QString team2Name = QString::fromStdString(M[i].T2.team_name);
+        QIcon team2Icon(iconList_2[i]);
+
+		QString team1Score, team2Score;
+        if(M[i].match_occur){
+       		team1Score = QString::number(M[i].T1_score);
+			team2Score = QString::number(M[i].T2_score);
+		}
+		else{
+			team1Score = "-";
+			team2Score = "-";
+		}
+
+        matchWidget->init(QString(to_string(i+1).c_str()), team1Name, team1Icon, team1Score, team2Name, team2Icon, team2Score);
+
+		button_container_layout->addWidget(matchWidget, Qt::AlignTop);
+	}
 	
 	//Next Button
     appButton *nextButton= new appButton();
@@ -162,142 +204,6 @@ void initNextMatch(StackedWidgets *App, QWidget* window, QString username = "use
     nextButton_container_layout->setContentsMargins(0, 0, 0, 0);
 
     // deleteButton_container_layout->addWidget(deleteButton_widget);
-
-	// // Scroll Area
-	// QScrollArea *scroll_area = new QScrollArea(window);
-
-	// scroll_area->setStyleSheet("QScrollArea { border: none; }");
-	// scroll_area->setFixedWidth(app_width*3/2);
-	// scroll_area->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-	// scroll_area->setWidgetResizable(true);
-
-	// for(int i=0; i<L.league_groups; i++){
-	// 	// Label
-	// 	appText *group_name = new appText();
-	// 	std::string group_name_text = "GROUP: " + std::string(1, (char)(i + 65));
-	// 	group_name->init(window, QString::fromStdString(group_name_text), default_font_size * 0.8);
-	// 	cout << group_name->getWidget_label()->text().toStdString() << endl;
-	// 	QLabel *group_label = group_name->getWidget_label();
-
-	// 	QStringList teamNameList = {};
-	// 	QList<QIcon> iconList = {};
-
-	// 	int i1,j1,k1;
-	// 	Group groupArray[L.league_groups];
-
-	// 	for (i1 = 0; i1 < L.league_groups; i1++)
-	// 	{
-	// 		groupArray[i1].group_name = (char) (i1 + 65);
-	// 	}
-
-	// 	int no_of_teams = 0;
-	// 	k1 = 0;
-	// 	for (j1 = 0; j1 < L.league_team_number; j1++)
-	// 	{
-	// 		if (L.T[j1].team_group == groupArray[i].group_name)
-	// 		{
-	// 			groupArray[i].T[k1] = L.T[j1];
-	// 			no_of_teams++;
-
-	// 			cout << "Added Teams: " << groupArray[i].T[k1].team_name << endl;
-
-	// 			QIcon icon;
-	// 			downloadIcon(to_string(groupArray[i].T[k1].team_id) + ".png", icon);
-
-	// 			iconList.push_back(icon);
-    //             k1++;
-	// 		}
-	// 	}
-
-	// 	// Table
-	// 	QTableWidget *league_table = new QTableWidget(no_of_teams, 9, window);
-	// 	league_table->setMinimumSize(app_width*3/2, app_height*5/4);
-	// 	league_table->setColumnWidth(0, app_width*0.4);
-
-	// 	QSize icon_size(app_width/16, app_height/16);
-	// 	league_table->setIconSize(icon_size);
-
-	// 	QStringList header_label_list = {
-	// 		"Team Name",
-	// 		"MP",
-	// 		"W",
-	// 		"D",
-	// 		"L",
-	// 		"GF",
-	// 		"GA",
-	// 		"GD",
-	// 		"Pts",
-	// 	};
-
-
-	// 	// for(const auto& entry : std::filesystem::directory_iterator("requisite/assets/images/logo")){
-	// 	// 	std::string logo_name = entry.path().filename().string();
-	// 	// 	std::string logo_dir = "requisite/assets/images/logo/" + logo_name;
-	// 	// 	std::cout << logo_dir << std::endl;
-	// 	// 	icons.push_back(QString(logo_dir.c_str()));
-	// 	// 	icons.push_back(QString(logo_dir.c_str()));
-	// 	// }
-
-	// 	league_table->setHorizontalHeaderLabels(header_label_list);
-    //     league_table->horizontalHeader()->setFont(QFont("Sans", default_font_size*0.6));
-    //     league_table->verticalHeader()->setFont(QFont("Sans", default_font_size*0.6));
-
-	// 	for (int j = 0; j < league_table->rowCount(); j++) {
-	// 		// QPixmap pixmap(iconList[j]);
-	// 		// QIcon icon(pixmap.scaled(800, 800, Qt::KeepAspectRatio, Qt::SmoothTransformation));
-	// 		QTableWidgetItem *table_item = new QTableWidgetItem(iconList[j], QString(groupArray[i].T[j].team_name.c_str()), 0);
-    //         table_item->setFont(QFont("Sans", default_font_size*0.8));
-	// 		table_item->setFlags(table_item->flags() & ~Qt::ItemIsEditable);
-	// 		league_table->setItem(j, 0, table_item);
-
-	// 		QStringList properties = {
-	// 			QString(groupArray[i].T[j].team_name.c_str()),
-	// 			QString::number(groupArray[i].T[j].team_mp),
-	// 			QString::number(groupArray[i].T[j].team_w),
-	// 			QString::number(groupArray[i].T[j].team_d),
-	// 			QString::number(groupArray[i].T[j].team_l),
-	// 			QString::number(groupArray[i].T[j].team_gf),
-	// 			QString::number(groupArray[i].T[j].team_ga),
-	// 			QString::number(groupArray[i].T[j].team_gf),
-	// 			QString::number(groupArray[i].T[j].team_points)
-	// 		};
-
-    //         for(int k = 1; k < league_table->columnCount(); k++){
-    //             QTableWidgetItem *table_item = new QTableWidgetItem(properties[k], 0);
-    //             table_item->setFont(QFont("Sans", default_font_size*0.6));
-    //             table_item->setTextAlignment(Qt::AlignCenter);
-    //             table_item->setFlags(table_item->flags() & ~Qt::ItemIsEditable);
-    //             league_table->setItem(j, k, table_item);
-    //         }
-	// 	}
-		
-	// 	for (int j = 0; j < league_table->columnCount(); j++) {
-	// 		if (j == 0) { 
-	// 			league_table->horizontalHeader()->setSectionResizeMode(j, QHeaderView::Fixed);
-	// 		} else {
-	// 			league_table->horizontalHeader()->setSectionResizeMode(j, QHeaderView::Stretch);
-	// 		}
-	// 	}
-	// 	if(league_table->rowCount()<=4){
-	// 		league_table->setMinimumSize(app_width*5/4, app_height/2);
-	// 		league_table->setIconSize(QSize(app_width/14, app_height/14));
-	// 	}
-	// 	else if(league_table->rowCount()<=8){
-	// 		league_table->setMinimumSize(app_width*5/4, app_height*5/6);
-	// 		league_table->setIconSize(QSize(app_width/16, app_height/16));
-	// 	}
-	// 	if(league_table->rowCount()<12){
-	// 		league_table->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-	// 	}
-	// 	else{
-    //         league_table->verticalHeader()->setMinimumSectionSize(app_height/10);
-	// 		for (int j = 0; j < league_table->rowCount(); j++) {
-	// 			league_table->verticalHeader()->setSectionResizeMode(j, QHeaderView::Fixed);
-	// 		}
-	// 	}
-	// 	sub_widget_layout->addWidget(group_label);
-	// 	sub_widget_layout->addWidget(league_table);
-	// }
 
 	QObject::connect(backButton_widget, &QPushButton::clicked, App, &StackedWidgets::changeWindow_backward);
 	// QObject::connect(deleteButton_widget, &QPushButton::clicked,
@@ -331,14 +237,16 @@ void initNextMatch(StackedWidgets *App, QWidget* window, QString username = "use
     //     }
 	// });
 
-    // scroll_area->setWidget(sub_widget);
+    scroll_area->setWidget(button_container);
 
     main_widget_layout->addWidget(NavBar, 0, Qt::AlignTop);
-    main_widget_layout->addWidget(sub_widget);
+    main_widget_layout->addWidget(scroll_area);
     // main_widget_layout->addWidget(deleteButton_widget, 0, Qt::AlignRight | Qt::AlignBottom);
     main_widget_layout->addWidget(nextButton_widget, 0, Qt::AlignCenter | Qt::AlignBottom);
 
+	cout << "Hello" << endl;
 	resetPage(window);
+	cout << "Hello" << endl;
 	
     QVBoxLayout *main_layout = new QVBoxLayout(window);
     main_layout->addWidget(main_widget);

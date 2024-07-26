@@ -159,6 +159,32 @@ int updateDatabase(string clientReq, string mode, stringstream &clientRes) {
 			return 1;
 		}
 	}
+	else if(strcmp(mode.c_str(), "query_match") == 0){
+		if (auto res = cli.Post("/match/query?=leaguedata.db", clientReq, "text/plain")) {
+			cout << res->status << endl;
+			cout << res->get_header_value("Content-Type") << endl;
+			// cout << res->body << endl;
+			clientRes.clear();
+			clientRes << res->body;
+		}
+		else {
+			cout << "error code: " << res.error() << std::endl;
+			return 1;
+		}
+	}
+	else if(strcmp(mode.c_str(), "query_match_number") == 0){
+		if (auto res = cli.Post("/match/query_number?=leaguedata.db", clientReq, "text/plain")) {
+			cout << res->status << endl;
+			cout << res->get_header_value("Content-Type") << endl;
+			cout << res->body << endl;
+			clientRes.clear();
+			clientRes << res->body;
+		}
+		else {
+			cout << "error code: " << res.error() << std::endl;
+			return 1;
+		}
+	}
 	else if(strcmp(mode.c_str(), "insert_match") == 0){
 		if (auto res = cli.Post("/match/insert?=leaguedata.db", clientReq, "text/plain")) {
 			cout << res->status << endl;

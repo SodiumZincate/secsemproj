@@ -2,6 +2,7 @@
 
 //this file is used to update league data and return the updated league data
 
+// input_string_1 = league, input_string_2 = team
 void update(string input_string_1, string input_string_2)
 {
     League L;
@@ -32,6 +33,8 @@ void update(string input_string_1, string input_string_2)
         //'i'th member of array of teams of league L is initialized using string input_string_2[i]
         L.T[i].init_team(team_string);
     }
+
+    //sort according to points in a group
 
     //sort according to points in a group
     L.update_group_positions();
