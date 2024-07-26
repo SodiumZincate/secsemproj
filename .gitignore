@@ -7,4 +7,6 @@ cbuild
 .vscode/
 *.db
 requisite/assets/images/logos/*.png
-server/src/uploads/logos/*.png
+server/src/*.exe
+server/src/database
+server/src/main
