@@ -43,6 +43,8 @@ void createMatchesGS(League L)
     }
 
     shuffleArray(Mgs, k);
+    rearrangeMatches(Mgs, k);
+
     string str;
     for (i = 0; i < k; i++)
     {
@@ -62,14 +64,46 @@ void createMatchesGS(League L)
     }
 }
 
-void shuffleArray(Match arr[], int size)
-{
+// Check if the current match results in consecutive matches for any team
+bool hasConsecutiveMatches(const Match arr[], int size) {
+    for (int i = 1; i < size; ++i) {
+        if (arr[i].T1.team_id == arr[i-1].T1.team_id ||
+            arr[i].T1.team_id == arr[i-1].T2.team_id ||
+            arr[i].T2.team_id == arr[i-1].T1.team_id ||
+            arr[i].T2.team_id == arr[i-1].T2.team_id) {
+            return true;
+        }
+    }
+    return false;
+}
+
+// Attempt to rearrange matches to avoid consecutive matches
+void rearrangeMatches(Match arr[], int size) {
+    bool rearranged;
+    do {
+        rearranged = false;
+        for (int i = 0; i < size - 1; ++i) {
+            if (arr[i].T1.team_id == arr[i+1].T1.team_id ||
+                arr[i].T1.team_id == arr[i+1].T2.team_id ||
+                arr[i].T2.team_id == arr[i+1].T1.team_id ||
+                arr[i].T2.team_id == arr[i+1].T2.team_id) {
+                if (i + 2 < size) {
+                    std::swap(arr[i+1], arr[i+2]);
+                }
+                rearranged = true;
+            }
+        }
+    } while (rearranged);
+}
+
+// Shuffle the array using the Fisher-Yates algorithm
+void shuffleArray(Match arr[], int size) {
     // Seed the random number generator
     srand(static_cast<unsigned int>(time(0)));
 
     // Shuffle the array
     for (int i = size - 1; i > 0; --i) {
         int j = rand() % (i + 1);
-        swap(arr[i], arr[j]);
+        std::swap(arr[i], arr[j]);
     }
 }

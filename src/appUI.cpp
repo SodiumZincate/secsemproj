@@ -316,7 +316,7 @@ MatchWidget::MatchWidget(QWidget* parent) {
 void MatchWidget::init(const QString& matchNumber, 
 					   const QString& team1Name, const QIcon& team1Icon, QString team1Score,
                        const QString& team2Name, const QIcon& team2Icon, QString team2Score) {
-	matchNumberLabel->setText("Match Number: " + matchNumber);
+	matchNumberLabel->setText("Match: " + matchNumber);
 
     team1NameLabel->setText(team1Name);
     team1IconLabel->setPixmap(team1Icon.pixmap(100, 100)); // Adjust icon size
