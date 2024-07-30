@@ -64,19 +64,6 @@ void createMatchesGS(League L)
     }
 }
 
-// Check if the current match results in consecutive matches for any team
-bool hasConsecutiveMatches(const Match arr[], int size) {
-    for (int i = 1; i < size; ++i) {
-        if (arr[i].T1.team_id == arr[i-1].T1.team_id ||
-            arr[i].T1.team_id == arr[i-1].T2.team_id ||
-            arr[i].T2.team_id == arr[i-1].T1.team_id ||
-            arr[i].T2.team_id == arr[i-1].T2.team_id) {
-            return true;
-        }
-    }
-    return false;
-}
-
 // Attempt to rearrange matches to avoid consecutive matches
 void rearrangeMatches(Match arr[], int size) {
     bool rearranged;
