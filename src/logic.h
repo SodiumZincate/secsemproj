@@ -129,4 +129,6 @@ void shuffleArray(Match arr[], int size);
 
 void rearrangeMatches(Match arr[], int size);
 
+bool hasConsecutiveMatches(const Match arr[], int size);
+
 Match displayMatch(string input_string);
