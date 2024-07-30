@@ -2,7 +2,7 @@
 #include "db.h"
 #include "logic.h"
 
-void initNextMatch(
+void initShowMatch(
 	StackedWidgets *App, 
 	QWidget* window, 
 	QString username,
@@ -149,12 +149,12 @@ void initNextMatch(
 	}
 
 	
-    //Container for league buttons
-    QWidget *button_container = new QWidget(window);
-    QVBoxLayout *button_container_layout = new QVBoxLayout(button_container);
-    button_container_layout->setSpacing(app_height/8);
-    button_container_layout->setAlignment(Qt::AlignTop | Qt::AlignHCenter);
-    button_container_layout->setContentsMargins(0, app_height / 10, 0, 0);
+    //Container for match
+    QWidget *match_container = new QWidget(window);
+    QVBoxLayout *match_container_layout = new QVBoxLayout(match_container);
+    match_container_layout->setSpacing(app_height/8);
+    match_container_layout->setAlignment(Qt::AlignTop | Qt::AlignHCenter);
+    match_container_layout->setContentsMargins(0, app_height / 10, 0, 0);
 
 	// Scroll Area
 	QScrollArea *scroll_area = new QScrollArea(window);
@@ -167,12 +167,15 @@ void initNextMatch(
 	for(int i = 0; i < no_of_match; i++){
 		MatchWidget* matchWidget = new MatchWidget(window);
         
-        // Assuming you have icon paths as strings
         QString team1Name = QString::fromStdString(M[i].T1.team_name);
-        QIcon team1Icon(iconList_1[i]); // Replace with actual 
+        QIcon team1Icon(iconList_1[i]);
 
         QString team2Name = QString::fromStdString(M[i].T2.team_name);
         QIcon team2Icon(iconList_2[i]);
+
+        QString match_ground = QString::fromStdString(M[i].T1.team_ground);
+
+        // QString match_time = QString::fromStdString(M[i].T2.team_name);
 
 		QString team1Score, team2Score;
         if(M[i].match_occur){
@@ -184,9 +187,13 @@ void initNextMatch(
 			team2Score = "-";
 		}
 
-        matchWidget->init(QString(to_string(i+1).c_str()), team1Name, team1Icon, team1Score, team2Name, team2Icon, team2Score);
-
-		button_container_layout->addWidget(matchWidget, Qt::AlignTop);
+        matchWidget->init(
+			QString(to_string(i+1).c_str()), 
+			team1Name, team1Icon, team1Score, 
+			team2Name, team2Icon, team2Score, 
+			match_ground);
+		
+		match_container_layout->addWidget(matchWidget, Qt::AlignTop);
 	}
 	
 	//Next Button
@@ -203,50 +210,31 @@ void initNextMatch(
     nextButton_container_layout->setAlignment(Qt::AlignLeft);
     nextButton_container_layout->setContentsMargins(0, 0, 0, 0);
 
-    // deleteButton_container_layout->addWidget(deleteButton_widget);
+	std::vector<Match> matchVector(M, M + no_of_match);
 
 	QObject::connect(backButton_widget, &QPushButton::clicked, App, &StackedWidgets::changeWindow_backward);
-	// QObject::connect(deleteButton_widget, &QPushButton::clicked,
-	// [=](){
-	// 	QMessageBox::StandardButton reply;
-    //     reply = QMessageBox::question(window, "Confirm Deletion",
-    //                                   "Are you sure you want to delete?",
-    //                                   QMessageBox::Yes | QMessageBox::No);
-        
-    //     if (reply == QMessageBox::Yes) {
-	// 		stringstream temp;
-	// 			cout << "del League ID: " << L.league_id << endl;
-	// 			int errorDatabase = updateDatabase(to_string(L.league_id), "delete_league", temp);
+	QObject::connect(nextButton_widget, &QPushButton::clicked, 
+	[=](){
+		initNextMatch(
+			App,
+			App->stacked_windows.widget(App->stacked_windows.currentIndex()+1),
+			username,
+			leaguename,
+			L,
+			matchVector,
+			iconList_1,
+			iconList_2
+		);
+		App->changeWindow_forward();
+	});
 
-	// 			if(errorDatabase!=0){
-	// 				cout << "Failed to delete league" << endl;
-	// 			}
-	// 			else{
-	// 				cout << "league deleted successfully" << endl;
-	// 				initDashboard(
-	// 					App,
-	// 					App->stacked_windows.widget(2),
-	// 					username,
-	// 					L.league_user_id
-	// 				);
-	// 				App->changeWindow_dashboard();
-	// 			}
-    //         qDebug() << "User chose to delete.";
-    //     } else {
-    //         qDebug() << "User canceled the deletion.";
-    //     }
-	// });
-
-    scroll_area->setWidget(button_container);
+    scroll_area->setWidget(match_container);
 
     main_widget_layout->addWidget(NavBar, 0, Qt::AlignTop);
     main_widget_layout->addWidget(scroll_area);
-    // main_widget_layout->addWidget(deleteButton_widget, 0, Qt::AlignRight | Qt::AlignBottom);
     main_widget_layout->addWidget(nextButton_widget, 0, Qt::AlignCenter | Qt::AlignBottom);
 
-	cout << "Hello" << endl;
 	resetPage(window);
-	cout << "Hello" << endl;
 	
     QVBoxLayout *main_layout = new QVBoxLayout(window);
     main_layout->addWidget(main_widget);

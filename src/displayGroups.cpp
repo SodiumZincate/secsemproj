@@ -23,7 +23,7 @@ vector<Group> displayGroups(string input_string_1, string input_string_2)
         team_string.clear();
 
         int j;
-        for(j = 0; j < 14; j++)
+        for(j = 0; j < 15; j++)
         {
             getline(tokenStream, token, '\n');
             team_string += token + "\n";

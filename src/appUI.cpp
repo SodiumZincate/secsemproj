@@ -1,7 +1,7 @@
 #include "appUI.h"
 #include <QtCore/QDebug>
 
-// delete all contents of windows(dashboardApp) so new contents can be displayed
+// delete all contents of windows so new contents can be displayed
 void deleteAllWidgetsAndLayouts(QWidget* widget) {
     if (!widget) return;
 
@@ -17,9 +17,6 @@ void deleteAllWidgetsAndLayouts(QWidget* widget) {
         }
         delete layout;
     }
-
-    // Delete the widget itself
-    // delete widget;
 }
 
 void resetPage(QWidget* window) {
@@ -138,7 +135,12 @@ TeamDialogBox::TeamDialogBox(QWidget *parent){
 	team_component->init(this, "Team name");
 	teamEdit = team_component->getWidget_edit();
 
+	LabelEditComponent *team_ground_component = new LabelEditComponent();
+	team_ground_component->init(this, "Venue");
+	teamGroundEdit = team_ground_component->getWidget_edit();
+
 	delete team_component->getWidget_label();
+	delete team_ground_component->getWidget_label();
 
 	QWidget *teamButtonContainer = new QWidget(this);
 	QHBoxLayout *teamButtonContainerLayout = new QHBoxLayout(teamButtonContainer); 
@@ -150,6 +152,7 @@ TeamDialogBox::TeamDialogBox(QWidget *parent){
 	teamButtonContainerLayout->addWidget(teamButton_widget, 0, Qt::AlignCenter);
 
 	team_layout->addWidget(teamEdit);
+	team_layout->addWidget(teamGroundEdit);
 	team_layout->addWidget(teamButtonContainer);
 
 	QObject::connect(teamButton_widget, &QPushButton::clicked, this, &TeamDialogBox::addIcon);
@@ -173,10 +176,23 @@ void TeamDialogBox::updateEditText() {
 	else{
 		team_name = teamEdit->text();
 	}
+	if(QString(teamGroundEdit->text()) == ""){
+		team_name = "";
+		teamGroundEdit->setText("");
+		teamGroundEdit->setPlaceholderText("Field can't be empty");
+		teamGroundEdit->setStyleSheet("QLineEdit { placeholder-text-color: #FB3B3B }");
+	}
+	else{
+		team_ground_name = teamGroundEdit->text();
+	}
 }
 
 QString TeamDialogBox::getTeamName(){
 	return team_name;
+}
+
+QString TeamDialogBox::getGroundName(){
+	return team_ground_name;
 }
 
 QIcon TeamDialogBox::getTeamIcon(){
@@ -252,8 +268,17 @@ MatchWidget::MatchWidget(QWidget* parent) {
 	// Create label for match number
     matchNumberLabel = new QLabel(parent);
     matchNumberLabel->setAlignment(Qt::AlignCenter);
-	matchNumberLabel->setFont(QFont("Sans", default_font_size));
+	matchNumberLabel->setFont(QFont("Times", default_font_size*1.1));
     matchNumberLabel->setStyleSheet("font-weight: bold;");
+
+	// Create label for match info
+    matchGroundLabel = new QLabel(parent);
+    matchGroundLabel->setAlignment(Qt::AlignCenter);
+	matchGroundLabel->setFont(QFont("Sans", default_font_size*1.1));
+	
+    matchTimeLabel = new QLabel(parent);
+    matchTimeLabel->setAlignment(Qt::AlignCenter);
+	matchTimeLabel->setFont(QFont("Sans", default_font_size*0.8));
 
 	// Create horizontal layout for the match details
     QWidget *matchDetailsWidget = new QWidget(parent);
@@ -267,12 +292,15 @@ MatchWidget::MatchWidget(QWidget* parent) {
 
     // Initialize team 1 widgets
     team1NameLabel = new QLabel(parent);
-	team1NameLabel->setFont(QFont("Sans", default_font_size*0.8));
+	team1NameLabel->setFont(QFont("Sans", default_font_size));
+    team1NameLabel->setStyleSheet("font-weight: bold;");
+	team1NameLabel->setAlignment(Qt::AlignCenter);
+
     team1IconLabel = new QLabel(parent);
+    team1IconLabel->setAlignment(Qt::AlignCenter);
+	
     team1ScoreLabel = new QLabel(parent);
 	team1ScoreLabel->setFont(QFont("Sans", default_font_size));
-	team1NameLabel->setAlignment(Qt::AlignCenter);
-    team1IconLabel->setAlignment(Qt::AlignCenter);
     team1ScoreLabel->setAlignment(Qt::AlignCenter);
 
     team1Layout->addWidget(team1IconLabel);
@@ -282,12 +310,15 @@ MatchWidget::MatchWidget(QWidget* parent) {
 
     // Initialize team 2 widgets
     team2NameLabel = new QLabel(parent);
-	team2NameLabel->setFont(QFont("Sans", default_font_size*0.8));
+	team2NameLabel->setFont(QFont("Sans", default_font_size));
+    team2NameLabel->setStyleSheet("font-weight: bold;");
+	team2NameLabel->setAlignment(Qt::AlignCenter);
+
     team2IconLabel = new QLabel(parent);
+    team2IconLabel->setAlignment(Qt::AlignCenter);
+	
     team2ScoreLabel = new QLabel(parent);
 	team2ScoreLabel->setFont(QFont("Sans", default_font_size));
-	team2NameLabel->setAlignment(Qt::AlignCenter);
-    team2IconLabel->setAlignment(Qt::AlignCenter);
     team2ScoreLabel->setAlignment(Qt::AlignCenter);
 
     team2Layout->addWidget(team2IconLabel);
@@ -311,12 +342,17 @@ MatchWidget::MatchWidget(QWidget* parent) {
 
 	mainLayout->addWidget(matchNumberLabel, 0, Qt::AlignTop);
 	mainLayout->addWidget(matchDetailsWidget, 0, Qt::AlignTop);
+	mainLayout->addWidget(matchGroundLabel, 0, Qt::AlignTop);
+	mainLayout->addWidget(matchTimeLabel, 0, Qt::AlignTop);
 }
 
 void MatchWidget::init(const QString& matchNumber, 
 					   const QString& team1Name, const QIcon& team1Icon, QString team1Score,
-                       const QString& team2Name, const QIcon& team2Icon, QString team2Score) {
+                       const QString& team2Name, const QIcon& team2Icon, QString team2Score,
+					   const QString& matchGround) {
 	matchNumberLabel->setText("Match: " + matchNumber);
+	matchGroundLabel->setText("Venue: " + matchGround);
+	matchTimeLabel->setText("Time");
 
     team1NameLabel->setText(team1Name);
     team1IconLabel->setPixmap(team1Icon.pixmap(100, 100)); // Adjust icon size
@@ -328,6 +364,62 @@ void MatchWidget::init(const QString& matchNumber,
 
 	team1NameLabel->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
     team2NameLabel->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+}
+
+EditableMatchWidget::EditableMatchWidget(QWidget* parent) : MatchWidget(parent) {
+    // Remove the existing score labels
+    QVBoxLayout *mainLayout = dynamic_cast<QVBoxLayout*>(layout());
+    if (mainLayout) {
+        QWidget *matchDetailsWidget = mainLayout->itemAt(1)->widget();
+        QHBoxLayout *matchDetailsLayout = dynamic_cast<QHBoxLayout*>(matchDetailsWidget->layout());
+
+        if (matchDetailsLayout) {
+            QWidget *team1Widget = matchDetailsLayout->itemAt(0)->widget();
+            QWidget *team2Widget = matchDetailsLayout->itemAt(4)->widget();
+            
+            QVBoxLayout *team1Layout = dynamic_cast<QVBoxLayout*>(team1Widget->layout());
+			// team1Layout->setSpacing(app_height/20);
+            QVBoxLayout *team2Layout = dynamic_cast<QVBoxLayout*>(team2Widget->layout());
+			// team1Layout->setSpacing(app_height/20);
+
+			// Update old score labels
+			team1ScoreLabel->hide();
+			team2ScoreLabel->hide();
+			QLabel *team1GoalLabel = new QLabel();
+            team1GoalLabel->setText("GOALS:");
+            team1GoalLabel->setFont(QFont("Sans", default_font_size*0.8));
+            team1GoalLabel->setContentsMargins(0,app_height/16,0,0);
+
+			QLabel *team2GoalLabel = new QLabel();
+            team2GoalLabel->setText("GOALS:");
+            team2GoalLabel->setFont(QFont("Sans", default_font_size*0.8));
+            team2GoalLabel->setContentsMargins(0,app_height/16,0,0);
+            
+            // Initialize input fields for scores
+			QIntValidator* validator = new QIntValidator(0, 20, parent);
+
+            team1ScoreInput = new QLineEdit(parent);
+            team1ScoreInput->setAlignment(Qt::AlignCenter);
+            team1ScoreInput->setFixedSize(app_width/4, app_height/10);
+			team1ScoreInput->setFont(QFont("Sans", default_font_size*0.8));
+            team1ScoreInput->setValidator(validator);
+            
+            team2ScoreInput = new QLineEdit(parent);
+            team2ScoreInput->setAlignment(Qt::AlignCenter);
+            team2ScoreInput->setFixedSize(app_width/4, app_height/10);
+			team2ScoreInput->setFont(QFont("Sans", default_font_size*0.8));
+            team2ScoreInput->setValidator(validator);
+            
+            team1Layout->addWidget(team1GoalLabel, 0, Qt::AlignHCenter);
+			team1Layout->addWidget(team1ScoreInput, 0, Qt::AlignHCenter);
+            
+			team2Layout->addWidget(team2GoalLabel, 0, Qt::AlignHCenter);
+			team2Layout->addWidget(team2ScoreInput, 0, Qt::AlignHCenter);
+
+            team1ScoreInput->setVisible(true);
+            team2ScoreInput->setVisible(true);
+        }
+    }
 }
 
 void LabelEditComponent::init(QWidget* parent, QString widget_text, int font_size) {

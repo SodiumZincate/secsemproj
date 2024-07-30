@@ -235,7 +235,7 @@ void initShowLeague(StackedWidgets *App, QWidget* window, QString username = "us
 	QObject::connect(backButton_widget, &QPushButton::clicked, App, &StackedWidgets::changeWindow_dashboard);
 	QObject::connect(nextButton_widget, &QPushButton::clicked,
 	[=](){
-		initNextMatch(
+		initShowMatch(
 			App,
 			App->stacked_windows.widget(App->stacked_windows.currentIndex()+1),
 			username,

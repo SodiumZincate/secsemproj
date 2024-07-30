@@ -132,7 +132,9 @@ int no_of_teams)
 	TeamDialogBox *team_input = new TeamDialogBox(window);
 
 	static vector<string> teamList;
+	static vector<string> teamGroundList;
 	teamList = {};
+	teamGroundList = {};
 	static vector<string> teamIconPathList;
 	teamIconPathList = {};
 
@@ -188,7 +190,8 @@ int no_of_teams)
 						+ "0\n"
 						+ "0\n"
 						+ "0\n"
-						+ "0";
+						+ "0\n"
+						+ teamGroundList[k];
 
 						int errorDatabase = updateDatabase(clientReq, "insert_team", clientResTeam);
 						if(errorDatabase != 0){
@@ -246,6 +249,7 @@ int no_of_teams)
 			if (!sourceFile.exists()) {
 				qDebug() << "Source file does not exist:" << sourceFilePath;
 				team_input->teamEdit->setText("");
+				team_input->teamGroundEdit->setText("");
 				team_input->teamEdit->setPlaceholderText("Source file does not exist");
 				team_input->teamEdit->setStyleSheet("QLineEdit{placeholder-text-color: #FB3B3B}");
 				return;
@@ -276,6 +280,7 @@ int no_of_teams)
 				}
 			} else {
 				team_input->teamEdit->setText("");
+				team_input->teamGroundEdit->setText("");
 				team_input->teamEdit->setPlaceholderText("Failed to add team");
 				team_input->teamEdit->setStyleSheet("QLineEdit{placeholder-text-color: #FB3B3B}");
 				qDebug() << "File copy failed.";
@@ -283,16 +288,18 @@ int no_of_teams)
 				return;
 			}
 
-			if (!team_input->team_name.isEmpty() && team_input->iconAdded) {
+			if (!team_input->team_name.isEmpty() && !team_input->team_ground_name.isEmpty() && team_input->iconAdded) {
 				if (count < no_of_teams) {
 					qDebug() << team_input->getTeamName().toStdString();
 					teamList.push_back(team_input->getTeamName().toStdString());
+					teamGroundList.push_back(team_input->getGroundName().toStdString());
 					qDebug() << newFilePath.toStdString();
 					teamIconPathList.push_back(newFilePath.toStdString());
 					team_input->iconAdded = false;
 					count++;
 					max_team_id++;
 					team_input->teamEdit->setText("");
+					// team_input->teamGroundEdit->setText("");
 					team_input->teamEdit->setPlaceholderText("Team Added Successfully");
 					team_input->teamEdit->setStyleSheet("QLineEdit{placeholder-text-color: #48FF4D}");
 				}

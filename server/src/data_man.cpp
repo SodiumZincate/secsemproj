@@ -134,9 +134,10 @@ void insertDatabaseTeam(string cli_req, string file){
 	string ga = string_list[10];
 	string gd = string_list[11];
 	string point = string_list[12];
+	string ground = string_list[13];
 
 	stringstream ss;
-	ss << "INSERT INTO TEAM(UID,LID,TNAME,TGROUP,POSITION,MP,WIN,LOSS,DRAW,GF,GA,GD,POINTS) VALUES"
+	ss << "INSERT INTO TEAM(UID,LID,TNAME,TGROUP,POSITION,MP,WIN,LOSS,DRAW,GF,GA,GD,POINTS,GROUND) VALUES"
 	<< "("
 	<< "'" << uid << "',"
 	<< "'" << lid << "',"
@@ -150,7 +151,8 @@ void insertDatabaseTeam(string cli_req, string file){
 	<< "'" << gf << "',"
 	<< "'" << ga << "',"
 	<< "'" << gd << "',"
-	<< "'" << point << "'"
+	<< "'" << point << "',"
+	<< "'" << ground << "'"
 	<< ")";
 
 	string sqlInsert = ss.str();
@@ -506,6 +508,7 @@ void updateDatabaseTeam(string cli_req, string file, Response &res)
 	string ga = string_list[11];
 	string gd = string_list[12];
 	string point = string_list[13];
+	string ground = string_list[14];
 
 	stringstream ss;
 	ss << "UPDATE TEAM SET "
@@ -521,7 +524,8 @@ void updateDatabaseTeam(string cli_req, string file, Response &res)
 	<< "GF = '" << gf << "', "
 	<< "GA = '" << ga << "', "
 	<< "GD = '" << gd << "', "
-	<< "POINTS = '" << point << "' "
+	<< "POINTS = '" << point << "', "
+	<< "GROUND = '" << ground << "' "
 	<< "WHERE TID = '" << tid << "';";
 
 	string sqlUpdate = ss.str();
@@ -626,7 +630,7 @@ void queryDatabaseTeam(string cli_req, string file, Response &res)
 	}
 
 	stringstream ss;
-	ss << "SELECT TID,UID,LID,TNAME,TGROUP,POSITION,MP,WIN,LOSS,DRAW,GF,GA,GD,POINTS FROM TEAM WHERE UID"
+	ss << "SELECT TID,UID,LID,TNAME,TGROUP,POSITION,MP,WIN,LOSS,DRAW,GF,GA,GD,POINTS,GROUND FROM TEAM WHERE UID"
 	<< "="
 	<< "'" + user_id + "'"
 	<< " AND LID"

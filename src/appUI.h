@@ -68,15 +68,18 @@ class TeamDialogBox : public QDialog{
 	Q_OBJECT
 public:
     QLineEdit *teamEdit;
+    QLineEdit *teamGroundEdit;
     QPushButton *teamButton_widget;
     QPixmap icon;
     QString iconPath;
 	QString team_name;
+	QString team_ground_name;
 	QString file_name;
 	bool iconAdded = false;
 
 	TeamDialogBox(QWidget *parent);
 	QString getTeamName();
+	QString getGroundName();
 	QIcon getTeamIcon();
 	QString getTeamIconPath();
 	
@@ -105,16 +108,28 @@ void initAddTeam(
 
 void initShowLeague(StackedWidgets *App, QWidget* window, QString username, QString leaguename, League L);
 
-void initNextMatch(
+void initShowMatch(
 	StackedWidgets *App, 
 	QWidget* window, 
 	QString username, 
 	QString leaguename, 
 	League L);
 
+void initNextMatch(
+	StackedWidgets *App, 
+	QWidget* window, 
+	QString username,
+	QString leaguename,
+	League L,
+	vector<Match> matchVector,
+	QList<QIcon> iconList_1,
+	QList<QIcon> iconList_2);
+
 void resetPage(QWidget* window);
 
-void clearWidgetAndLayout(QWidget* widget);
+void deleteAllWidgetsAndLayouts(QWidget* widget);
+
+void deleteAllWidgetsAndLayouts(QLayout* layout);
 
 // Main class for the widgets in the app
 // (Username, Email, Password) widgets
@@ -162,15 +177,28 @@ public:
     MatchWidget(QWidget* parent = nullptr);
     void init(const QString& matchNumber, 
 			  const QString& team1Name, const QIcon& team1Icon, QString team1Score,
-              const QString& team2Name, const QIcon& team2Icon, QString team2Score);
+              const QString& team2Name, const QIcon& team2Icon, QString team2Score,
+			  const QString& matchGround);
 
     QLabel* matchNumberLabel;
+    QLabel* matchGroundLabel;
+    QLabel* matchTimeLabel;
     QLabel* team1NameLabel;
     QLabel* team1IconLabel;
     QLabel* team1ScoreLabel;
     QLabel* team2NameLabel;
     QLabel* team2IconLabel;
     QLabel* team2ScoreLabel;
+
+	QLineEdit *team1ScoreInput;
+    QLineEdit *team2ScoreInput;
+};
+
+class EditableMatchWidget : public MatchWidget {
+    Q_OBJECT
+
+public:
+    EditableMatchWidget(QWidget* parent = nullptr);
 };
 
 // Sub class for the individual input field widgets in the app

@@ -67,7 +67,8 @@ int main(int argc, char *argv[])
 		<< "GF INTEGER NOT NULL,"
 		<< "GA INTEGER NOT NULL,"
 		<< "GD INTEGER NOT NULL,"
-		<< "POINTS INTEGER NOT NULL"
+		<< "POINTS INTEGER NOT NULL,"
+		<< "GROUND TEXT NOT NULL"
 		<< ")";
 	stringstream ss4;
 	ss4 << "CREATE TABLE MATCH"

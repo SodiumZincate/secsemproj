@@ -49,21 +49,23 @@ void Team::init_team(string input_string)
     team_ga = stoi(list[11]);
     team_gd = stoi(list[12]);
     team_points = stoi(list[13]);
+    team_ground = list[14];
 
-	// cout << "team_id :: " << team_id << endl;
-    // cout << "team_user_id :: " << team_user_id << endl;
-    // cout << "team_league_id :: " << team_league_id << endl;
-    // cout << "team_name :: " << team_name<< endl;
-	// cout << "team_group :: " << team_group << endl;
-    // cout << "team_position :: " << team_position << endl;
-    // cout << "team_mp :: " << team_mp << endl;
-    // cout << "team_w :: " << team_w << endl;
-    // cout << "team_l :: " << team_l << endl;
-    // cout << "team_d :: " << team_d << endl;
-    // cout << "team_gf :: " << team_gf  << endl;
-    // cout << "team_ga :: " << team_ga  << endl;
-    // cout << "team_gd :: " << team_gd  << endl;
-    // cout << "team_points :: " << team_points  << endl;
+	cout << "team_id :: " << team_id << endl;
+    cout << "team_user_id :: " << team_user_id << endl;
+    cout << "team_league_id :: " << team_league_id << endl;
+    cout << "team_name :: " << team_name<< endl;
+	cout << "team_group :: " << team_group << endl;
+    cout << "team_position :: " << team_position << endl;
+    cout << "team_mp :: " << team_mp << endl;
+    cout << "team_w :: " << team_w << endl;
+    cout << "team_l :: " << team_l << endl;
+    cout << "team_d :: " << team_d << endl;
+    cout << "team_gf :: " << team_gf  << endl;
+    cout << "team_ga :: " << team_ga  << endl;
+    cout << "team_gd :: " << team_gd  << endl;
+    cout << "team_points :: " << team_points  << endl;
+    cout << "team_ground :: " << team_ground  << endl;
 
 	cout << list.size() << endl;
 }
@@ -167,7 +169,8 @@ void League::update_teams_data()
         to_string(T[i].team_league_id) + "\n" + T[i].team_name + "\n" + T[i].team_group + "\n" +
         to_string(T[i].team_position) + "\n" + to_string(T[i].team_mp) + "\n" + to_string(T[i].team_w) + "\n" +
         to_string(T[i].team_l) + "\n" + to_string(T[i].team_d) + "\n" + to_string(T[i].team_gf) + "\n" +
-        to_string(T[i].team_ga) + "\n" + to_string(T[i].team_gd) + "\n" + to_string(T[i].team_points) + "\n";
+        to_string(T[i].team_ga) + "\n" + to_string(T[i].team_gd) + "\n" + to_string(T[i].team_points) + "\n"
+		+ T[i].team_ground + "\n";
     }
 
     int errorDatabase = updateDatabase(ret, "team_update", clientRes);

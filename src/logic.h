@@ -30,11 +30,13 @@ class Team
     int team_id;
     int team_user_id;
     int team_league_id;
+    string team_ground;
 
     //properties of a team that are fixed, initialized by program
     char team_group;
 
     //properties of a team that are not fixed
+    int team_position = 0;
     int team_mp = 0;
     int team_w = 0;
     int team_d = 0;
@@ -43,7 +45,6 @@ class Team
     int team_ga = 0;
     int team_gd = 0;
     int team_points = 0;
-    int team_position = 0;
 
     //methods
     Team() {}
