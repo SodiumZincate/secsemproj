@@ -4,22 +4,22 @@
 
 void createMatchesKOBye(League L)
 {
-    //array of teams qualified for first KO round
-    Team Q[MAX_TEAMS];
     Match Mko[MAX_MATCHES_KO_BYE];
-    int matches;
-    int i, j, k;
+    Team Tko[32];
+    int i, j;
     j = 0;
     for (i = 0; i < L.league_team_number; i++)
     {
-        if (L.T[i].team_position <= L.league_qualifiers)
+        if (L.T[i].team_ko_status == 1)
         {
-            L.T[i].team_ko_status = 1;
-            Q[j] = L.T[i];
+            Tko[j] = L.T[i];
             j++;
         }
     }
-    int QualifiedTeams = sizeof(Q) / sizeof(Q[0]);
+
+    int matches;
+    
+    int QualifiedTeams = j;
     int &q = QualifiedTeams;
     if (q >= 17 && q <= 32)
     {
@@ -27,8 +27,8 @@ void createMatchesKOBye(League L)
         j = 0;
         for (i = 0; i < matches; i++)
         {
-            Mko[i].T1 = Q[j];
-            Mko[i].T2 = Q[j+1];
+            Mko[i].T1 = Tko[j];
+            Mko[i].T2 = Tko[j+1];
             j += 2;
         }
     }
@@ -38,8 +38,8 @@ void createMatchesKOBye(League L)
         j = 0;
         for (i = 0; i < matches; i++)
         {
-            Mko[i].T1 = Q[j];
-            Mko[i].T2 = Q[j+1];
+            Mko[i].T1 = Tko[j];
+            Mko[i].T2 = Tko[j+1];
             j += 2;
         }
     }
@@ -49,8 +49,8 @@ void createMatchesKOBye(League L)
         j = 0;
         for (i = 0; i < matches; i++)
         {
-            Mko[i].T1 = Q[j];
-            Mko[i].T2 = Q[j+1];
+            Mko[i].T1 = Tko[j];
+            Mko[i].T2 = Tko[j+1];
             j += 2;
         }
     }
@@ -60,8 +60,8 @@ void createMatchesKOBye(League L)
         j = 0;
         for (i = 0; i < matches; i++)
         {
-            Mko[i].T1 = Q[j];
-            Mko[i].T2 = Q[j+1];
+            Mko[i].T1 = Tko[j];
+            Mko[i].T2 = Tko[j+1];
             j += 2;
         }
     }
