@@ -35,8 +35,6 @@ void update(string input_string_1, string input_string_2)
     }
 
     //sort according to points in a group
-
-    //sort according to points in a group
     L.update_group_positions();
 
     //return league
