@@ -17,6 +17,7 @@ using namespace std;
 #define MAX_GROUPS 16
 #define MAX_MATCHES_PT 16
 #define MAX_MATCHES_GT 100
+#define MAX_MATCHES_KO_BYE 16
 
 class Match;
 
@@ -45,6 +46,7 @@ class Team
     int team_ga = 0;
     int team_gd = 0;
     int team_points = 0;
+    int team_ko_status = 0;
 
     //methods
     Team() {}
@@ -123,8 +125,11 @@ League displayLeagueOnly(string input_string_1);
 //function to return groups 
 vector<Group> displayGroups(string input_string_1, string input_string_2);
 
-//this file is used to create matches 
+//this file is used to create matches for group stages
 void createMatchesGS(League L);
+
+//this file is used to create matches for KO stages
+void createMatchesKOBye(League L);
 
 void shuffleArray(Match arr[], int size);
 

@@ -1,6 +1,6 @@
 #include "logic.h"
 
-//this file is used to create matches 
+//this file is used to create matches for GS matches
 
 void createMatchesGS(League L)
 {
