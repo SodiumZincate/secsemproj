@@ -88,11 +88,13 @@ class League
     int league_id;
     int league_user_id;
     string league_name;
-    int league_group_stages;
     int league_round_robin;
     int league_qualifiers;
     int league_groups;
     int league_team_number;
+	string League_start_date;
+	int league_no_of_match_times;
+	string league_match_times[4];
 
     //array of teams for a league
     Team T[MAX_TEAMS];

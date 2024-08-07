@@ -120,20 +120,31 @@ void League::init_league(string input_string)
     league_id = stoi(list[0]);
     league_user_id = stoi(list[1]);
     league_name = list[2];
-    league_group_stages = stoi(list[3]);
-    league_round_robin = stoi(list[4]);
-    league_qualifiers = stoi(list[5]);
-    league_groups = stoi(list[6]);
-    league_team_number = stoi(list[7]);
+    league_round_robin = stoi(list[3]);
+    league_qualifiers = stoi(list[4]);
+    league_groups = stoi(list[5]);
+    league_team_number = stoi(list[6]);
+    League_start_date = list[7];
+    league_no_of_match_times = stoi(list[8]);
+    stringstream temp_match_times;
+	temp_match_times << list[9];
 
 	cout << "league_id :: " << league_id << endl;
     cout << "league_user_id :: " << league_user_id << endl;
     cout << "league_name :: " << league_name << endl;
-    cout << "league_group_stages :: " << league_group_stages<< endl;
 	cout << "league_round_robin :: " << league_round_robin << endl;
     cout << "league_qualifiers :: " << league_qualifiers << endl;
     cout << "league_groups :: " << league_groups << endl;
     cout << "league_team_number :: " << league_team_number << endl;
+    cout << "league_start_date :: " << League_start_date << endl;
+    cout << "league_no_of_match_times :: " << league_no_of_match_times << endl;
+	
+	int i = 0;
+	while(getline(temp_match_times, token, '\t')){
+		league_match_times[i] = token;
+		cout << "league_match_times"<<"["<<i<<"] :: " << league_no_of_match_times << endl;
+		i++;
+	}
 }
 
 void League::sort_teams_array()
@@ -151,10 +162,9 @@ void League::sort_teams_array()
 
 void League::update_league_data()
 {
-    string ret;
-    ret = to_string(league_id) + "\n" + to_string(league_user_id) + "\n" + league_name + "\n" + 
-    to_string(league_group_stages) + "\n" + to_string(league_round_robin) + "\n" +
-    to_string(league_qualifiers) + "\n" + to_string(league_groups) + "\n" + to_string(league_team_number);
+    // string ret;
+    // ret = to_string(league_id) + "\n" + to_string(league_user_id) + "\n" + league_name + "\n" +  "\n" + to_string(league_round_robin) + "\n" +
+    // to_string(league_qualifiers) + "\n" + to_string(league_groups) + "\n" + to_string(league_team_number);
 }
 
 void League::update_teams_data()

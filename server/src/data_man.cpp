@@ -266,22 +266,26 @@ void insertDatabaseLeague(string cli_req, string file, Response &res){
 
 	string uid = string_list[0];
 	string league_name = string_list[1];
-	string group_stage = string_list[2];
-	string round_robin = string_list[3];
-	string qualifiers = string_list[4];
-	string no_of_groups = string_list[5];
-	string no_of_teams = string_list[6];
+	string round_robin = string_list[2];
+	string qualifiers = string_list[3];
+	string no_of_groups = string_list[4];
+	string no_of_teams = string_list[5];
+	string start_date = string_list[6];
+	string no_of_match_times = string_list[7];
+	string match_times = string_list[8];
 
 	stringstream ss;
-	ss << "INSERT INTO LEAGUE(UID,LNAME,GROUPSTAGE,ROUNDROBIN,QUALIFIERS,NUMBEROFGROUPS,NUMBEROFTEAMS) VALUES"
+	ss << "INSERT INTO LEAGUE(UID,LNAME,ROUNDROBIN,QUALIFIERS,NUMBEROFGROUPS,NUMBEROFTEAMS,STARTDATE,NUMBEROFMATCHTIMES,MATCHTIMES) VALUES"
 	<< "("
 	<< "'" << uid << "',"
 	<< "'" << league_name << "',"
-	<< "'" << group_stage << "',"
 	<< "'" << round_robin << "',"
 	<< "'" << qualifiers << "',"
 	<< "'" << no_of_groups << "',"
-	<< "'" << no_of_teams << "'"
+	<< "'" << no_of_teams << "',"
+	<< "'" << start_date << "',"
+	<< "'" << no_of_match_times << "',"
+	<< "'" << match_times << "'"
 	<< ")";
 
 	string sqlInsert = ss.str();
@@ -787,7 +791,7 @@ void queryDatabaseLeague(string cli_req, string file, Response &res)
 	}
 
 	stringstream ss;
-	ss << "SELECT LID,UID,LNAME,GROUPSTAGE,ROUNDROBIN,QUALIFIERS,NUMBEROFGROUPS,NUMBEROFTEAMS FROM LEAGUE WHERE LID"
+	ss << "SELECT LID,UID,LNAME,ROUNDROBIN,QUALIFIERS,NUMBEROFGROUPS,NUMBEROFTEAMS,STARTDATE,NUMBEROFMATCHTIMES,MATCHTIMES FROM LEAGUE WHERE LID"
 	<< "="
 	<< "'" + league_id + "'";
 

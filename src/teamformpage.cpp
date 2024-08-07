@@ -299,9 +299,11 @@ int no_of_teams)
 					count++;
 					max_team_id++;
 					team_input->teamEdit->setText("");
-					// team_input->teamGroundEdit->setText("");
+					team_input->teamGroundEdit->setText("");
 					team_input->teamEdit->setPlaceholderText("Team Added Successfully");
 					team_input->teamEdit->setStyleSheet("QLineEdit{placeholder-text-color: #48FF4D}");
+					team_input->teamGroundEdit->setPlaceholderText("Venue Added Successfully");
+					team_input->teamGroundEdit->setStyleSheet("QLineEdit{placeholder-text-color: #48FF4D}");
 				}
 				if (count == no_of_teams) {
 					continue_button_widget->setText("Continue to League");

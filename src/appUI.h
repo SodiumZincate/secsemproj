@@ -23,6 +23,8 @@
 #include <QtCore/QBuffer>
 #include <QtCore/QPointer>
 #include <QtWidgets/QMessageBox>
+#include <QtWidgets/QCalendarWidget>
+#include <QtWidgets/QTimeEdit>
 #include <iostream>
 #include "logic.h"
 #include "db.h"
