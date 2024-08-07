@@ -123,60 +123,60 @@ void initDashboard(StackedWidgets *App, QWidget* window, QString username = "use
 
 		QObject::connect(league_name, &appClickableText::clicked,
 		[=](){
-		qDebug() << "Clicked league_name:" << text;
-		std::stringstream clientResLeague;
-		std::stringstream clientResTeam;
-		std::string streamLine;
-		std::vector<std::string> streamList;
+			qDebug() << "Clicked league_name:" << text;
+			std::stringstream clientResLeague;
+			std::stringstream clientResTeam;
+			std::string streamLine;
+			std::vector<std::string> streamList;
 
-		std::string clientReq = leagueIdList[i];
-		int errorDatabase = updateDatabase(clientReq, "query_league", clientResLeague);
-		getline(clientResLeague, streamLine, '\n');
-		if(errorDatabase != 0 || strcmp(streamLine.c_str(), "") == 0){
-			std::cout << "\nError initializing league database" << std::endl;
-		}
-		else{
-			std::string league_string = clientResLeague.str();
-
-			clientReq = std::to_string(user_id) + "\n" + leagueIdList[i];
-			int errorDatabase = updateDatabase(clientReq, "query_team", clientResTeam);
-			getline(clientResTeam, streamLine, '\n');
-			if(errorDatabase !=0 || strcmp(streamLine.c_str(), "") == 0){
-				stringstream temp;
-				std::cout << "\nError initializing team database" << std::endl;
-				int errorDatabase = updateDatabase(leagueIdList[i], "delete_league", temp);
-
-				if(errorDatabase!=0){
-					cout << "Failed to delete league" << endl;
-				}
-				else{
-					cout << "league deleted successfully" << endl;
-					initDashboard(
-						App,
-						App->stacked_windows.widget(2),
-						username,
-						user_id
-					);
-					App->changeWindow_dashboard();
-				}
+			std::string clientReq = leagueIdList[i];
+			int errorDatabase = updateDatabase(clientReq, "query_league", clientResLeague);
+			getline(clientResLeague, streamLine, '\n');
+			if(errorDatabase != 0 || strcmp(streamLine.c_str(), "") == 0){
+				std::cout << "\nError initializing league database" << std::endl;
 			}
 			else{
-				std::string team_string = clientResTeam.str();
-				// cout << "League String: " << league_string << endl;
-				// cout << "Team String: " << team_string << endl;
-				// update(league_string, team_string);
-				League L = displayLeague(league_string, team_string);
+				std::string league_string = clientResLeague.str();
 
-				initShowLeague(
-					App,
-					App->stacked_windows.widget(5),
-					username,
-					QString(leagueNameList[i].c_str()),
-					L
-				);
-				App->changeWindow_showLeague();
+				clientReq = std::to_string(user_id) + "\n" + leagueIdList[i];
+				int errorDatabase = updateDatabase(clientReq, "query_team", clientResTeam);
+				getline(clientResTeam, streamLine, '\n');
+				if(errorDatabase !=0 || strcmp(streamLine.c_str(), "") == 0){
+					stringstream temp;
+					std::cout << "\nError initializing team database" << std::endl;
+					int errorDatabase = updateDatabase(leagueIdList[i], "delete_league", temp);
+
+					if(errorDatabase!=0){
+						cout << "Failed to delete league" << endl;
+					}
+					else{
+						cout << "league deleted successfully" << endl;
+						initDashboard(
+							App,
+							App->stacked_windows.widget(2),
+							username,
+							user_id
+						);
+						App->changeWindow_dashboard();
+					}
+				}
+				else{
+					std::string team_string = clientResTeam.str();
+					// cout << "League String: " << league_string << endl;
+					// cout << "Team String: " << team_string << endl;
+					// update(league_string, team_string);
+					League L = displayLeague(league_string, team_string);
+
+					initShowLeague(
+						App,
+						App->stacked_windows.widget(5),
+						username,
+						QString(leagueNameList[i].c_str()),
+						L
+					);
+					App->changeWindow_showLeague();
+				}
 			}
-		}
 		});
 
 		button_container_layout->addWidget(league_name, Qt::AlignTop);

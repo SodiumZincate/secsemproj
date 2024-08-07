@@ -37,7 +37,7 @@ Match displayMatch(League L)
 			match_string.clear();
 
 			int j;
-			for(j = 0; j < 8; j++)
+			for(j = 0; j < 9; j++)
 			{
 				getline(clientResMatch, token, '\n');
 				match_string += token + "\n";
@@ -58,7 +58,10 @@ Match displayMatch(League L)
 			int tid_2 = stoi(list[4]);
 			M[i].T1_score = stoi(list[5]);
 			M[i].T2_score = stoi(list[6]);
-			M[i].match_occur = stoi(list[7]);
+			M[i].match_date = L.League_start_date;
+			M[i].match_date = list[7];
+			M[i].match_time = list[8];
+			M[i].match_occur = stoi(list[9]);
 
 			for(int j = 0; j<L.league_team_number; j++){
 				if(L.T[j].team_id == tid_1){

@@ -43,5 +43,5 @@ void update(string input_string_1, string input_string_2)
     L.update_league_data();
 
     //return team
-    L.update_teams_data();
+    L.updateDatabaseTeam();
 }

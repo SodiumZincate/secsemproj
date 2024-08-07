@@ -85,8 +85,10 @@ void initNextMatch(
 	scroll_area->setWidgetResizable(true);
 
 	EditableMatchWidget* matchWidget = new EditableMatchWidget();
+	int match_number;
 	for(int i = 0; i < no_of_match; i++){
 		if(!M[i].match_occur){
+			match_number = i;
 			QString team1Name = QString::fromStdString(M[i].T1.team_name);
 			QIcon team1Icon(iconList_1[i]);
 
@@ -94,6 +96,9 @@ void initNextMatch(
 			QIcon team2Icon(iconList_2[i]);
 
 			QString match_ground = QString::fromStdString(M[i].T1.team_ground);
+			QString match_date = QString::fromStdString(M[i].match_date);
+			QString match_time = QString::fromStdString(M[i].match_time);
+			qDebug() << match_date << match_time;
 
 			QString team1Score, team2Score;
 			
@@ -104,7 +109,7 @@ void initNextMatch(
 			QString(to_string(i+1).c_str()), 
 			team1Name, team1Icon, team1Score, 
 			team2Name, team2Icon, team2Score, 
-			match_ground);
+			match_ground, match_date, match_time);
 
 			match_container_layout->addWidget(matchWidget, Qt::AlignTop);
 			break;		
@@ -113,7 +118,7 @@ void initNextMatch(
 	
 	//Next Button
     appButton *updateButton= new appButton();
-    updateButton->init(window,"NEXT MATCH",default_font_size*0.9);
+    updateButton->init(window,"UPDATE",default_font_size*0.9);
     QPushButton *updateButton_widget = updateButton->getWidget_button();
     updateButton_widget->setFixedSize(app_width/4,app_height/12);
 	updateButton_widget->setStyleSheet("QPushButton{background-color: #48FF4D}");
@@ -125,7 +130,63 @@ void initNextMatch(
     updateButton_container_layout->setAlignment(Qt::AlignLeft);
     updateButton_container_layout->setContentsMargins(0, 0, 0, 0);
 
-	QObject::connect(backButton_widget, &QPushButton::clicked, App, &StackedWidgets::changeWindow_backward);
+	QObject::connect(backButton_widget, &QPushButton::clicked, [=](){
+		initShowMatch(
+				App,
+				App->stacked_windows.widget(App->stacked_windows.currentIndex()-1),
+				username,
+				leaguename,
+				L
+			);
+		App->changeWindow_backward();
+	});
+	QObject::connect(updateButton_widget, &QPushButton::clicked, [=](){
+		League tempL = L;
+		string team1Score, team2Score;
+		team1Score = matchWidget->team1ScoreInput->text().toStdString();
+		team2Score = matchWidget->team2ScoreInput->text().toStdString();
+		
+		string clientReq = to_string(matchVector[match_number].match_id) + "\n" + team1Score + "\n" + team2Score;
+
+		stringstream clientRes;
+		int errorDatabase = updateDatabase(clientReq, "update_match", clientRes);
+
+		if(errorDatabase!=0){
+			cout << "Failed to update match" << endl;
+		}
+		else{
+			cout << "match updated successfully" << endl;
+
+			for(int i=0; i<tempL.league_team_number; i++){
+				if(tempL.T[i].team_id == matchVector[match_number].T1.team_id){
+					tempL.T[i].update_team_data(stoi(team1Score), stoi(team2Score));
+					cout << "ID: " << tempL.T[i].team_id << endl;
+					cout << "GF: " << tempL.T[i].team_gf << endl;
+					cout << "GA: " << tempL.T[i].team_ga << endl;
+				}
+			}
+			for(int i=0; i<tempL.league_team_number; i++){
+				if(tempL.T[i].team_id == matchVector[match_number].T2.team_id){
+					tempL.T[i].update_team_data(stoi(team2Score), stoi(team1Score));
+					cout << "ID: " << tempL.T[i].team_id << endl;
+					cout << "GF: " << tempL.T[i].team_gf << endl;
+					cout << "GA: " << tempL.T[i].team_ga << endl;
+				}
+			}
+
+			tempL.update_group_positions();
+			tempL.updateDatabaseTeam();
+
+			initShowMatch(
+				App,
+				App->stacked_windows.widget(App->stacked_windows.currentIndex()-1),
+				username,
+				leaguename,
+				tempL
+			);
+			App->changeWindow_backward();
+		}
+	});
 
     scroll_area->setWidget(match_container);
 

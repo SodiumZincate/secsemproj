@@ -101,7 +101,7 @@ void initShowMatch(
 		for(i = 0; i < no_of_match; i++)
 		{
 			match_string.clear();
-			for(int j = 0; j < 8; j++)
+			for(int j = 0; j < 10; j++)
 			{
 				getline(clientResMatch, token, '\n');
 				match_string += token + "\n";
@@ -113,18 +113,21 @@ void initShowMatch(
 			while(getline(tokenStream, token, '\n'))
 			{
 				list.push_back(token);
+				cout << token << ".." << endl;
 			}
 
 			M[i].T1 = Team();
 			M[i].T2 = Team();
-			M[i].match_id=stoi(list[0]);
+			M[i].match_id = stoi(list[0]);
 		    M[i].match_user_id = stoi(list[1]);
 		    M[i].match_league_lid = stoi(list[2]);
 			int tid_1 = stoi(list[3]);
 			int tid_2 = stoi(list[4]);
 			M[i].T1_score = stoi(list[5]);
 			M[i].T2_score = stoi(list[6]);
-			M[i].match_occur = stoi(list[7]);
+			M[i].match_date = list[7];
+			M[i].match_time = list[8];
+			M[i].match_occur = stoi(list[9]);
 
 			for(int j=0; j<L.league_team_number; j++){
 				if(L.T[j].team_id == tid_1){
@@ -174,8 +177,9 @@ void initShowMatch(
         QIcon team2Icon(iconList_2[i]);
 
         QString match_ground = QString::fromStdString(M[i].T1.team_ground);
-
-        // QString match_time = QString::fromStdString(M[i].T2.team_name);
+        QString match_date = QString::fromStdString(M[i].match_date);
+        QString match_time = QString::fromStdString(M[i].match_time);
+		qDebug() << match_date << match_time;
 
 		QString team1Score, team2Score;
         if(M[i].match_occur){
@@ -191,7 +195,7 @@ void initShowMatch(
 			QString(to_string(i+1).c_str()), 
 			team1Name, team1Icon, team1Score, 
 			team2Name, team2Icon, team2Score, 
-			match_ground);
+			match_ground, match_date, match_time);
 		
 		match_container_layout->addWidget(matchWidget, Qt::AlignTop);
 	}
@@ -212,7 +216,17 @@ void initShowMatch(
 
 	std::vector<Match> matchVector(M, M + no_of_match);
 
-	QObject::connect(backButton_widget, &QPushButton::clicked, App, &StackedWidgets::changeWindow_backward);
+	QObject::connect(backButton_widget, &QPushButton::clicked,
+	[=](){
+		initShowLeague(
+			App,
+			App->stacked_windows.widget(App->stacked_windows.currentIndex()-1),
+			username,
+			leaguename,
+			L
+		);
+		App->changeWindow_backward();
+	});
 	QObject::connect(nextButton_widget, &QPushButton::clicked, 
 	[=](){
 		initNextMatch(

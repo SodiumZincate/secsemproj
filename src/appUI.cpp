@@ -349,10 +349,11 @@ MatchWidget::MatchWidget(QWidget* parent) {
 void MatchWidget::init(const QString& matchNumber, 
 					   const QString& team1Name, const QIcon& team1Icon, QString team1Score,
                        const QString& team2Name, const QIcon& team2Icon, QString team2Score,
-					   const QString& matchGround) {
+					   const QString& matchGround, const QString& matchDate, const QString& matchTime) {
 	matchNumberLabel->setText("Match: " + matchNumber);
 	matchGroundLabel->setText("Venue: " + matchGround);
-	matchTimeLabel->setText("Time");
+	matchTimeLabel->setText("Time: " + matchDate + "\n" + matchTime);
+	qDebug() << matchTimeLabel->text();
 
     team1NameLabel->setText(team1Name);
     team1IconLabel->setPixmap(team1Icon.pixmap(100, 100)); // Adjust icon size

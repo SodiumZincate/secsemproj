@@ -82,6 +82,8 @@ int main(int argc, char *argv[])
 		<< "TID2 INTEGER NOT NULL,"
 		<< "TEAM1GOAL INTEGER NOT NULL,"
 		<< "TEAM2GOAL INTEGER NOT NULL,"
+		<< "MATCHDATE TEXT NOT NULL,"
+		<< "MATCHTIME TEXT NOT NULL,"
 		<< "PLAYED INTEGER NOT NULL"
 		<< ")";
 

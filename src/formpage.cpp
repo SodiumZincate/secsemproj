@@ -138,7 +138,7 @@ void initAddLeague(StackedWidgets *App, QWidget* window, QString username = "use
 	//
 	QWidget *timeContainer = new QWidget(window);
 	QVBoxLayout *timeContainer_layout = new QVBoxLayout(timeContainer);
-	timeContainer_layout->setSpacing(app_height/8);
+	timeContainer_layout->setSpacing(app_height/16);
 
 	appText *match_time_text = new appText();
 	match_time_text->init(window, "Match Times (Select from top):", default_font_size*0.64);

@@ -116,6 +116,22 @@ void initShowLeague(StackedWidgets *App, QWidget* window, QString username = "us
 		QStringList teamNameList = {};
 
 		int i1,j1,k1;
+		for(int ii = 0; ii < L.league_team_number-1; ii++){
+			for(int iii = ii+1; iii < L.league_team_number; iii++){
+				if(L.T[ii].team_points < L.T[iii].team_points){
+					swap(L.T[ii], L.T[iii]);
+				}
+				else if(L.T[ii].team_points == L.T[iii].team_points){
+					if(L.T[ii].team_gd < L.T[iii].team_gd){
+						swap(L.T[ii], L.T[iii]);
+					}
+					else if(L.T[ii].team_mp > L.T[iii].team_mp){
+						swap(L.T[ii], L.T[iii]);
+					}
+				}
+			}
+		}
+
 		Group groupArray[L.league_groups];
 
 		for (i1 = 0; i1 < L.league_groups; i1++)
@@ -191,7 +207,7 @@ void initShowLeague(StackedWidgets *App, QWidget* window, QString username = "us
 				QString::number(groupArray[i].T[j].team_l),
 				QString::number(groupArray[i].T[j].team_gf),
 				QString::number(groupArray[i].T[j].team_ga),
-				QString::number(groupArray[i].T[j].team_gf),
+				QString::number(groupArray[i].T[j].team_gd),
 				QString::number(groupArray[i].T[j].team_points)
 			};
 

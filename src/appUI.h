@@ -180,7 +180,7 @@ public:
     void init(const QString& matchNumber, 
 			  const QString& team1Name, const QIcon& team1Icon, QString team1Score,
               const QString& team2Name, const QIcon& team2Icon, QString team2Score,
-			  const QString& matchGround);
+			  const QString& matchGround, const QString& matchDate, const QString& matchTime);
 
     QLabel* matchNumberLabel;
     QLabel* matchGroundLabel;

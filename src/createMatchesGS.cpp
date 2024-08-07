@@ -20,6 +20,8 @@ void createMatchesGS(League L)
                     {
                         Mgs[k].T1 = L.T[i];
                         Mgs[k].T2 = L.T[j];
+						Mgs[k].match_date = L.League_start_date;
+						cout << Mgs[k].match_time;
                         k++;
                     }
                 }
@@ -35,6 +37,8 @@ void createMatchesGS(League L)
                     {
                         Mgs[k].T1 = L.T[i];
                         Mgs[k].T2 = L.T[j];
+						Mgs[k].match_date = L.League_start_date;
+						cout << Mgs[k].match_time;
                         k++;
                     }
                 }
@@ -53,10 +57,12 @@ void createMatchesGS(League L)
     }
 
     string str;
+	j = 0;
+	QDate tempDate = QDate::fromString(QString::fromStdString(L.League_start_date));
     for (i = 0; i < k; i++)
     {
         str = to_string(L.league_user_id) + "\n" + to_string(L.league_id) + "\n" +
-        to_string(Mgs[i].T1.team_id) + "\n" + to_string(Mgs[i].T2.team_id) + "\n" + "0" + "\n" + "0" + "\n" + "0";
+        to_string(Mgs[i].T1.team_id) + "\n" + to_string(Mgs[i].T2.team_id) + "\n" + "0" + "\n" + "0" + "\n"  + tempDate.toString().toStdString() + "\n" + L.league_match_times[j] + "\n" + "0";
         stringstream temp;
         int errorDatabase = updateDatabase(str, "insert_match", temp);
         if (errorDatabase!=0)
@@ -68,6 +74,12 @@ void createMatchesGS(League L)
             std::cout << "\nData inserted successfully" << std::endl;
         } 
         str.clear();
+
+		j++;
+		if(j>=L.league_no_of_match_times){
+			j = 0;
+			tempDate = tempDate.addDays(1);
+		}
     }
 }
 

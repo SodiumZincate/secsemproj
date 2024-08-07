@@ -77,6 +77,8 @@ class Match
     int T1_score;
     int T2_score;
     bool match_occur = 0;
+	string match_date;
+	string match_time;
 };
 
 //class for a league
@@ -110,7 +112,7 @@ class League
     //function to update league data in the database
     void update_league_data();
     //function to update teams data in the database
-    void update_teams_data();
+    void updateDatabaseTeam();
 };
 
 //function to update league data

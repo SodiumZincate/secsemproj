@@ -145,6 +145,13 @@ void run_server() {
 		insertDatabaseMatch(cli_req, filepath);
     });
 
+	svr.Post("/match/update", [upload_dir](const Request &req, Response &res) {
+		string cli_req = req.body;
+
+        std::string filepath = upload_dir + "/" + "leaguedata.db";
+		updateDatabaseMatch(cli_req, filepath);
+    });
+
 	svr.Post("/league/insert", [upload_dir](const Request &req, Response &res) {
 		string cli_req = req.body;
 		// std::vector<string> string_list;

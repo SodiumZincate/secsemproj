@@ -72,40 +72,35 @@ void Team::init_team(string input_string)
 
 void League::update_group_positions()
 { 
-    int teams_in_group = ceil(league_groups / league_team_number);
-    int &t = teams_in_group;
+	int teams_in_group = ceil(static_cast<float>(league_team_number) / league_groups);
     Team Ta[MAX_TEAMS];
     int i, j, k;
-    for (i = 0; i < league_groups; i++)
-    {
-        for (j = 0; j < league_team_number; j++)
-        {
-            if (T[j].team_group == (char) (i + 65))
-            {
-                Ta[i] = T[j];
-            }
-        }
+    // Function to update group positions based on points
 
-        for (k = 0; k < t - 1; k++) 
-        {
-            for (j = 0; j < t - i - 1; j++) 
-            {
-                if (Ta[j].team_points > Ta[j + 1].team_points) 
-                swap(Ta[j], Ta[j + 1]); 
-            }
-        }
+	for (int i = 0; i < league_groups; ++i) {
+		std::vector<Team> group_teams;
 
-        for (k = 0; k < t; k++)
-        {
-            for (j = 0; j < league_team_number; j++)
-            {
-                if (Ta[k].team_id == T[j].team_id)
-                {
-                    T[j].team_position = k;
-                }
-            }
-        }
-    }
+		// Collect teams belonging to the current group
+		for (int j = 0; j < league_team_number; ++j) {
+			if (T[j].team_group == static_cast<char>(i + 65)) {
+				group_teams.push_back(T[j]);
+			}
+		}
+
+		// Sort the collected teams based on their points
+		std::sort(group_teams.begin(), group_teams.end(), [](const Team& a, const Team& b) {
+			return a.team_points > b.team_points; // Descending order
+		});
+
+		// Update positions of the sorted teams in the original array
+		for (int k = 0; k < group_teams.size(); ++k) {
+			for (int j = 0; j < league_team_number; ++j) {
+				if (T[j].team_id == group_teams[k].team_id) {
+					T[j].team_position = k + 1; // Positions start from 1
+				}
+			}
+		}
+	}
 }
 
 void League::init_league(string input_string)
@@ -142,7 +137,7 @@ void League::init_league(string input_string)
 	int i = 0;
 	while(getline(temp_match_times, token, '\t')){
 		league_match_times[i] = token;
-		cout << "league_match_times"<<"["<<i<<"] :: " << league_no_of_match_times << endl;
+		cout << "league_match_times"<<"["<<i<<"] :: " << league_match_times[i] << endl;
 		i++;
 	}
 }
@@ -167,24 +162,29 @@ void League::update_league_data()
     // to_string(league_qualifiers) + "\n" + to_string(league_groups) + "\n" + to_string(league_team_number);
 }
 
-void League::update_teams_data()
+void League::updateDatabaseTeam()
 {
     stringstream clientRes; // irrevelant
 
-    string ret;
     int i;
     for (i = 0; i < league_team_number; i++)
     {
-        ret = ret + to_string(T[i].team_id) + "\n" + to_string(T[i].team_user_id) + "\n" + 
+		string ret;
+        ret += to_string(T[i].team_id) + "\n" + to_string(T[i].team_user_id) + "\n" + 
         to_string(T[i].team_league_id) + "\n" + T[i].team_name + "\n" + T[i].team_group + "\n" +
         to_string(T[i].team_position) + "\n" + to_string(T[i].team_mp) + "\n" + to_string(T[i].team_w) + "\n" +
         to_string(T[i].team_l) + "\n" + to_string(T[i].team_d) + "\n" + to_string(T[i].team_gf) + "\n" +
         to_string(T[i].team_ga) + "\n" + to_string(T[i].team_gd) + "\n" + to_string(T[i].team_points) + "\n"
-		+ T[i].team_ground + "\n";
-    }
+		+ T[i].team_ground;
 
-    int errorDatabase = updateDatabase(ret, "team_update", clientRes);
-    if(errorDatabase!=0){
-        std::cout << "\nError initializing database" << std::endl;
-    }    
+		cout << "Updated team data: " << ret << endl;
+		
+		int errorDatabase = updateDatabase(ret, "update_team", clientRes);
+		if(errorDatabase!=0){
+			std::cout << "\nError initializing database" << std::endl;
+		}
+		else{
+			std::cout << "Team updated successfully" << std::endl;
+		}
+    }
 }

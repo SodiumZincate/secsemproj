@@ -68,10 +68,12 @@ void insertDatabaseMatch(string cli_req, string file){
 	string tid2 = string_list[3];
 	string team1_goal = string_list[4];
 	string team2_goal = string_list[5];
-	string played = string_list[5];
+	string match_date = string_list[6];
+	string match_time = string_list[7];
+	string played = string_list[8];
 
 	stringstream ss;
-	ss << "INSERT INTO MATCH(UID,LID,TID1,TID2,TEAM1GOAL,TEAM2GOAL,PLAYED) VALUES"
+	ss << "INSERT INTO MATCH(UID,LID,TID1,TID2,TEAM1GOAL,TEAM2GOAL,MATCHDATE,MATCHTIME,PLAYED) VALUES"
 	<< "("
 	<< "'" << uid << "',"
 	<< "'" << lid << "',"
@@ -79,6 +81,8 @@ void insertDatabaseMatch(string cli_req, string file){
 	<< "'" << tid2 << "',"
 	<< "'" << team1_goal << "',"
 	<< "'" << team2_goal << "',"
+	<< "'" << match_date << "',"
+	<< "'" << match_time << "',"
 	<< "'" << played << "'"
 	<< ")";
 
@@ -535,16 +539,16 @@ void updateDatabaseTeam(string cli_req, string file, Response &res)
 	string sqlUpdate = ss.str();
 	exit = sqlite3_exec(db, sqlUpdate.c_str(), NULL, 0, &errMsg);
 	if(exit!=SQLITE_OK){
-		cerr << "Error updating data" << std::endl;
+		cerr << "Error updating team" << std::endl;
 		cerr << errMsg << std::endl;
 		sqlite3_free(errMsg);
 	}
 	else{
-		std::cout << "Data updated successfully" << std::endl;
+		std::cout << "team updated successfully" << std::endl;
 	}
 
 	std::cout << "Table Contents: " << std::endl;
-	// queryTeam(db);
+	queryTeam(db);
 
 	sqlite3_close(db);
 }
@@ -571,38 +575,30 @@ void updateDatabaseMatch(string cli_req, string file){
 		std::cout << "Database opened successfully" << std::endl;
 	}
 
-	string uid = string_list[0];
-	string lid = string_list[1];
-	string tid1 = string_list[2];
-	string tid2 = string_list[3];
-	string team1_goal = string_list[4];
-	string team2_goal = string_list[5];
-	string played = string_list[5];
+	string mid = string_list[0];
+	string team1_goal = string_list[1];
+	string team2_goal = string_list[2];
 
 	stringstream ss;
-	// ss << "UPDATE MATCH SET "
-	// << "UID = '" << uid << "', "
-	// << "LID = '" << lid << "', "
-	// << "TID1 = '" << tid1 << "', "
-	// << "TID2 = '" << tid2 << "', "
-	// << "TEAM1GOAL = '" << team1_goal << "', "
-	// << "TEAM2GOAL = '" << team2_goal << "', "
-	// << "PLAYED = '" << played << "' "
-	// << "WHERE MID = '" << mid << "';";
+	ss << "UPDATE MATCH SET "
+	<< "TEAM1GOAL = '" << team1_goal << "', "
+	<< "TEAM2GOAL = '" << team2_goal << "', "
+	<< "PLAYED = '" << 1 << "' "
+	<< "WHERE MID = '" << mid << "';";
 
 	string sqlInsert = ss.str();
 	exit = sqlite3_exec(db, sqlInsert.c_str(), NULL, 0, &errMsg);
 	if(exit!=SQLITE_OK){
-		cerr << "Error updating data" << std::endl;
+		cerr << "Error updating match" << std::endl;
 		cerr << errMsg << std::endl;
 		sqlite3_free(errMsg);
 	}
 	else{
-		std::cout << "Data updated successfully" << std::endl;
+		std::cout << "match updated successfully" << std::endl;
 	}
 
 	std::cout << "Table Contents: " << std::endl;
-	queryTeam(db);
+	// queryTeam(db);
 
 	sqlite3_close(db);
 }
@@ -677,7 +673,7 @@ void queryDatabaseTeam(string cli_req, string file, Response &res)
 	}
 
 	// std::cout << "Table Contents: " << std::endl;
-	// query(db);
+	// queryTeam(db);
 	
 	sqlite3_close(db);
 }
@@ -860,7 +856,7 @@ void queryDatabaseMatch(string cli_req, string file, Response &res)
 	}
 
 	stringstream ss;
-	ss << "SELECT MID,UID,LID,TID1,TID2,TEAM1GOAL,TEAM2GOAL,PLAYED FROM MATCH WHERE UID"
+	ss << "SELECT MID,UID,LID,TID1,TID2,TEAM1GOAL,TEAM2GOAL,MATCHDATE,MATCHTIME,PLAYED FROM MATCH WHERE UID"
 	<< "="
 	<< "'" + user_id + "'"
 	<< " AND LID"
@@ -893,11 +889,11 @@ void queryDatabaseMatch(string cli_req, string file, Response &res)
 			leagueExists = true;
 		}
 		if(leagueExists){
-			std::cout << "The league: " << league_id << " exists\n" << std::endl;
+			std::cout << "The match: " << league_id << " exists\n" << std::endl;
 			res.set_content(content.str(), "text/plain");
 		}
 		else{
-			std::cout << "The league: " + league_id + " does not exist\n" << std::endl;
+			std::cout << "The match: " + league_id + " does not exist\n" << std::endl;
 			res.set_content("\n\n\n", "text/plain");
 		}
 	}
