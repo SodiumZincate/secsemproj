@@ -90,16 +90,6 @@ appDesign::appDesign(){
         background-color: #E0E0E0;
     }
 
-    QTableWidget::item {
-        background-color: #FFFFFF;
-        selection-background-color: #E0E0E0;
-        selection-color: #000000;
-    }
-
-    QTableWidget::item:hover {
-        background-color: #F5F5F5;
-    }
-
     QTableWidget::item:selected {
         border: 1px solid #1889C1;
     }

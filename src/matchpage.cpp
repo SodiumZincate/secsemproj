@@ -216,6 +216,8 @@ void initShowMatch(
 			"}"
 		);
 		nextButton_widget->setEnabled(false);
+		leaguenameText_widget->setText(leaguename + " (FINISHED)");
+		leaguenameText_widget->setStyleSheet("QLabel{color:blue}");
 	}
 
 	//Next Container

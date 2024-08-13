@@ -132,6 +132,12 @@ void initShowLeague(StackedWidgets *App, QWidget* window, QString username = "us
 					else if(L.T[ii].team_mp > L.T[iii].team_mp){
 						swap(L.T[ii], L.T[iii]);
 					}
+					else if(L.T[ii].team_gf < L.T[iii].team_gf){
+						swap(L.T[ii], L.T[iii]);
+					}
+					else if(L.T[ii].team_ga > L.T[iii].team_ga){
+						swap(L.T[ii], L.T[iii]);
+					}
 				}
 			}
 		}
@@ -250,26 +256,21 @@ void initShowLeague(StackedWidgets *App, QWidget* window, QString username = "us
 		}
 
 		// Check for qualifiers
-		cout << "number: " << M.size()-1 << " end match: " << M[M.size()-1].match_occur << endl;
-		if(M[M.size()-1].match_occur){
-			QColor customColor("#48FF4D");
-			QBrush customBrush(customColor);
+		// Apply background color to qualifying rows
+        if (M[M.size() - 1].match_occur) {
+			QColor customColor("#94F496");  // Desired background color
+			QBrush customBrush(customColor);  // Create a brush with the color
 
-			for(int jj = 0; jj < L.league_qualifiers; jj++) {
+			for (int jj = 0; jj < L.league_qualifiers; jj++) {
 				for (int col = 0; col < league_table->columnCount(); ++col) {
 					QTableWidgetItem *item = league_table->item(jj, col);
-					
-					if (!item) {
-						item = new QTableWidgetItem();
-						league_table->setItem(jj, col, item);
-					}
 
 					item->setBackground(customBrush);
 				}
 			}
 
-			// Repaint the table
-			league_table->repaint();
+			leaguenameText_widget->setText(leaguename + " (FINISHED)");
+			leaguenameText_widget->setStyleSheet("QLabel{color:blue}");
 		}
 
 		sub_widget_layout->addWidget(group_label);
