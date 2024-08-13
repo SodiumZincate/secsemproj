@@ -131,8 +131,6 @@ void resetPage(QWidget* window);
 
 void deleteAllWidgetsAndLayouts(QWidget* widget);
 
-void deleteAllWidgetsAndLayouts(QLayout* layout);
-
 // Main class for the widgets in the app
 // (Username, Email, Password) widgets
 class appUI {

@@ -104,6 +104,10 @@ void initShowLeague(StackedWidgets *App, QWidget* window, QString username = "us
 	scroll_area->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 	scroll_area->setWidgetResizable(true);
 
+	// Match List
+	vector<Match> M;
+	M = displayMatch(L);
+
 	for(int i=0; i<L.league_groups; i++){
 		// Label
 		appText *group_name = new appText();
@@ -244,6 +248,30 @@ void initShowLeague(StackedWidgets *App, QWidget* window, QString username = "us
 				league_table->verticalHeader()->setSectionResizeMode(j, QHeaderView::Fixed);
 			}
 		}
+
+		// Check for qualifiers
+		cout << "number: " << M.size()-1 << " end match: " << M[M.size()-1].match_occur << endl;
+		if(M[M.size()-1].match_occur){
+			QColor customColor("#48FF4D");
+			QBrush customBrush(customColor);
+
+			for(int jj = 0; jj < L.league_qualifiers; jj++) {
+				for (int col = 0; col < league_table->columnCount(); ++col) {
+					QTableWidgetItem *item = league_table->item(jj, col);
+					
+					if (!item) {
+						item = new QTableWidgetItem();
+						league_table->setItem(jj, col, item);
+					}
+
+					item->setBackground(customBrush);
+				}
+			}
+
+			// Repaint the table
+			league_table->repaint();
+		}
+
 		sub_widget_layout->addWidget(group_label);
 		sub_widget_layout->addWidget(league_table);
 	}

@@ -273,6 +273,26 @@ void initAddLeague(StackedWidgets *App, QWidget* window, QString username = "use
 		std::string number_no_of_teams;
 		number_no_of_teams = (no_of_teams_component->getFieldText()).toStdString();
 
+		bool number_of_teams_valid = false;
+		if(number_no_of_teams != ""){
+			if(stoi(number_no_of_teams)/number_no_of_groups <= number_qualifiers){
+				no_of_teams_component->deleteEditText();
+				no_of_teams_edit->setPlaceholderText("Invalid number of qualifiers and teams per group");
+				no_of_teams_edit->setStyleSheet("QLineEdit { placeholder-text-color: #FB3B3B }");
+			}
+			if(stoi(number_no_of_teams)/number_no_of_groups <= 1){
+				no_of_teams_component->deleteEditText();
+				no_of_teams_edit->setPlaceholderText("Invalid number of groups and teams");
+				no_of_teams_edit->setStyleSheet("QLineEdit { placeholder-text-color: #FB3B3B }");
+			}
+			if(no_of_teams_component->field_text != ""){
+				number_of_teams_valid = true;
+			}
+		}
+		else{
+			std::cout << "Fields can't be empty" << std::endl;
+		}
+
 		std::cout << "User ID: " << user_id << std::endl;
 
 		std::string timeString;
@@ -298,7 +318,7 @@ void initAddLeague(StackedWidgets *App, QWidget* window, QString username = "use
 		std::string streamLine;
 		std::vector<std::string> streamList;
 
-		if(league_text != ""){
+		if(league_text != "" && number_of_teams_valid){
 			int errorDatabase = updateDatabase(clientReq, "insert_league", clientRes);
 			if(errorDatabase!=0){
 				std::cout << "\nError initializing database" << std::endl;

@@ -16,6 +16,7 @@
 #include "update.cpp"
 #include "displayLeague.cpp"
 #include "displayGroups.cpp"
+#include "displayMatch.cpp"
 #include "createMatchesGS.cpp"
 
 int app_height = 0;

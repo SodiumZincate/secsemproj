@@ -206,6 +206,17 @@ void initShowMatch(
     QPushButton *nextButton_widget = nextButton->getWidget_button();
     nextButton_widget->setFixedSize(app_width/4,app_height/12);
 	nextButton_widget->setStyleSheet("QPushButton{background-color: #48FF4D}");
+	if(M[no_of_match-1].match_occur){
+		nextButton_widget->setText("MATCHES FINISHED");
+		nextButton_widget->setStyleSheet(
+			"QPushButton:disabled {"
+				"background-color:  darkgray;"
+				"color: lightgray;"
+				"border: 1px solid gray;"
+			"}"
+		);
+		nextButton_widget->setEnabled(false);
+	}
 
 	//Next Container
     QWidget *nextButton_container = new QWidget(window);

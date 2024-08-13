@@ -86,7 +86,6 @@ int no_of_teams)
 	QObject::connect(backButton_widget, &QPushButton::clicked,
 	[=](){
 		stringstream temp;
-		std::cout << "\nError initializing team database" << std::endl;
 		int errorDatabase = updateDatabase(to_string(league_id), "delete_league", temp);
 
 		if(errorDatabase!=0){
@@ -102,13 +101,13 @@ int no_of_teams)
 			);
 			App->changeWindow_dashboard();
 		}
-		initAddLeague(
-			App,
-			App->stacked_windows.widget(App->stacked_windows.currentIndex()-1),
-			username,
-			user_id
-		);
-		App->changeWindow_backward();
+		// initAddLeague(
+		// 	App,
+		// 	App->stacked_windows.widget(App->stacked_windows.currentIndex()-1),
+		// 	username,
+		// 	user_id
+		// );
+		// App->changeWindow_backward();
 	});
 
 	std::stringstream clientRes;
