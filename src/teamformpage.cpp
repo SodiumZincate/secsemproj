@@ -15,13 +15,11 @@ int no_of_teams)
 
     QWidget *main_widget = new QWidget(window);
     main_widget->setFixedSize(app_width*3/2, app_height*3/2);
-    // main_widget->setStyleSheet("QWidget{background-color:blue}");
     QVBoxLayout *main_widget_layout = new QVBoxLayout(main_widget);
-    main_widget_layout->setAlignment(Qt::AlignCenter); // Center align the contents
+    main_widget_layout->setAlignment(Qt::AlignCenter);
 
     QWidget *sub_widget = new QWidget(window);
     sub_widget->setFixedSize(app_width, app_height*3/2);
-    // sub_widget->setStyleSheet("QWidget{background-color:red}");
     QVBoxLayout *sub_widget_layout = new QVBoxLayout(sub_widget);
     sub_widget_layout->setAlignment(Qt::AlignTop);
 
@@ -32,7 +30,6 @@ int no_of_teams)
 	//NavBar
     QWidget *NavBar = new QWidget(window);
     NavBar->setFixedSize(app_width*3/2, app_height/6);
-	// NavBar->setStyleSheet("QWidget{background-color:yellow}");
     QHBoxLayout *NavBar_layout = new QHBoxLayout(NavBar);
     NavBar_layout->setAlignment(Qt::AlignTop);
 
@@ -102,13 +99,6 @@ int no_of_teams)
 			);
 			App->changeWindow_dashboard();
 		}
-		// initAddLeague(
-		// 	App,
-		// 	App->stacked_windows.widget(App->stacked_windows.currentIndex()-1),
-		// 	username,
-		// 	user_id
-		// );
-		// App->changeWindow_backward();
 	});
 
 	std::stringstream clientRes;
@@ -160,9 +150,6 @@ int no_of_teams)
 				std::cout << "\nError initializing league database" << std::endl;
 			}
 			else{
-				// while(getline(clientResLeague, streamLine, '\n')){
-				// 	list.push_back(streamLine);
-				// }
 				League L = displayLeagueOnly(clientResLeague.str());
 
 				char group[20];
@@ -301,13 +288,12 @@ int no_of_teams)
 					team_input->teamEdit->setText("");
 					team_input->teamGroundEdit->setText("");
 					team_input->teamEdit->setPlaceholderText("Team Added Successfully");
-					team_input->teamEdit->setStyleSheet("QLineEdit{placeholder-text-color: #48FF4D}");
+					team_input->teamEdit->setStyleSheet("QLineEdit{placeholder-text-color: #117614}");
 					team_input->teamGroundEdit->setPlaceholderText("Venue Added Successfully");
-					team_input->teamGroundEdit->setStyleSheet("QLineEdit{placeholder-text-color: #48FF4D}");
+					team_input->teamGroundEdit->setStyleSheet("QLineEdit{placeholder-text-color: #117614}");
 				}
 				if (count == no_of_teams) {
 					continue_button_widget->setText("Continue to League");
-					continue_button_widget->setStyleSheet("QPushButton{background-color: #48FF4D}");
 					continue_button_widget->setStyleSheet("QPushButton{background-color: #a2d9ce}");
 				}
 			} else {

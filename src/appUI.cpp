@@ -49,12 +49,10 @@ appDesign::appDesign(){
     app_palette.setColor(QPalette::Link, QColor::fromRgbF(0, 0, 1));
     app_palette.setColor(QPalette::LinkVisited, QColor::fromRgbF(1, 0, 1));
     app_palette.setColor(QPalette::AlternateBase, QColor::fromRgbF(0.968627, 0.968627, 0.968627));
-    // app_palette.setColor(QPalette::NoRole, QColor::fromRgbF(0, 0, 0));
     app_palette.setColor(QPalette::ToolTipBase, QColor::fromRgbF(1, 1, 0.862745));
     app_palette.setColor(QPalette::ToolTipText, QColor::fromRgbF(0, 0, 0));
     app_palette.setColor(QPalette::PlaceholderText, QColor::fromRgbF(0, 0, 0, 0.5));
     app_palette.setColor(QPalette::Accent, QColor::fromRgbF(0.188235, 0.54902, 0.776471));
-    // app_palette.setColor(QPalette::NColorRoles, QColor::fromRgbF(0.745098, 0.745098, 0.745098));
 
     app_style_sheet = R"(
     QWidget {
@@ -370,9 +368,7 @@ EditableMatchWidget::EditableMatchWidget(QWidget* parent) : MatchWidget(parent) 
             QWidget *team2Widget = matchDetailsLayout->itemAt(4)->widget();
             
             QVBoxLayout *team1Layout = dynamic_cast<QVBoxLayout*>(team1Widget->layout());
-			// team1Layout->setSpacing(app_height/20);
             QVBoxLayout *team2Layout = dynamic_cast<QVBoxLayout*>(team2Widget->layout());
-			// team1Layout->setSpacing(app_height/20);
 
 			// Update old score labels
 			team1ScoreLabel->hide();

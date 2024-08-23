@@ -29,7 +29,6 @@ League displayLeague(string input_string_1, string input_string_2)
             team_string += token + "\n";
 			cout << "teamInfo: " << token << endl;
         }
-		// cout << "Team: " << team_string << endl;
 
         //'i'th member of array of teams of league L is initialized using string input_string_2[i]
         L.T[i].init_team(team_string);

@@ -157,9 +157,6 @@ void League::sort_teams_array()
 
 void League::update_league_data()
 {
-    // string ret;
-    // ret = to_string(league_id) + "\n" + to_string(league_user_id) + "\n" + league_name + "\n" +  "\n" + to_string(league_round_robin) + "\n" +
-    // to_string(league_qualifiers) + "\n" + to_string(league_groups) + "\n" + to_string(league_team_number);
 }
 
 void League::updateDatabaseTeam()

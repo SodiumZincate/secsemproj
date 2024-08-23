@@ -7,9 +7,7 @@ void initDashboard(StackedWidgets *App, QWidget* window, QString username = "use
 
 	QWidget *main_widget = new QWidget(window);
 	main_widget->setFixedSize(app_width*3/2, app_height*3/2);
-	// main_widget->setStyleSheet("QWidget{background-color:red}");
 	QVBoxLayout *main_widget_layout = new QVBoxLayout(main_widget);
-	//main_widget_layout->setAlignment(Qt::AlignCenter); // Center align the contents
 	
 	//Username Text
     appText *usernameText = new appText();
@@ -18,14 +16,6 @@ void initDashboard(StackedWidgets *App, QWidget* window, QString username = "use
     usernameText_widget->setAlignment(Qt::AlignRight);
     usernameText_widget->setFixedHeight(app_height/4);
 
-    // //League Text
-    // appText *leaguetext = new appText();
-    // leaguetext->init(window,"Your Leagues",default_font_size);
-    // QLabel *leagueLabel_widget= leaguetext->getWidget_label();
-    // leagueLabel_widget->setMargin(10);
-	// mainLabel->setStyleSheet("QLabel{text-decoration:bold;}");
-    // leagueLabel_widget->setAlignment(Qt::AlignTop | Qt::AlignCenter);
-	
 	//League Name Text
 	appText *mainText = new appText();
     mainText ->init(window, "League Manager" ,default_font_size*1.2);
@@ -48,14 +38,12 @@ void initDashboard(StackedWidgets *App, QWidget* window, QString username = "use
 	backButton_widget->setStyleSheet("QPushButton{background-color:#bb8fce}");
 
     backButton_container_layout->addWidget(backButton_widget);
-    // backButton_container_layout->addWidget(usernameText_widget, 0, Qt::AlignRight);
 	
 	//NavBar
     QWidget *NavBar = new QWidget(window);
     QHBoxLayout *NavBar_layout = new QHBoxLayout(NavBar);
     NavBar->setFixedHeight(app_height/6);
     NavBar_layout->setContentsMargins(0, 0, 0, 0);
-	//NavBar->setStyleSheet("QWidget{background-color:yellow}");
 
 	NavBar_layout->addWidget(backButton_container);
 	NavBar_layout->addWidget(mainText_widget);
@@ -99,7 +87,6 @@ void initDashboard(StackedWidgets *App, QWidget* window, QString username = "use
 			leagueIdList.push_back(streamLine);
 			getline(clientRes, streamLine, '\n');
 			leagueNameList.push_back(streamLine);
-			// std::cout << "League name: " << streamLine << std::endl;
 			if(strcmp(streamLine.c_str(), "") != 0){
 				no_of_leagues++;
 			}
@@ -162,9 +149,6 @@ void initDashboard(StackedWidgets *App, QWidget* window, QString username = "use
 				}
 				else{
 					std::string team_string = clientResTeam.str();
-					// cout << "League String: " << league_string << endl;
-					// cout << "Team String: " << team_string << endl;
-					// update(league_string, team_string);
 					League L = displayLeague(league_string, team_string);
 
 					initShowLeague(

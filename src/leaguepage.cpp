@@ -242,8 +242,8 @@ void initShowLeague(StackedWidgets *App, QWidget* window, QString username = "us
 		// Check for qualifiers
 		// Apply background color to qualifying rows
         if (M[M.size() - 1].match_occur) {
-			QColor customColor("#a2d9ce");  // Desired background color
-			QBrush customBrush(customColor);  // Create a brush with the color
+			QColor customColor("#a2d9ce");
+			QBrush customBrush(customColor);
 
 			for (int jj = 0; jj < L.league_qualifiers; jj++) {
 				for (int col = 0; col < league_table->columnCount(); ++col) {

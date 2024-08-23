@@ -15,15 +15,6 @@ static int callback(void* data, int argc, char **argv, char** azcolName){
 	return 0;
 }
 
-// void query(sqlite3 *db){
-// 	char *errMsg;
-// 	string sqlQuery = "SELECT * FROM USER";
-// 	if(sqlite3_exec(db, sqlQuery.c_str(), callback, 0, &errMsg) != SQLITE_OK){
-// 		cerr << "SQL Error: " << errMsg << endl;
-// 		sqlite3_free(errMsg);
-// 	}
-// }
-
 int main(int argc, char *argv[])
 // int initDatabase(string username, string email, string password)
 {

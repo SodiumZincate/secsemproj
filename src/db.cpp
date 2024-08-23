@@ -28,7 +28,7 @@ void uploadFile(httplib::Client& cli, const std::string& filePath) {
 
 void downloadIcon(std::string filename, QIcon& icon) {
     // Initialize the HTTP client
-    httplib::Client cli("192.168.156.109", 8080);
+    httplib::Client cli("localhost", 8080);
 
     // Create the full URL for the request
     std::string url = "/icons/query?file=" + filename;
@@ -59,7 +59,7 @@ void downloadIcon(std::string filename, QIcon& icon) {
 }
 
 int updateDatabase(string clientReq, string mode, stringstream &clientRes) {
-	httplib::Client cli("192.168.156.109", 8080);
+	httplib::Client cli("localhost", 8080);
 
 	stringstream stream;
 	stream << clientReq;
@@ -98,7 +98,6 @@ int updateDatabase(string clientReq, string mode, stringstream &clientRes) {
 		if (auto res = cli.Post("/login/query?=leaguedata.db", clientReq, "text/plain")) {
 			cout << res->status << endl;
 			cout << res->get_header_value("Content-Type") << endl;
-			// cout << res->body << endl;
 			clientRes.clear();
 			clientRes << res->body;
 		}
@@ -111,7 +110,6 @@ int updateDatabase(string clientReq, string mode, stringstream &clientRes) {
 		if (auto res = cli.Post("/team/update?=leaguedata.db", clientReq, "text/plain")) {
 			cout << res->status << endl;
 			cout << res->get_header_value("Content-Type") << endl;
-			// cout << res->body << endl;
 			clientRes.clear();
 			clientRes << res->body;
 		}
@@ -124,7 +122,6 @@ int updateDatabase(string clientReq, string mode, stringstream &clientRes) {
 		if (auto res = cli.Post("/team/query?=leaguedata.db", clientReq, "text/plain")) {
 			cout << res->status << endl;
 			cout << res->get_header_value("Content-Type") << endl;
-			// cout << res->body << endl;
 			clientRes.clear();
 			clientRes << res->body;
 		}
@@ -137,7 +134,6 @@ int updateDatabase(string clientReq, string mode, stringstream &clientRes) {
 		if (auto res = cli.Post("/team/query_id?=leaguedata.db", clientReq, "text/plain")) {
 			cout << res->status << endl;
 			cout << res->get_header_value("Content-Type") << endl;
-			// cout << res->body << endl;
 			clientRes.clear();
 			clientRes << res->body;
 		}
@@ -150,7 +146,6 @@ int updateDatabase(string clientReq, string mode, stringstream &clientRes) {
 		if (auto res = cli.Post("/league/query?=leaguedata.db", clientReq, "text/plain")) {
 			cout << res->status << endl;
 			cout << res->get_header_value("Content-Type") << endl;
-			// cout << res->body << endl;
 			clientRes.clear();
 			clientRes << res->body;
 		}
@@ -163,7 +158,6 @@ int updateDatabase(string clientReq, string mode, stringstream &clientRes) {
 		if (auto res = cli.Post("/match/query?=leaguedata.db", clientReq, "text/plain")) {
 			cout << res->status << endl;
 			cout << res->get_header_value("Content-Type") << endl;
-			// cout << res->body << endl;
 			clientRes.clear();
 			clientRes << res->body;
 		}
@@ -202,7 +196,6 @@ int updateDatabase(string clientReq, string mode, stringstream &clientRes) {
 		if (auto res = cli.Post("/match/update?=leaguedata.db", clientReq, "text/plain")) {
 			cout << res->status << endl;
 			cout << res->get_header_value("Content-Type") << endl;
-			// cout << res->body << endl;
 			clientRes.clear();
 			clientRes << res->body;
 		}
@@ -228,7 +221,6 @@ int updateDatabase(string clientReq, string mode, stringstream &clientRes) {
 		if (auto res = cli.Post("/league/insert?=leaguedata.db", clientReq, "text/plain")) {
 			cout << res->status << endl;
 			cout << res->get_header_value("Content-Type") << endl;
-			// cout << res->body << endl;
 			clientRes.clear();
 			clientRes << res->body;
 		}
@@ -241,7 +233,6 @@ int updateDatabase(string clientReq, string mode, stringstream &clientRes) {
 		if (auto res = cli.Post("/league/query_list?=leaguedata.db", clientReq, "text/plain")) {
 			cout << res->status << endl;
 			cout << res->get_header_value("Content-Type") << endl;
-			// cout << res->body << endl;
 			clientRes.clear();
 			clientRes << res->body;
 		}

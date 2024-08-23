@@ -30,7 +30,7 @@ void uploadFile(httplib::Client& cli, const std::string& url, const std::string&
 
 
 int main(int argc, char *argv[]) {
-	httplib::Client cli("192.168.156.109", 8080);
+	httplib::Client cli("0.0.0.0", 8080);
 	
 	if (strcmp(argv[1], "upload") == 0){
 		std::string item = argv[2];

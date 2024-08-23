@@ -9,7 +9,7 @@ void initRegister(StackedWidgets *App, QWidget* window) {
     // Main Widget
     QWidget *main_widget = new QWidget(window);
     QVBoxLayout *main_widget_layout = new QVBoxLayout(main_widget);
-    main_widget_layout->setAlignment(Qt::AlignCenter); // Center align the contents
+    main_widget_layout->setAlignment(Qt::AlignCenter);
    
     // Username Widget
     appUI *username = new appUI();
@@ -139,11 +139,6 @@ void initRegister(StackedWidgets *App, QWidget* window) {
     QObject::connect(button_widget, &QPushButton::clicked, password_component, &LabelEditComponent::updateEditText);
     QObject::connect(button_widget, &QPushButton::clicked, retype_password_component, &LabelEditComponent::updateEditText);
 
-	// QObject::disconnect(button_widget, &QPushButton::clicked, username_component, &LabelEditComponent::updateEditText);
-    // QObject::disconnect(button_widget, &QPushButton::clicked, email_component, &LabelEditComponent::updateEditText);
-    // QObject::disconnect(button_widget, &QPushButton::clicked, password_component, &LabelEditComponent::updateEditText);
-    // QObject::disconnect(button_widget, &QPushButton::clicked, retype_password_component, &LabelEditComponent::updateEditText);
-
 	// Connection for checking same password in both password fields
 	QObject::connect(button_widget, &QPushButton::clicked, 
     	[=]() {
@@ -223,7 +218,7 @@ void initLogin(StackedWidgets *App, QWidget* window) {
     // Main Widget
     QWidget *main_widget = new QWidget(window);
     QVBoxLayout *main_widget_layout = new QVBoxLayout(main_widget);
-    main_widget_layout->setAlignment(Qt::AlignCenter); // Center align the contents
+    main_widget_layout->setAlignment(Qt::AlignCenter);
 
     // Username Widget
     appUI *username = new appUI();

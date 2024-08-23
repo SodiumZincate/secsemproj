@@ -66,11 +66,7 @@ void build(char** argv) {
 			#endif
 		})
 		.src({
-			// "src/appUI.cpp",
 			"src/main.cpp",
-			// "src/practice.cpp"
-			// "src/loginWidget.cpp",
-			// "src/db.cpp"
 		})
 		.moc_src({
 			"src/appUI.h"

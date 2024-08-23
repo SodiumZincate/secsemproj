@@ -7,14 +7,10 @@ void initAddLeague(StackedWidgets *App, QWidget* window, QString username = "use
 
     QWidget *main_widget = new QWidget(window);
     main_widget->setFixedSize(app_width*3/2, app_height*3/2);
-    // main_widget->setStyleSheet("QWidget{background-color:blue}");
     QVBoxLayout *main_widget_layout = new QVBoxLayout(main_widget);
     main_widget_layout->setAlignment(Qt::AlignCenter); // Center align the contents
 
     QWidget *sub_widget = new QWidget(window);
-    // sub_widget->setFixedSize(app_width*3/2, app_height*3/2);
-    // sub_widget->setStyleSheet("QWidget{background-color:red}");
-	// sub_widget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Maximum);
     QVBoxLayout *sub_widget_layout = new QVBoxLayout(sub_widget);
     sub_widget_layout->setAlignment(Qt::AlignCenter);
 
@@ -25,7 +21,6 @@ void initAddLeague(StackedWidgets *App, QWidget* window, QString username = "use
 	//NavBar
     QWidget *NavBar = new QWidget(window);
     NavBar->setFixedSize(app_width*3/2, app_height/6);
-	// NavBar->setStyleSheet("QWidget{background-color:yellow}");
     QHBoxLayout *NavBar_layout = new QHBoxLayout(NavBar);
     NavBar_layout->setAlignment(Qt::AlignTop);
 
@@ -58,7 +53,6 @@ void initAddLeague(StackedWidgets *App, QWidget* window, QString username = "use
 
 	//
 	QWidget *league_name = new QWidget(window);
-	// league_name->setStyleSheet("QWidget{background-color:red}");
     league_name->setFixedHeight(app_height/8);
     QHBoxLayout *league_name_layout=new QHBoxLayout(league_name);
     league_name_layout->setAlignment(Qt::AlignLeft);
@@ -75,7 +69,6 @@ void initAddLeague(StackedWidgets *App, QWidget* window, QString username = "use
 
 	//
 	QWidget *no_of_teams = new QWidget(window);
-	// league_name->setStyleSheet("QWidget{background-color:red}");
     no_of_teams->setFixedHeight(app_height/8);
     QHBoxLayout *no_of_teams_layout=new QHBoxLayout(no_of_teams);
     no_of_teams_layout->setAlignment(Qt::AlignLeft);
@@ -117,7 +110,6 @@ void initAddLeague(StackedWidgets *App, QWidget* window, QString username = "use
 
 	//
 	QWidget *no_of_match_time=new QWidget(window);
-	// group_stage->setStyleSheet("QWidget{background-color:red}");
     no_of_match_time->setFixedHeight(app_height/8);
     QHBoxLayout *no_of_match_time_layout=new QHBoxLayout(no_of_match_time);
     no_of_match_time_layout->setAlignment(Qt::AlignLeft);
@@ -235,7 +227,6 @@ void initAddLeague(StackedWidgets *App, QWidget* window, QString username = "use
     continue_button_container_layout->setAlignment(Qt::AlignCenter);
     continue_button_container_layout->setContentsMargins(0, app_height / 8, 0, 0);
 	continue_button_container_layout->addWidget(continue_button_widget);
-	// calendarContainer_layout->addWidget(continue_button_widget);
 
 	QObject::connect(backButton_widget, &QPushButton::clicked, App , &StackedWidgets::changeWindow_backward);
 
@@ -253,23 +244,6 @@ void initAddLeague(StackedWidgets *App, QWidget* window, QString username = "use
 		number_qualifiers = (qualifiers_component->getComboNumber());
 		number_no_of_groups = (no_of_groups_component->getComboNumber());
 		number_no_of_match_times = (no_of_match_time_component->getComboNumber());
-
-		// char group[20];
-		// int i, j, k;
-		// for (i = 0; i < number_no_of_groups; i++)
-		// {
-		// 	group[i] = (char) (65 + i);
-		// }
-
-		// k = 0;
-		// for(int j = 0; j < number_no_of_groups; j++)
-		// {
-		// 	for (i = j; i < number_no_of_groups; i += number_no_of_groups)
-		// 	{
-		// 		T[i].team_group = group[j];
-		// 	}
-		// 	k++;
-		// }
 		
 		std::string number_no_of_teams;
 		number_no_of_teams = (no_of_teams_component->getFieldText()).toStdString();

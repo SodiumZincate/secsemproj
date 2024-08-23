@@ -19,31 +19,6 @@ auto form_html = R"(
     </html>
 )";
 
-// void uploadFile(const std::string& url, const std::string& filePath) {
-//     httplib::Client cli("192.168.156.109", 8080);
-//     std::ifstream file(filePath, std::ios::binary);
-    
-//     if (!file.is_open()) {
-//         std::cerr << "Error: Could not open file " << filePath << std::endl;
-//         return;
-//     }
-
-//     std::vector<char> fileContent((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
-//     httplib::MultipartFormDataItems items = {
-//         {"files", std::string(fileContent.begin(), fileContent.end()),
-// 		std::filesystem::path(filePath).filename().string(), "application/octet-stream"}
-//     };
-
-//     auto res = cli.Post("/upload", items);
-
-//     if (res && res->status == 200) {
-//         std::cout << "File " << filePath << " uploaded successfully." << std::endl;
-//     } else {
-//         std::cerr << "Error: File upload failed for " << filePath << std::endl;
-//     }
-// }
-
-
 void run_server() {
     Server svr;
     string upload_dir = "./uploads";
@@ -96,9 +71,8 @@ void run_server() {
 
 	svr.Post("/login/register", [upload_dir](const Request &req, Response &res) {
 		string cli_req = req.body;
+		
         std::string filepath = upload_dir + "/" + "leaguedata.db";
-		// queryDatabase(cli_req, filepath, res);
-
 		insertDatabase(cli_req, filepath);
     });
 
@@ -125,22 +99,12 @@ void run_server() {
 
 	svr.Post("/team/insert", [upload_dir](const Request &req, Response &res) {
 		string cli_req = req.body;
-		// std::vector<string> string_list;
-		// std::string token;
-		// while(getline(tokenStream, token, '\n')){
-		// 	string_list.push_back(token);
-		// }
         std::string filepath = upload_dir + "/" + "leaguedata.db";
 		insertDatabaseTeam(cli_req, filepath);
     });
 
 	svr.Post("/match/insert", [upload_dir](const Request &req, Response &res) {
 		string cli_req = req.body;
-		// std::vector<string> string_list;
-		// std::string token;
-		// while(getline(tokenStream, token, '\n')){
-		// 	string_list.push_back(token);
-		// }
         std::string filepath = upload_dir + "/" + "leaguedata.db";
 		insertDatabaseMatch(cli_req, filepath);
     });
@@ -154,11 +118,6 @@ void run_server() {
 
 	svr.Post("/league/insert", [upload_dir](const Request &req, Response &res) {
 		string cli_req = req.body;
-		// std::vector<string> string_list;
-		// std::string token;
-		// while(getline(tokenStream, token, '\n')){
-		// 	string_list.push_back(token);
-		// }
         std::string filepath = upload_dir + "/" + "leaguedata.db";
 		insertDatabaseLeague(cli_req, filepath, res);
     });
@@ -183,13 +142,6 @@ void run_server() {
         std::string filepath = upload_dir + "/" + "leaguedata.db";	
 		queryDatabaseMatchNumber(cli_req, filepath, res);
     });
-
-	// svr.Post("/league/query_id", [upload_dir](const Request &req, Response &res) {
-	// 	string cli_req = req.body;
-
-    //     std::string filepath = upload_dir + "/" + "leaguedata.db";
-	// 	queryDatabaseLeagueID(cli_req, filepath, res);
-    // });
 
 	svr.Post("/league/query_list", [upload_dir](const Request &req, Response &res) {
 		string cli_req = req.body;
@@ -251,7 +203,7 @@ void run_server() {
 	});
 
     std::cout << "Server is listening on http://localhost:8080\n";
-    svr.listen("192.168.156.109", 8080);
+    svr.listen("0.0.0.0", 8080);
 
 	string stopString;
 	std::cin >> stopString;

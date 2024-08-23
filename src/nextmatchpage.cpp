@@ -16,14 +16,12 @@ void initNextMatch(
 
     QWidget *main_widget = new QWidget(window);
     main_widget->setFixedSize(app_width*3/2, app_height*3/2);
-    // main_widget->setStyleSheet("QWidget{background-color:blue}");
     QVBoxLayout *main_widget_layout = new QVBoxLayout(main_widget);
     main_widget_layout->setAlignment(Qt::AlignCenter); // Center align the contents
 
 	//NavBar
     QWidget *NavBar = new QWidget(window);
     NavBar->setFixedSize(app_width*3/2, app_height/6);
-	// NavBar->setStyleSheet("QWidget{background-color:yellow}");
     QHBoxLayout *NavBar_layout = new QHBoxLayout(NavBar);
     NavBar_layout->setAlignment(Qt::AlignTop);
 
@@ -203,7 +201,6 @@ void initNextMatch(
 
     main_widget_layout->addWidget(NavBar, 0, Qt::AlignTop);
 	main_widget_layout->addWidget(scroll_area);
-    // main_widget_layout->addWidget(deleteButton_widget, 0, Qt::AlignRight | Qt::AlignBottom);
     main_widget_layout->addWidget(updateButton_widget, 0, Qt::AlignCenter | Qt::AlignBottom);
 
 	resetPage(window);
