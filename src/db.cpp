@@ -28,7 +28,7 @@ void uploadFile(httplib::Client& cli, const std::string& filePath) {
 
 void downloadIcon(std::string filename, QIcon& icon) {
     // Initialize the HTTP client
-    httplib::Client cli("localhost", 8080);
+    httplib::Client cli("192.168.156.109", 8080);
 
     // Create the full URL for the request
     std::string url = "/icons/query?file=" + filename;
@@ -59,7 +59,7 @@ void downloadIcon(std::string filename, QIcon& icon) {
 }
 
 int updateDatabase(string clientReq, string mode, stringstream &clientRes) {
-	httplib::Client cli("localhost", 8080);
+	httplib::Client cli("192.168.156.109", 8080);
 
 	stringstream stream;
 	stream << clientReq;

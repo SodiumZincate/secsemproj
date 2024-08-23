@@ -20,7 +20,7 @@ auto form_html = R"(
 )";
 
 // void uploadFile(const std::string& url, const std::string& filePath) {
-//     httplib::Client cli("0.0.0.0", 8080);
+//     httplib::Client cli("192.168.156.109", 8080);
 //     std::ifstream file(filePath, std::ios::binary);
     
 //     if (!file.is_open()) {
@@ -251,7 +251,7 @@ void run_server() {
 	});
 
     std::cout << "Server is listening on http://localhost:8080\n";
-    svr.listen("0.0.0.0", 8080);
+    svr.listen("192.168.156.109", 8080);
 
 	string stopString;
 	std::cin >> stopString;

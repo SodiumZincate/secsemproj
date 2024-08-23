@@ -41,7 +41,7 @@ void initAddLeague(StackedWidgets *App, QWidget* window, QString username = "use
     backButton->init(window,"BACK",default_font_size*0.9);
     QPushButton *backButton_widget = backButton->getWidget_button();
     backButton_widget->setFixedSize(app_width/8,app_height/12);
-	// backButton_widget->setStyleSheet("QPushButton{background-color:green}");
+	backButton_widget->setStyleSheet("QPushButton{background-color:#bb8fce}");
 
 	//Backbutton Container
     QWidget *backButton_container = new QWidget(window);
@@ -226,6 +226,7 @@ void initAddLeague(StackedWidgets *App, QWidget* window, QString username = "use
     appButton *continue_button = new appButton();
     continue_button->init(window, "Continue", default_font_size*1.2);
     QPushButton *continue_button_widget = continue_button->getWidget_button();
+	continue_button_widget->setStyleSheet("QPushButton{background-color: #a2d9ce}");
 	
 
 	//  Submit Button Container Widget (Made so the Submit Button Widget could be centered as a Widget)

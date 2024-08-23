@@ -46,7 +46,7 @@ void initNextMatch(
     backButton->init(window,"BACK",default_font_size*0.9);
     QPushButton *backButton_widget = backButton->getWidget_button();
     backButton_widget->setFixedSize(app_width/8,app_height/12);
-	// backButton_widget->setStyleSheet("QPushButton{background-color:green}");
+	backButton_widget->setStyleSheet("QPushButton{background-color:#bb8fce }");
 
 	//Backbutton Container
     QWidget *backButton_container = new QWidget(window);
@@ -121,7 +121,7 @@ void initNextMatch(
     updateButton->init(window,"UPDATE",default_font_size*0.9);
     QPushButton *updateButton_widget = updateButton->getWidget_button();
     updateButton_widget->setFixedSize(app_width/4,app_height/12);
-	updateButton_widget->setStyleSheet("QPushButton{background-color: #48FF4D}");
+	updateButton_widget->setStyleSheet("QPushButton{background-color: #a2d9ce}");
 
 	//Next Container
     QWidget *updateButton_container = new QWidget(window);

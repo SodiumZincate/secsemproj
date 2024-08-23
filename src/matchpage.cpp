@@ -51,7 +51,7 @@ void initShowMatch(
     backButton->init(window,"BACK",default_font_size*0.9);
     QPushButton *backButton_widget = backButton->getWidget_button();
     backButton_widget->setFixedSize(app_width/8,app_height/12);
-	// backButton_widget->setStyleSheet("QPushButton{background-color:green}");
+	backButton_widget->setStyleSheet("QPushButton{background-color:#bb8fce}");
 
 	//Backbutton Container
     QWidget *backButton_container = new QWidget(window);
@@ -205,14 +205,14 @@ void initShowMatch(
     nextButton->init(window,"NEXT MATCH",default_font_size*0.9);
     QPushButton *nextButton_widget = nextButton->getWidget_button();
     nextButton_widget->setFixedSize(app_width/4,app_height/12);
-	nextButton_widget->setStyleSheet("QPushButton{background-color: #48FF4D}");
+	nextButton_widget->setStyleSheet("QPushButton{background-color: #a2d9ce }");
 	if(M[no_of_match-1].match_occur){
 		nextButton_widget->setText("MATCHES FINISHED");
 		nextButton_widget->setStyleSheet(
 			"QPushButton:disabled {"
-				"background-color:  darkgray;"
-				"color: lightgray;"
-				"border: 1px solid gray;"
+				"background-color:  #1E1E1E;"
+				"color: #EEEEEE;"
+				"border: 1px solid #000000;"
 			"}"
 		);
 		nextButton_widget->setEnabled(false);

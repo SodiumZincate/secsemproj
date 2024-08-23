@@ -45,7 +45,7 @@ void initDashboard(StackedWidgets *App, QWidget* window, QString username = "use
     backButton->init(window,"Log Out",default_font_size*0.9);
     QPushButton *backButton_widget = backButton->getWidget_button();
     backButton_widget->setFixedSize(app_width/8,app_height/12);
-	// backButton_widget->setStyleSheet("QPushButton{background-color:green}");
+	backButton_widget->setStyleSheet("QPushButton{background-color:#bb8fce}");
 
     backButton_container_layout->addWidget(backButton_widget);
     // backButton_container_layout->addWidget(usernameText_widget, 0, Qt::AlignRight);
@@ -186,6 +186,7 @@ void initDashboard(StackedWidgets *App, QWidget* window, QString username = "use
     leagueButton->init(window,"Add league",default_font_size*1.2);
     QPushButton *leagueButton_widget=leagueButton->getWidget_button();
     leagueButton_widget->setFixedSize(app_width/4,app_width/14);
+	leagueButton_widget->setStyleSheet("QPushButton{background-color: #a2d9ce}");
 	
     //Container for League button
     QWidget *leagueButton_container = new QWidget(window);

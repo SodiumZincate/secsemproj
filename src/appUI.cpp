@@ -59,14 +59,14 @@ appDesign::appDesign(){
     app_style_sheet = R"(
     QWidget {
         color: #000000;
-        background-color: #FFFFFF;
+        background-color:  #e8daef;
     }
     QLineEdit {
-        border: 1px solid #CCCCCC;
+        border: 2px solid #000000;
         padding: 5px;
     }
     QPushButton {
-        border: 2px solid #CCCCCC;
+        border: 2px solid #000000;
         border-radius: 5px;
     }
     QPushButton:hover {
@@ -76,14 +76,14 @@ appDesign::appDesign(){
         background-color: #D0D0D0;
     }
     QComboBox {
-        border: 1px solid #CCCCCC;
+        border: 2px solid #000000;
         border-radius: 5px;
         padding: 5px;
-        background-color: #FFFFFF;
+       
     }
     QTableWidget {
         border: 1px solid #CCCCCC;
-        background-color: #FFFFFF;
+        background-color: #f4ecf7 ;
     }
 
     QHeaderView::section {
@@ -138,6 +138,7 @@ TeamDialogBox::TeamDialogBox(QWidget *parent){
 	appButton *teamButton = new appButton();
 	teamButton->init(this, "Add Icon");
 	teamButton_widget = teamButton->getWidget_button();
+    teamButton_widget->setStyleSheet("QPushButton{background-color: #a2d9ce}");
 
 	teamButtonContainerLayout->addWidget(teamButton_widget, 0, Qt::AlignCenter);
 

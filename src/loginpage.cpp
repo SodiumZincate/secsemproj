@@ -44,6 +44,7 @@ void initRegister(StackedWidgets *App, QWidget* window) {
     appButton *button = new appButton();
     button->init(window, "Submit");
     QPushButton *button_widget = button->getWidget_button();
+	button_widget->setStyleSheet("QPushButton{background-color: #a2d9ce}");
 
     // Submit Button Widget
 	appButton *signin_button = new appButton();
@@ -245,6 +246,7 @@ void initLogin(StackedWidgets *App, QWidget* window) {
     appButton *button = new appButton();
     button->init(window, "Submit");
     QPushButton *button_widget = button->getWidget_button();
+	button_widget->setStyleSheet("QPushButton{background-color: #a2d9ce}");
 
     // Submit Button Widget
 	appButton *signin_button = new appButton();

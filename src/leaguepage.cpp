@@ -45,7 +45,7 @@ void initShowLeague(StackedWidgets *App, QWidget* window, QString username = "us
     backButton->init(window,"BACK",default_font_size*0.9);
     QPushButton *backButton_widget = backButton->getWidget_button();
     backButton_widget->setFixedSize(app_width/8,app_height/12);
-	// backButton_widget->setStyleSheet("QPushButton{background-color:green}");
+	backButton_widget->setStyleSheet("QPushButton{background-color:#bb8fce}");
 
 	//Backbutton Container
     QWidget *backButton_container = new QWidget(window);
@@ -61,7 +61,7 @@ void initShowLeague(StackedWidgets *App, QWidget* window, QString username = "us
     deleteButton->init(window,"DELETE LEAGUE",default_font_size*0.9);
     QPushButton *deleteButton_widget = deleteButton->getWidget_button();
     deleteButton_widget->setFixedSize(app_width/4,app_height/12);
-	deleteButton_widget->setStyleSheet("QPushButton{background-color: #FB3B3B}");
+	deleteButton_widget->setStyleSheet("QPushButton{background-color: #f5b7b1}");
 
 	//Delete Container
     QWidget *deleteButton_container = new QWidget(window);
@@ -81,7 +81,7 @@ void initShowLeague(StackedWidgets *App, QWidget* window, QString username = "us
     nextButton->init(window,"SHOW MATCHES",default_font_size*0.9);
     QPushButton *nextButton_widget = nextButton->getWidget_button();
     nextButton_widget->setFixedSize(app_width/4,app_height/12);
-	nextButton_widget->setStyleSheet("QPushButton{background-color: #48FF4D}");
+	nextButton_widget->setStyleSheet("QPushButton{background-color: #a2d9ce}");
 
 	//Next Container
     QWidget *nextButton_container = new QWidget(window);
@@ -258,7 +258,7 @@ void initShowLeague(StackedWidgets *App, QWidget* window, QString username = "us
 		// Check for qualifiers
 		// Apply background color to qualifying rows
         if (M[M.size() - 1].match_occur) {
-			QColor customColor("#94F496");  // Desired background color
+			QColor customColor("#a2d9ce");  // Desired background color
 			QBrush customBrush(customColor);  // Create a brush with the color
 
 			for (int jj = 0; jj < L.league_qualifiers; jj++) {

@@ -41,7 +41,7 @@ int no_of_teams)
     backButton->init(window,"BACK",default_font_size*0.9);
     QPushButton *backButton_widget = backButton->getWidget_button();
     backButton_widget->setFixedSize(app_width/8,app_height/12);
-	// backButton_widget->setStyleSheet("QPushButton{background-color:green}");
+	backButton_widget->setStyleSheet("QPushButton{background-color:#bb8fce}");
 
 	//Backbutton Container
     QWidget *backButton_container = new QWidget(window);
@@ -69,6 +69,7 @@ int no_of_teams)
     continue_button->init(window, "Add Team");
     QPushButton *continue_button_widget = continue_button->getWidget_button();
 	continue_button_widget->setFixedSize(app_width/2, app_height/8);
+	continue_button_widget->setStyleSheet("QPushButton{background-color: #a2d9ce}");
 
 	 // Submit Button Container Widget (Made so the Submit Button Widget could be centered as a Widget)
     QWidget *continue_button_container = new QWidget(window);
@@ -307,6 +308,7 @@ int no_of_teams)
 				if (count == no_of_teams) {
 					continue_button_widget->setText("Continue to League");
 					continue_button_widget->setStyleSheet("QPushButton{background-color: #48FF4D}");
+					continue_button_widget->setStyleSheet("QPushButton{background-color: #a2d9ce}");
 				}
 			} else {
 				qDebug() << "Fields can't be empty";
