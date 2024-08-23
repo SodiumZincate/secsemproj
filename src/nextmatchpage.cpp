@@ -146,45 +146,56 @@ void initNextMatch(
 		team1Score = matchWidget->team1ScoreInput->text().toStdString();
 		team2Score = matchWidget->team2ScoreInput->text().toStdString();
 		
-		string clientReq = to_string(matchVector[match_number].match_id) + "\n" + team1Score + "\n" + team2Score;
+		if(team1Score == "" || team2Score == ""){
+			matchWidget->team1ScoreInput->setText("");
+			matchWidget->team1ScoreInput->setPlaceholderText("Invalid");
+			matchWidget->team1ScoreInput->setStyleSheet("QLineEdit { placeholder-text-color: #FB3B3B }");
 
-		stringstream clientRes;
-		int errorDatabase = updateDatabase(clientReq, "update_match", clientRes);
-
-		if(errorDatabase!=0){
-			cout << "Failed to update match" << endl;
+			matchWidget->team2ScoreInput->setText("");
+			matchWidget->team2ScoreInput->setPlaceholderText("Invalid");
+			matchWidget->team2ScoreInput->setStyleSheet("QLineEdit { placeholder-text-color: #FB3B3B }");
 		}
 		else{
-			cout << "match updated successfully" << endl;
+			string clientReq = to_string(matchVector[match_number].match_id) + "\n" + team1Score + "\n" + team2Score;
 
-			for(int i=0; i<tempL.league_team_number; i++){
-				if(tempL.T[i].team_id == matchVector[match_number].T1.team_id){
-					tempL.T[i].update_team_data(stoi(team1Score), stoi(team2Score));
-					cout << "ID: " << tempL.T[i].team_id << endl;
-					cout << "GF: " << tempL.T[i].team_gf << endl;
-					cout << "GA: " << tempL.T[i].team_ga << endl;
-				}
+			stringstream clientRes;
+			int errorDatabase = updateDatabase(clientReq, "update_match", clientRes);
+
+			if(errorDatabase!=0){
+				cout << "Failed to update match" << endl;
 			}
-			for(int i=0; i<tempL.league_team_number; i++){
-				if(tempL.T[i].team_id == matchVector[match_number].T2.team_id){
-					tempL.T[i].update_team_data(stoi(team2Score), stoi(team1Score));
-					cout << "ID: " << tempL.T[i].team_id << endl;
-					cout << "GF: " << tempL.T[i].team_gf << endl;
-					cout << "GA: " << tempL.T[i].team_ga << endl;
+			else{
+				cout << "match updated successfully" << endl;
+
+				for(int i=0; i<tempL.league_team_number; i++){
+					if(tempL.T[i].team_id == matchVector[match_number].T1.team_id){
+						tempL.T[i].update_team_data(stoi(team1Score), stoi(team2Score));
+						cout << "ID: " << tempL.T[i].team_id << endl;
+						cout << "GF: " << tempL.T[i].team_gf << endl;
+						cout << "GA: " << tempL.T[i].team_ga << endl;
+					}
 				}
+				for(int i=0; i<tempL.league_team_number; i++){
+					if(tempL.T[i].team_id == matchVector[match_number].T2.team_id){
+						tempL.T[i].update_team_data(stoi(team2Score), stoi(team1Score));
+						cout << "ID: " << tempL.T[i].team_id << endl;
+						cout << "GF: " << tempL.T[i].team_gf << endl;
+						cout << "GA: " << tempL.T[i].team_ga << endl;
+					}
+				}
+
+				tempL.update_group_positions();
+				tempL.updateDatabaseTeam();
+
+				initShowMatch(
+					App,
+					App->stacked_windows.widget(App->stacked_windows.currentIndex()-1),
+					username,
+					leaguename,
+					tempL
+				);
+				App->changeWindow_backward();
 			}
-
-			tempL.update_group_positions();
-			tempL.updateDatabaseTeam();
-
-			initShowMatch(
-				App,
-				App->stacked_windows.widget(App->stacked_windows.currentIndex()-1),
-				username,
-				leaguename,
-				tempL
-			);
-			App->changeWindow_backward();
 		}
 	});
 

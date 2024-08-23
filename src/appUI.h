@@ -25,6 +25,9 @@
 #include <QtWidgets/QMessageBox>
 #include <QtWidgets/QCalendarWidget>
 #include <QtWidgets/QTimeEdit>
+#include <QtCore/QTimer>
+#include <QtCore/QPropertyAnimation>
+#include <QtWidgets/QGraphicsOpacityEffect>
 #include <iostream>
 #include "logic.h"
 #include "db.h"
@@ -98,6 +101,8 @@ void initLogin(StackedWidgets *App, QWidget* window);
 void initDashboard(StackedWidgets *App, QWidget* window, QString username, int user_id);
 
 void initAddLeague(StackedWidgets *App, QWidget* window, QString username, int user_id);
+
+void initLeagueIcon(StackedWidgets *App, QWidget* window);
 
 void initAddTeam(
 	StackedWidgets *App, 

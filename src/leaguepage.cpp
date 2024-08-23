@@ -7,14 +7,10 @@ void initShowLeague(StackedWidgets *App, QWidget* window, QString username = "us
 
     QWidget *main_widget = new QWidget(window);
     main_widget->setFixedSize(app_width*3/2, app_height*3/2);
-    // main_widget->setStyleSheet("QWidget{background-color:blue}");
     QVBoxLayout *main_widget_layout = new QVBoxLayout(main_widget);
-    main_widget_layout->setAlignment(Qt::AlignCenter); // Center align the contents
+    main_widget_layout->setAlignment(Qt::AlignCenter);
 
     QWidget *sub_widget = new QWidget(window);
-    // sub_widget->setFixedSize(app_width*3/2, app_height*3/2);
-    // sub_widget->setStyleSheet("QWidget{background-color:red}");
-	// sub_widget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Maximum);
     QVBoxLayout *sub_widget_layout = new QVBoxLayout(sub_widget);
     sub_widget_layout->setAlignment(Qt::AlignTop);
 	sub_widget_layout->setSpacing(80);
@@ -22,7 +18,6 @@ void initShowLeague(StackedWidgets *App, QWidget* window, QString username = "us
 	//NavBar
     QWidget *NavBar = new QWidget(window);
     NavBar->setFixedSize(app_width*3/2, app_height/6);
-	// NavBar->setStyleSheet("QWidget{background-color:yellow}");
     QHBoxLayout *NavBar_layout = new QHBoxLayout(NavBar);
     NavBar_layout->setAlignment(Qt::AlignTop);
 
@@ -188,22 +183,11 @@ void initShowLeague(StackedWidgets *App, QWidget* window, QString username = "us
 			"Pts",
 		};
 
-
-		// for(const auto& entry : std::filesystem::directory_iterator("requisite/assets/images/logo")){
-		// 	std::string logo_name = entry.path().filename().string();
-		// 	std::string logo_dir = "requisite/assets/images/logo/" + logo_name;
-		// 	std::cout << logo_dir << std::endl;
-		// 	icons.push_back(QString(logo_dir.c_str()));
-		// 	icons.push_back(QString(logo_dir.c_str()));
-		// }
-
 		league_table->setHorizontalHeaderLabels(header_label_list);
         league_table->horizontalHeader()->setFont(QFont("Sans", default_font_size*0.6));
         league_table->verticalHeader()->setFont(QFont("Sans", default_font_size*0.6));
 
 		for (int j = 0; j < league_table->rowCount(); j++) {
-			// QPixmap pixmap(iconList[j]);
-			// QIcon icon(pixmap.scaled(800, 800, Qt::KeepAspectRatio, Qt::SmoothTransformation));
 			QTableWidgetItem *table_item = new QTableWidgetItem(iconList[j], QString(groupArray[i].T[j].team_name.c_str()), 0);
             table_item->setFont(QFont("Sans", default_font_size*0.8));
 			table_item->setFlags(table_item->flags() & ~Qt::ItemIsEditable);

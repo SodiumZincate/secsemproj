@@ -87,7 +87,7 @@ void initAddLeague(StackedWidgets *App, QWidget* window, QString username = "use
     QLineEdit *no_of_teams_edit = no_of_teams_component->getWidget_edit();
 	no_of_teams_edit->setFixedSize(app_width*71/100, app_height/10);
 
-	QIntValidator* validator = new QIntValidator(0, 200, window);
+	QIntValidator* validator = new QIntValidator(2, 200, window);
 	no_of_teams_edit->setValidator(validator);
 
     no_of_teams_layout->addWidget(no_of_teams_label);
