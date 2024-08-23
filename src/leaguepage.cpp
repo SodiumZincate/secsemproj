@@ -7,14 +7,10 @@ void initShowLeague(StackedWidgets *App, QWidget* window, QString username = "us
 
     QWidget *main_widget = new QWidget(window);
     main_widget->setFixedSize(app_width*3/2, app_height*3/2);
-    // main_widget->setStyleSheet("QWidget{background-color:blue}");
     QVBoxLayout *main_widget_layout = new QVBoxLayout(main_widget);
-    main_widget_layout->setAlignment(Qt::AlignCenter); // Center align the contents
+    main_widget_layout->setAlignment(Qt::AlignCenter);
 
     QWidget *sub_widget = new QWidget(window);
-    // sub_widget->setFixedSize(app_width*3/2, app_height*3/2);
-    // sub_widget->setStyleSheet("QWidget{background-color:red}");
-	// sub_widget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Maximum);
     QVBoxLayout *sub_widget_layout = new QVBoxLayout(sub_widget);
     sub_widget_layout->setAlignment(Qt::AlignTop);
 	sub_widget_layout->setSpacing(80);
@@ -22,7 +18,6 @@ void initShowLeague(StackedWidgets *App, QWidget* window, QString username = "us
 	//NavBar
     QWidget *NavBar = new QWidget(window);
     NavBar->setFixedSize(app_width*3/2, app_height/6);
-	// NavBar->setStyleSheet("QWidget{background-color:yellow}");
     QHBoxLayout *NavBar_layout = new QHBoxLayout(NavBar);
     NavBar_layout->setAlignment(Qt::AlignTop);
 
@@ -45,7 +40,6 @@ void initShowLeague(StackedWidgets *App, QWidget* window, QString username = "us
     backButton->init(window,"BACK",default_font_size*0.9);
     QPushButton *backButton_widget = backButton->getWidget_button();
     backButton_widget->setFixedSize(app_width/8,app_height/12);
-	// backButton_widget->setStyleSheet("QPushButton{background-color:green}");
 
 	//Backbutton Container
     QWidget *backButton_container = new QWidget(window);
@@ -188,22 +182,11 @@ void initShowLeague(StackedWidgets *App, QWidget* window, QString username = "us
 			"Pts",
 		};
 
-
-		// for(const auto& entry : std::filesystem::directory_iterator("requisite/assets/images/logo")){
-		// 	std::string logo_name = entry.path().filename().string();
-		// 	std::string logo_dir = "requisite/assets/images/logo/" + logo_name;
-		// 	std::cout << logo_dir << std::endl;
-		// 	icons.push_back(QString(logo_dir.c_str()));
-		// 	icons.push_back(QString(logo_dir.c_str()));
-		// }
-
 		league_table->setHorizontalHeaderLabels(header_label_list);
         league_table->horizontalHeader()->setFont(QFont("Sans", default_font_size*0.6));
         league_table->verticalHeader()->setFont(QFont("Sans", default_font_size*0.6));
 
 		for (int j = 0; j < league_table->rowCount(); j++) {
-			// QPixmap pixmap(iconList[j]);
-			// QIcon icon(pixmap.scaled(800, 800, Qt::KeepAspectRatio, Qt::SmoothTransformation));
 			QTableWidgetItem *table_item = new QTableWidgetItem(iconList[j], QString(groupArray[i].T[j].team_name.c_str()), 0);
             table_item->setFont(QFont("Sans", default_font_size*0.8));
 			table_item->setFlags(table_item->flags() & ~Qt::ItemIsEditable);
@@ -258,8 +241,8 @@ void initShowLeague(StackedWidgets *App, QWidget* window, QString username = "us
 		// Check for qualifiers
 		// Apply background color to qualifying rows
         if (M[M.size() - 1].match_occur) {
-			QColor customColor("#94F496");  // Desired background color
-			QBrush customBrush(customColor);  // Create a brush with the color
+			QColor customColor("#94F496");
+			QBrush customBrush(customColor);
 
 			for (int jj = 0; jj < L.league_qualifiers; jj++) {
 				for (int col = 0; col < league_table->columnCount(); ++col) {

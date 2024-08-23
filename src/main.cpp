@@ -11,6 +11,7 @@
 #include "leaguepage.cpp"
 #include "matchpage.cpp"
 #include "nextmatchpage.cpp"
+#include "logopage.cpp"
 #include "db.cpp"
 #include "logic.cpp"
 #include "update.cpp"
@@ -57,14 +58,12 @@ int main(int argc, char *argv[]) {
 	QWidget showLeagueApp;
 	QWidget showMatchApp;
 	QWidget nextPageMatchApp;
+	QWidget leagueIconApp;
 
 	// Initializa login and register pages
 	initRegister(&stack1, &registerApp);
 	initLogin(&stack1, &loginApp);
-	// initDashboard(&stack1, &dashboardApp);
-	// initAddLeague(&stack1, &addleagueApp);
-	// initAddTeam(&stack1, &addteamApp);
-	// initShowLeague(&stack1, &showLeagueApp);
+	initLeagueIcon(&stack1, &leagueIconApp);
 
 	stack1.addWidget(&registerApp);
 	stack1.addWidget(&loginApp);
@@ -74,9 +73,10 @@ int main(int argc, char *argv[]) {
 	stack1.addWidget(&showLeagueApp);
 	stack1.addWidget(&showMatchApp);
 	stack1.addWidget(&nextPageMatchApp);
+	stack1.addWidget(&leagueIconApp);
 
 	// Set initial page to login page
-	stack1.setCurrentIndex(1);
+	stack1.setCurrentIndex(8);
 
 	// stack1.addtoLayout();
 	stack1.mainWidget.setLayout(stack1.appLayout);
