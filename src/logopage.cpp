@@ -10,7 +10,26 @@ void initLeagueIcon(StackedWidgets *App, QWidget* window){
     main_widget_layout->setAlignment(Qt::AlignCenter);
 
 	QPushButton *leagueIcon = new QPushButton(window);
-	QPixmap pixmap("requisite/assets/images/leaguepage_icon.jpeg");
+    leagueIcon->setStyleSheet(
+		"QPushButton {"
+        "   border: none;"
+        "   background-color: transparent;"
+        "   padding: 0;"
+        "   margin: 0;"
+        "   font-size: 16px;"
+        "   color: black;"
+        "}"
+        "QPushButton:hover {"
+        "   background-color: transparent;"
+        "}"
+        "QPushButton:pressed {"
+        "   background-color: transparent;"
+        "}"
+        "QPushButton:disabled {"
+        "   color: gray;"
+        "   background-color: transparent;"
+        "}");
+	QPixmap pixmap("requisite/assets/images/leaguepage_icon.png");
 
 	QPixmap scaledPixmap = pixmap.scaled(app_width * 3 / 2, app_height * 3 / 2, Qt::KeepAspectRatio, Qt::SmoothTransformation);
     QIcon icon(scaledPixmap);

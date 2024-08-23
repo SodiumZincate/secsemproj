@@ -400,6 +400,13 @@ EditableMatchWidget::EditableMatchWidget(QWidget* parent) : MatchWidget(parent) 
             team2ScoreInput->setFixedSize(app_width/4, app_height/10);
 			team2ScoreInput->setFont(QFont("Sans", default_font_size*0.8));
             team2ScoreInput->setValidator(validator);
+
+			QObject::connect(team1ScoreInput, &QLineEdit::textEdited, [this](){
+				team1ScoreInput->setPlaceholderText("");
+				QPalette palette = team1ScoreInput->palette();
+				palette.setColor(QPalette::PlaceholderText, QColor(0, 0, 0, 128));
+				team1ScoreInput->setPalette(palette);
+			});
             
             team1Layout->addWidget(team1GoalLabel, 0, Qt::AlignHCenter);
 			team1Layout->addWidget(team1ScoreInput, 0, Qt::AlignHCenter);
