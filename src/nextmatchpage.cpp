@@ -163,22 +163,16 @@ void initNextMatch(
 				cout << "Failed to update match" << endl;
 			}
 			else{
-				cout << "match updated successfully" << endl;
+				cout << "Match updated successfully" << endl;
 
 				for(int i=0; i<tempL.league_team_number; i++){
 					if(tempL.T[i].team_id == matchVector[match_number].T1.team_id){
 						tempL.T[i].update_team_data(stoi(team1Score), stoi(team2Score));
-						cout << "ID: " << tempL.T[i].team_id << endl;
-						cout << "GF: " << tempL.T[i].team_gf << endl;
-						cout << "GA: " << tempL.T[i].team_ga << endl;
 					}
 				}
 				for(int i=0; i<tempL.league_team_number; i++){
 					if(tempL.T[i].team_id == matchVector[match_number].T2.team_id){
 						tempL.T[i].update_team_data(stoi(team2Score), stoi(team1Score));
-						cout << "ID: " << tempL.T[i].team_id << endl;
-						cout << "GF: " << tempL.T[i].team_gf << endl;
-						cout << "GA: " << tempL.T[i].team_ga << endl;
 					}
 				}
 

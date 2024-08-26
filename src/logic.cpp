@@ -50,24 +50,6 @@ void Team::init_team(string input_string)
     team_gd = stoi(list[12]);
     team_points = stoi(list[13]);
     team_ground = list[14];
-
-	cout << "team_id :: " << team_id << endl;
-    cout << "team_user_id :: " << team_user_id << endl;
-    cout << "team_league_id :: " << team_league_id << endl;
-    cout << "team_name :: " << team_name<< endl;
-	cout << "team_group :: " << team_group << endl;
-    cout << "team_position :: " << team_position << endl;
-    cout << "team_mp :: " << team_mp << endl;
-    cout << "team_w :: " << team_w << endl;
-    cout << "team_l :: " << team_l << endl;
-    cout << "team_d :: " << team_d << endl;
-    cout << "team_gf :: " << team_gf  << endl;
-    cout << "team_ga :: " << team_ga  << endl;
-    cout << "team_gd :: " << team_gd  << endl;
-    cout << "team_points :: " << team_points  << endl;
-    cout << "team_ground :: " << team_ground  << endl;
-
-	cout << list.size() << endl;
 }
 
 void League::update_group_positions()
@@ -123,21 +105,10 @@ void League::init_league(string input_string)
     league_no_of_match_times = stoi(list[8]);
     stringstream temp_match_times;
 	temp_match_times << list[9];
-
-	cout << "league_id :: " << league_id << endl;
-    cout << "league_user_id :: " << league_user_id << endl;
-    cout << "league_name :: " << league_name << endl;
-	cout << "league_round_robin :: " << league_round_robin << endl;
-    cout << "league_qualifiers :: " << league_qualifiers << endl;
-    cout << "league_groups :: " << league_groups << endl;
-    cout << "league_team_number :: " << league_team_number << endl;
-    cout << "league_start_date :: " << League_start_date << endl;
-    cout << "league_no_of_match_times :: " << league_no_of_match_times << endl;
 	
 	int i = 0;
 	while(getline(temp_match_times, token, '\t')){
 		league_match_times[i] = token;
-		cout << "league_match_times"<<"["<<i<<"] :: " << league_match_times[i] << endl;
 		i++;
 	}
 }
@@ -173,8 +144,6 @@ void League::updateDatabaseTeam()
         to_string(T[i].team_l) + "\n" + to_string(T[i].team_d) + "\n" + to_string(T[i].team_gf) + "\n" +
         to_string(T[i].team_ga) + "\n" + to_string(T[i].team_gd) + "\n" + to_string(T[i].team_points) + "\n"
 		+ T[i].team_ground;
-
-		cout << "Updated team data: " << ret << endl;
 		
 		int errorDatabase = updateDatabase(ret, "update_team", clientRes);
 		if(errorDatabase!=0){

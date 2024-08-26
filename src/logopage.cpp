@@ -47,7 +47,7 @@ void initLeagueIcon(StackedWidgets *App, QWidget* window){
     main_layout->setAlignment(Qt::AlignCenter);
     window->setLayout(main_layout);
 
-	 QTimer::singleShot(2000, [=]() {
+	QTimer::singleShot(2000, [=]() {
         // Create a QGraphicsOpacityEffect to control the opacity
         QGraphicsOpacityEffect *opacityEffect = new QGraphicsOpacityEffect(leagueIcon);
         leagueIcon->setGraphicsEffect(opacityEffect);

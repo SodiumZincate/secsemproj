@@ -92,7 +92,6 @@ void initDashboard(StackedWidgets *App, QWidget* window, QString username = "use
 			}
 		}
 	}
-	std::cout << "Number of leagues: " << no_of_leagues << std::endl;
 
 	if(no_of_leagues == 0){
 		leagueLabel_widget->setStyleSheet({"QLabel{color:#FB3B3B}"});
@@ -103,11 +102,13 @@ void initDashboard(StackedWidgets *App, QWidget* window, QString username = "use
 	}
     button_container_layout->addWidget(leagueLabel_widget);
 
+	// Loop for creating clickable text for number of leagues from database
 	for(int i = 0; i < no_of_leagues; i++){
 		appClickableText *league_name = new appClickableText();
 		QString text = (std::to_string(i+1) + ") <u>" + leagueNameList[i] + "</u>").c_str();
 		league_name->init(window, text, default_font_size*0.8);
 
+		// Connection of clickable text with database and flip page
 		QObject::connect(league_name, &appClickableText::clicked,
 		[=](){
 			qDebug() << "Clicked league_name:" << text;
@@ -137,7 +138,6 @@ void initDashboard(StackedWidgets *App, QWidget* window, QString username = "use
 						cout << "Failed to delete league" << endl;
 					}
 					else{
-						cout << "league deleted successfully" << endl;
 						initDashboard(
 							App,
 							App->stacked_windows.widget(2),
@@ -187,10 +187,11 @@ void initDashboard(StackedWidgets *App, QWidget* window, QString username = "use
     main_widget_layout->addWidget(scroll_area, 0, Qt::AlignHCenter);
     main_widget_layout->addWidget(leagueButton_container);
 
+	// Connecting back button
 	QObject::connect(backButton_widget, &QPushButton::clicked, App, &StackedWidgets::changeWindow_backward);
+	// Connecting Add league button
 	QObject::connect(leagueButton_widget, &QPushButton::clicked,
 	[=](){
-		std::cout << App->stacked_windows.currentIndex() << std::endl;
 		initAddLeague(
 			App,
 			App->stacked_windows.widget(App->stacked_windows.currentIndex()+1),

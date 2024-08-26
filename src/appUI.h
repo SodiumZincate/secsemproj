@@ -158,6 +158,7 @@ public:
 };
 
 // Class for buttons in the app
+// Members: QPushButton & function for initializing and returning QPushButton
 class appButton{
 public:
     QPushButton* button_widget;

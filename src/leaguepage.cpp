@@ -103,17 +103,18 @@ void initShowLeague(StackedWidgets *App, QWidget* window, QString username = "us
 	vector<Match> M;
 	M = displayMatch(L);
 
+	// Creating tables as per number of groups
 	for(int i=0; i<L.league_groups; i++){
-		// Label
+		// Label for group name
 		appText *group_name = new appText();
 		std::string group_name_text = "GROUP: " + std::string(1, (char)(i + 65));
 		group_name->init(window, QString::fromStdString(group_name_text), default_font_size * 0.8);
-		cout << group_name->getWidget_label()->text().toStdString() << endl;
 		QLabel *group_label = group_name->getWidget_label();
 
 		QList<QIcon> iconList = {};
 		QStringList teamNameList = {};
 
+		// Logic for showing and sorting position of teams in a group
 		int i1,j1,k1;
 		for(int ii = 0; ii < L.league_team_number-1; ii++){
 			for(int iii = ii+1; iii < L.league_team_number; iii++){
@@ -139,6 +140,7 @@ void initShowLeague(StackedWidgets *App, QWidget* window, QString username = "us
 
 		Group groupArray[L.league_groups];
 
+		// Assing group name
 		for (i1 = 0; i1 < L.league_groups; i1++)
 		{
 			groupArray[i1].group_name = (char) (i1 + 65);
@@ -153,17 +155,17 @@ void initShowLeague(StackedWidgets *App, QWidget* window, QString username = "us
 				groupArray[i].T[k1] = L.T[j1];
 				no_of_teams++;
 
-				cout << "Added Teams: " << groupArray[i].T[k1].team_name << endl;
-
+				// Adding icon respective to groups
 				QIcon icon;
 				downloadIcon(to_string(groupArray[i].T[k1].team_id) + ".png", icon);
 
+				// Add icon to list
 				iconList.push_back(icon);
                 k1++;
 			}
 		}
 
-		// Table
+		// Table fot showing team data
 		QTableWidget *league_table = new QTableWidget(no_of_teams, 9, window);
 		league_table->setMinimumSize(app_width*3/2, app_height*5/4);
 		league_table->setColumnWidth(0, app_width*0.4);
@@ -171,6 +173,7 @@ void initShowLeague(StackedWidgets *App, QWidget* window, QString username = "us
 		QSize icon_size(app_width/16, app_height/16);
 		league_table->setIconSize(icon_size);
 
+		// Column data
 		QStringList header_label_list = {
 			"Team Name",
 			"MP",
@@ -210,6 +213,8 @@ void initShowLeague(StackedWidgets *App, QWidget* window, QString username = "us
                 table_item->setFont(QFont("Sans", default_font_size*0.6));
                 table_item->setTextAlignment(Qt::AlignCenter);
                 table_item->setFlags(table_item->flags() & ~Qt::ItemIsEditable);
+
+				// Put item in table
                 league_table->setItem(j, k, table_item);
             }
 		}
@@ -261,7 +266,9 @@ void initShowLeague(StackedWidgets *App, QWidget* window, QString username = "us
 		sub_widget_layout->addWidget(league_table);
 	}
 
+	// Connection of back button
 	QObject::connect(backButton_widget, &QPushButton::clicked, App, &StackedWidgets::changeWindow_dashboard);
+	// Connection of next button
 	QObject::connect(nextButton_widget, &QPushButton::clicked,
 	[=](){
 		initShowMatch(
@@ -273,6 +280,7 @@ void initShowLeague(StackedWidgets *App, QWidget* window, QString username = "us
 		);
 		App->changeWindow_forward();
 	});
+	// Connection of delete button
 	QObject::connect(deleteButton_widget, &QPushButton::clicked,
 	[=](){
 		QMessageBox::StandardButton reply;
@@ -282,7 +290,6 @@ void initShowLeague(StackedWidgets *App, QWidget* window, QString username = "us
         
         if (reply == QMessageBox::Yes) {
 			stringstream temp;
-				cout << "del League ID: " << L.league_id << endl;
 				int errorDatabase = updateDatabase(to_string(L.league_id), "delete_league", temp);
 
 				if(errorDatabase!=0){

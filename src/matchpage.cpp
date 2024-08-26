@@ -73,7 +73,6 @@ void initShowMatch(
 	Match M[no_of_match];
 	QList<QIcon> iconList_1 = {}, iconList_2 ={};
 
-	cout << "Number of match: " << no_of_match << endl;
 	clientReq.clear();
 	clientReq = to_string(L.league_user_id) + "\n" + to_string(L.league_id);
 	std::stringstream clientResMatch;
@@ -103,7 +102,6 @@ void initShowMatch(
 			while(getline(tokenStream, token, '\n'))
 			{
 				list.push_back(token);
-				cout << token << ".." << endl;
 			}
 
 			M[i].T1 = Team();
@@ -137,7 +135,6 @@ void initShowMatch(
 
 			iconList_1.push_back(icon_1);
 			iconList_2.push_back(icon_2);
-			cout << "Pairing Match " << i << ": Team1 ID " << M[i].T1.team_id << " vs Team2 ID " << M[i].T2.team_id << endl;
 		}
 	}
 
@@ -157,7 +154,9 @@ void initShowMatch(
 	scroll_area->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 	scroll_area->setWidgetResizable(true);
 
+	// Loop for showing matches based on number of match
 	for(int i = 0; i < no_of_match; i++){
+		// class for each individual match based on data from database
 		MatchWidget* matchWidget = new MatchWidget(window);
         
         QString team1Name = QString::fromStdString(M[i].T1.team_name);

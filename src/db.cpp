@@ -170,7 +170,6 @@ int updateDatabase(string clientReq, string mode, stringstream &clientRes) {
 		if (auto res = cli.Post("/match/query_number?=leaguedata.db", clientReq, "text/plain")) {
 			cout << res->status << endl;
 			cout << res->get_header_value("Content-Type") << endl;
-			cout << res->body << endl;
 			clientRes.clear();
 			clientRes << res->body;
 		}
@@ -183,7 +182,6 @@ int updateDatabase(string clientReq, string mode, stringstream &clientRes) {
 		if (auto res = cli.Post("/match/insert?=leaguedata.db", clientReq, "text/plain")) {
 			cout << res->status << endl;
 			cout << res->get_header_value("Content-Type") << endl;
-			cout << res->body << endl;
 			clientRes.clear();
 			clientRes << res->body;
 		}
@@ -208,7 +206,6 @@ int updateDatabase(string clientReq, string mode, stringstream &clientRes) {
 		if (auto res = cli.Post("/team/insert?=leaguedata.db", clientReq, "text/plain")) {
 			cout << res->status << endl;
 			cout << res->get_header_value("Content-Type") << endl;
-			cout << res->body << endl;
 			clientRes.clear();
 			clientRes << res->body;
 		}

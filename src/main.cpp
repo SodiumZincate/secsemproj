@@ -20,6 +20,7 @@
 #include "displayMatch.cpp"
 #include "createMatchesGS.cpp"
 
+// Global variables
 int app_height = 0;
 int app_width = 0;
 int screenWidth;
@@ -29,6 +30,8 @@ int default_font_size;
 
 int main(int argc, char *argv[]) {
 	QApplication app(argc, argv);
+
+	// Style for the app
     QApplication::setStyle("Fusion");
     QScreen *screen = QGuiApplication::primaryScreen();
 	QSize screenSize = screen->size();
@@ -47,8 +50,7 @@ int main(int argc, char *argv[]) {
     app_width = screenWidth / 2;
     app_height = screenHeight / 2;
 	
-	std::cout << screenWidth << std::endl;
-
+	// Stacked widgets for easier nagivation of pages
 	StackedWidgets stack1;
 	QWidget registerApp;
 	QWidget loginApp;
