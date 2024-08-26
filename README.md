@@ -1,4 +1,4 @@
-# project
+# Project
 This is the repository for the project of second semester, 'League Manager'. 
 
 The project is basically a software that allows a person to easily manage a football league or football tournament that they are hosting by:
