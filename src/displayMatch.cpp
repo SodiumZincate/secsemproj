@@ -20,7 +20,6 @@ vector<Match> displayMatch(League L)
 	Match M[no_of_match];
 	QList<QIcon> iconList_1 = {}, iconList_2 ={};
 
-	cout << "Number of match: " << no_of_match << endl;
 	clientReq.clear();
 	clientReq = to_string(L.league_user_id) + "\n" + to_string(L.league_id);
 	std::stringstream clientResMatch;
@@ -50,7 +49,6 @@ vector<Match> displayMatch(League L)
 			while(getline(tokenStream, token, '\n'))
 			{
 				list.push_back(token);
-				cout << token << ".." << endl;
 			}
 
 			M[i].T1 = Team();

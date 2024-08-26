@@ -268,8 +268,6 @@ void initAddLeague(StackedWidgets *App, QWidget* window, QString username = "use
 			std::cout << "Fields can't be empty" << std::endl;
 		}
 
-		std::cout << "User ID: " << user_id << std::endl;
-
 		std::string timeString;
 		timeString = 
 		match_time1->time().toString().toStdString()
@@ -301,8 +299,6 @@ void initAddLeague(StackedWidgets *App, QWidget* window, QString username = "use
 			else{
 				getline(clientRes, streamLine, '\n');
 				QString league_id(streamLine.c_str());
-				cout << "League ID: " << league_id.toStdString() << endl;
-				std::cout << App->stacked_windows.currentIndex() << std::endl;
 				initAddTeam(
 					App,
 					App->stacked_windows.widget(App->stacked_windows.currentIndex()+1),

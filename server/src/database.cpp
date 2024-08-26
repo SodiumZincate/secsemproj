@@ -2,19 +2,6 @@
 
 using namespace std;
 
-// Callback function is called for each row
-// data = database, argc = no. of columns in a row,
-// argv = array of strings where each string is the value of a column in the row
-// azcolName = array of strings where each string is the name of the column
-static int callback(void* data, int argc, char **argv, char** azcolName){
-	int i;
-	for(i=0; i<argc; i++){
-		cout << azcolName[i] << " = " << argv[i] << endl; 
-	}
-	cout << endl;
-	return 0;
-}
-
 int main(int argc, char *argv[])
 // int initDatabase(string username, string email, string password)
 {

@@ -96,22 +96,18 @@ appDesign::appDesign(){
 
 void StackedWidgets::changeWindow_forward() {
     setCurrentIndex(stacked_windows.currentIndex()+1);
-	std::cout << stacked_windows.currentIndex() << std::endl;
 }
 
 void StackedWidgets::changeWindow_backward() {
     setCurrentIndex(stacked_windows.currentIndex()-1);
-	std::cout << stacked_windows.currentIndex() << std::endl;
 }
 
 void StackedWidgets::changeWindow_showLeague() {
     setCurrentIndex(5);
-	std::cout << stacked_windows.currentIndex() << std::endl;
 }
 
 void StackedWidgets::changeWindow_dashboard() {
     setCurrentIndex(2);
-	std::cout << stacked_windows.currentIndex() << std::endl;
 }
 
 TeamDialogBox::TeamDialogBox(QWidget *parent){
@@ -245,7 +241,6 @@ void appClickableText::init(QWidget* parent, QString text, int font_size) {
 
 void appClickableText::mousePressEvent(QMouseEvent* event){
 	if(event->button() == Qt::LeftButton){
-		qDebug() << "appClickableText clicked"; // Debug statement
 		emit clicked();
 	}
 }
@@ -429,6 +424,7 @@ void LabelEditComponent::init(QWidget* parent, QString widget_text, int font_siz
     widget_edit->setFixedSize(QSize(app_width * 2 / 3, app_height / 10));
     widget_edit->setFont(QFont("Sans", font_size*0.8));
     widget_edit->setPlaceholderText(widget_text);     
+	
 	QObject::connect(widget_edit, &QLineEdit::textEdited, [this, widget_text](){
 		widget_edit->setPlaceholderText(widget_text);
 		QPalette palette = widget_edit->palette();
@@ -540,6 +536,5 @@ QComboBox* LabelComboComponent::getWidget_combo() {
 
 int LabelComboComponent::getComboNumber() {
     combo_number = widget_combobox->currentText().toInt();
-	std::cout << combo_number << std::endl;
 	return combo_number;
 }

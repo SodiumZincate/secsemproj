@@ -21,7 +21,6 @@ void createMatchesGS(League L)
                         Mgs[k].T1 = L.T[i];
                         Mgs[k].T2 = L.T[j];
 						Mgs[k].match_date = L.League_start_date;
-						cout << Mgs[k].match_time;
                         k++;
                     }
                 }
@@ -38,7 +37,6 @@ void createMatchesGS(League L)
                         Mgs[k].T1 = L.T[i];
                         Mgs[k].T2 = L.T[j];
 						Mgs[k].match_date = L.League_start_date;
-						cout << Mgs[k].match_time;
                         k++;
                     }
                 }

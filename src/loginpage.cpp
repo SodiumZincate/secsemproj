@@ -89,6 +89,7 @@ void initRegister(StackedWidgets *App, QWidget* window) {
 	QPushButton *showButton = new QPushButton(password_component->getWidget_edit());
 	showButton->setIcon(QIcon("requisite/assets/images/eye_shown.png"));
 	showButton->setFixedHeight(password_component->getWidget_edit()->height()/2);
+
 	QObject::connect(showButton, &QPushButton::clicked, 
     	[password_component, showButton]() {
 			password_component->togglePasswordVisibility(showButton);
@@ -98,6 +99,7 @@ void initRegister(StackedWidgets *App, QWidget* window) {
 	QPushButton *showRetypeButton = new QPushButton(retype_password_component->getWidget_edit());
 	showRetypeButton->setIcon(QIcon("requisite/assets/images/eye_shown.png"));
 	showRetypeButton->setFixedHeight(retype_password_component->getWidget_edit()->height()/2);
+	
 	QObject::connect(showRetypeButton, &QPushButton::clicked, 
     	[retype_password_component, showRetypeButton]() {
 			retype_password_component->togglePasswordVisibility(showRetypeButton);
@@ -161,12 +163,8 @@ void initRegister(StackedWidgets *App, QWidget* window) {
 			else{
 				while(getline(clientRes, streamLine, '\n')){
 					streamList.push_back(streamLine);
-					std::cout << "Streamline: " << streamLine << std::endl;
-					std::cout << "Username: " << username_text << std::endl;
-					std::cout << "Password: " << password_text << std::endl;
 				}
 				if(strcmp(username_text.c_str(), streamList[1].c_str())==0) {
-					std::cout << "You are already registered" << std::endl;
 					username_component->usernameExists(true);
 					email_component->deleteEditText();
 					password_component->deleteEditText();
@@ -323,22 +321,16 @@ void initLogin(StackedWidgets *App, QWidget* window) {
 			else{
 				while(getline(clientRes, streamLine, '\n')){
 					streamList.push_back(streamLine);
-					std::cout << "Streamline: " << streamLine << std::endl;
-					std::cout << "Username: " << username_text << std::endl;
-					std::cout << "Password: " << password_text << std::endl;
 				}
 				if(strcmp(username_text.c_str(), streamList[1].c_str())==0 
 				&& strcmp(password_text.c_str(), streamList[3].c_str())==0) {
 					int user_id = stoi(streamList[0]);
-					std::cout << "You are logged in" << std::endl;
-					std::cout << App->stacked_windows.currentIndex() << std::endl;
 					initDashboard(
 						App,
 						App->stacked_windows.widget(App->stacked_windows.currentIndex()+1),
 						QString(username_text.c_str()),
 						user_id
 					);
-					cout << user_id << endl;
 					username_component->deleteEditText();
 					password_component->deleteEditText();
 					App->changeWindow_forward();
