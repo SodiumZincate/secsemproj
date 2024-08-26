@@ -337,7 +337,6 @@ void MatchWidget::init(const QString& matchNumber,
 	matchNumberLabel->setText("Match: " + matchNumber);
 	matchGroundLabel->setText("Venue: " + matchGround);
 	matchTimeLabel->setText("Time: " + matchDate + "\n" + matchTime);
-	qDebug() << matchTimeLabel->text();
 
     team1NameLabel->setText(team1Name);
     team1IconLabel->setPixmap(team1Icon.pixmap(100, 100)); // Adjust icon size
